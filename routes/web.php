@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\DepositController as AdminDepositController;
+use App\Http\Controllers\Admin\LotteryController as AdminLotteryController;
+use App\Http\Controllers\LotteryController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,8 +14,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('app')->name('app.')->group(function () {
         Route::inertia('dashboard', 'app/dashboard')->name('dashboard');
-        Route::inertia('lotteries', 'app/lotteries')->name('lotteries');
-        Route::inertia('tickets', 'app/tickets')->name('tickets');
+
+        Route::get('lotteries', [LotteryController::class, 'index'])->name('lotteries');
+        Route::get('lotteries/{lottery}', [LotteryController::class, 'show'])->name('lotteries.show');
+        Route::post('lotteries/{lottery}/purchase', [LotteryController::class, 'purchase'])->name('lotteries.purchase');
+
+        Route::get('tickets', [TicketController::class, 'index'])->name('tickets');
 
         Route::get('wallet', [WalletController::class, 'index'])->name('wallet');
         Route::post('wallet/deposits', [WalletController::class, 'store'])->name('wallet.deposits.store');
@@ -26,7 +33,13 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::get('deposits', [AdminDepositController::class, 'index'])->name('deposits');
     Route::post('deposits/{deposit}/approve', [AdminDepositController::class, 'approve'])->name('deposits.approve');
     Route::post('deposits/{deposit}/reject', [AdminDepositController::class, 'reject'])->name('deposits.reject');
-    Route::inertia('lotteries', 'admin/lotteries')->name('lotteries');
+
+    Route::get('lotteries', [AdminLotteryController::class, 'index'])->name('lotteries');
+    Route::get('lotteries/create', [AdminLotteryController::class, 'create'])->name('lotteries.create');
+    Route::post('lotteries', [AdminLotteryController::class, 'store'])->name('lotteries.store');
+    Route::get('lotteries/{lottery}', [AdminLotteryController::class, 'show'])->name('lotteries.show');
+    Route::post('lotteries/{lottery}/cancel', [AdminLotteryController::class, 'cancel'])->name('lotteries.cancel');
+
     Route::inertia('users', 'admin/users')->name('users');
     Route::inertia('audit', 'admin/audit')->name('audit');
 });

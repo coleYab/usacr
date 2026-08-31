@@ -117,4 +117,24 @@ class User extends Authenticatable implements PasskeyUser
     {
         return $this->hasMany(AdminAction::class, 'admin_id');
     }
+
+    /**
+     * Tickets purchased by this user.
+     *
+     * @return HasMany<Ticket, $this>
+     */
+    public function tickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+    /**
+     * Lotteries created by this admin.
+     *
+     * @return HasMany<Lottery, $this>
+     */
+    public function createdLotteries(): HasMany
+    {
+        return $this->hasMany(Lottery::class, 'created_by');
+    }
 }
