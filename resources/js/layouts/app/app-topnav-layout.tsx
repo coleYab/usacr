@@ -1,8 +1,16 @@
 import { Link, usePage } from '@inertiajs/react';
-import { LayoutGrid, Menu, Ticket, Wallet, Sparkles } from 'lucide-react';
+import {
+    LayoutGrid,
+    Menu,
+    Sparkles,
+    Ticket,
+    Trophy,
+    Wallet,
+} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { AppContent } from '@/components/app-content';
 import { Breadcrumbs } from '@/components/breadcrumbs';
+import { NotificationBell } from '@/components/notification-bell';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -22,7 +30,7 @@ import { UserMenuContent } from '@/components/user-menu-content';
 import { useCurrentUrl } from '@/hooks/use-current-url';
 import { useInitials } from '@/hooks/use-initials';
 import { cn } from '@/lib/utils';
-import { dashboard, lotteries, tickets, wallet } from '@/routes/app';
+import { dashboard, lotteries, results, tickets, wallet } from '@/routes/app';
 import type { AppLayoutProps, NavItem } from '@/types';
 
 type Props = AppLayoutProps & {
@@ -33,6 +41,7 @@ const mainNavItems: NavItem[] = [
     { title: 'Dashboard', href: dashboard(), icon: LayoutGrid },
     { title: 'Lotteries', href: lotteries(), icon: Sparkles },
     { title: 'My Tickets', href: tickets(), icon: Ticket },
+    { title: 'Results', href: results(), icon: Trophy },
     { title: 'Wallet', href: wallet(), icon: Wallet },
 ];
 
@@ -140,6 +149,7 @@ export default function AppTopnavLayout({
                                 {effectiveBalance}
                             </span>
                         </div>
+                        <NotificationBell />
                         <ThemeToggle />
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>

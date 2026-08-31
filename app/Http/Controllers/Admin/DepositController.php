@@ -9,6 +9,7 @@ use App\Http\Requests\RejectDepositRequest;
 use App\Http\Resources\DepositResource;
 use App\Models\Deposit;
 use App\Models\User;
+use App\Notifications\DepositStatusNotification;
 use App\Services\WalletService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -68,6 +69,8 @@ class DepositController extends Controller
             );
 
             $this->logAction($admin, 'deposit.approved', $locked, 'Approved deposit of '.money($locked->amount).'.');
+
+            $locked->user->notify(new DepositStatusNotification($locked));
         });
 
         return back()->with('success', 'Deposit approved and wallet credited.');
@@ -93,6 +96,8 @@ class DepositController extends Controller
             ]);
 
             $this->logAction($admin, 'deposit.rejected', $locked, 'Rejected deposit of '.money($locked->amount).'.');
+
+            $locked->user->notify(new DepositStatusNotification($locked));
         });
 
         return back()->with('success', 'Deposit rejected.');

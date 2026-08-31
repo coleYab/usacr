@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Carbon;
 
@@ -90,6 +91,16 @@ class Lottery extends Model
     public function winningTicket(): BelongsTo
     {
         return $this->belongsTo(Ticket::class, 'winning_ticket_id');
+    }
+
+    /**
+     * The draw log recorded when the lottery was drawn.
+     *
+     * @return HasOne<DrawLog, $this>
+     */
+    public function drawLog(): HasOne
+    {
+        return $this->hasOne(DrawLog::class);
     }
 
     /**

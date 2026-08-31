@@ -44,6 +44,16 @@ class HandleInertiaRequests extends Middleware
                 'user' => $user,
             ],
             'walletBalance' => $user?->wallet ? money($user->wallet->balance) : money(0),
+            'notifications' => $user ? [
+                'unreadCount' => $user->unreadNotifications()->count(),
+                'recent' => $user->notifications()->take(10)->get()->map(fn ($n) => [
+                    'id' => $n->id,
+                    'data' => $n->data,
+                    'read_at' => $n->read_at?->toISOString(),
+                    'created_at' => $n->created_at?->toISOString(),
+                    'created_at_diff' => $n->created_at?->diffForHumans(),
+                ]),
+            ] : null,
             'flash' => [
                 'toast' => $this->buildToast($request),
             ],

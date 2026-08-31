@@ -29,6 +29,10 @@ class LotteryResource extends JsonResource
             }, $this->media);
         }
 
+        $winningTicket = $this->winningTicket;
+        $winner = $winningTicket?->user;
+        $drawLog = $this->drawLog;
+
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -48,6 +52,11 @@ class LotteryResource extends JsonResource
             'status' => $this->status->value,
             'status_label' => $this->status->label(),
             'participant_count' => $this->participantCount(),
+            'winning_ticket_id' => $this->winning_ticket_id,
+            'winning_ticket_code' => $winningTicket?->ticket_code,
+            'winner_name' => $winner ? ($winner->name ?? 'Winner') : null,
+            'verification_hash' => $drawLog?->verification_hash,
+            'verification_seed' => $drawLog?->verification_seed,
             'created_at' => $this->created_at?->toISOString(),
             'created_at_formatted' => $this->created_at?->format('M j, Y g:i A'),
         ];

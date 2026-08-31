@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react';
 import {
+    Clock,
     History,
     LayoutDashboard,
     ListChecks,
@@ -28,7 +29,14 @@ import {
     SidebarSeparator,
 } from '@/components/ui/sidebar';
 import { dashboard as appDashboard } from '@/routes/app';
-import { audit, dashboard, deposits, lotteries, users } from '@/routes/admin';
+import {
+    audit,
+    dashboard,
+    deposits,
+    draws,
+    lotteries,
+    users,
+} from '@/routes/admin';
 import { useCurrentUrl } from '@/hooks/use-current-url';
 import type { AppLayoutProps, NavItem } from '@/types';
 
@@ -49,6 +57,7 @@ const navGroups: GroupedNav[] = [
         items: [
             { title: 'Deposits', href: deposits(), icon: Wallet },
             { title: 'Lotteries', href: lotteries(), icon: Sparkles },
+            { title: 'Draws', href: draws(), icon: Clock },
             { title: 'Users', href: users(), icon: Users },
         ],
     },

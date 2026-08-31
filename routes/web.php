@@ -1,13 +1,17 @@
 <?php
 
 use App\Http\Controllers\Admin\DepositController as AdminDepositController;
+use App\Http\Controllers\Admin\DrawController as AdminDrawController;
 use App\Http\Controllers\Admin\LotteryController as AdminLotteryController;
 use App\Http\Controllers\LotteryController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ResultController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'welcome')->name('home');
+Route::get('results', [ResultController::class, 'index'])->name('results');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('dashboard', '/app/dashboard')->name('dashboard');
@@ -20,9 +24,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('lotteries/{lottery}/purchase', [LotteryController::class, 'purchase'])->name('lotteries.purchase');
 
         Route::get('tickets', [TicketController::class, 'index'])->name('tickets');
+        Route::get('results', [ResultController::class, 'index'])->name('results');
 
         Route::get('wallet', [WalletController::class, 'index'])->name('wallet');
         Route::post('wallet/deposits', [WalletController::class, 'store'])->name('wallet.deposits.store');
+
+        Route::post('notifications/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
+        Route::post('notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
     });
 });
 
@@ -39,6 +47,9 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::post('lotteries', [AdminLotteryController::class, 'store'])->name('lotteries.store');
     Route::get('lotteries/{lottery}', [AdminLotteryController::class, 'show'])->name('lotteries.show');
     Route::post('lotteries/{lottery}/cancel', [AdminLotteryController::class, 'cancel'])->name('lotteries.cancel');
+
+    Route::get('draws', [AdminDrawController::class, 'index'])->name('draws');
+    Route::post('draws/run', [AdminDrawController::class, 'run'])->name('draws.run');
 
     Route::inertia('users', 'admin/users')->name('users');
     Route::inertia('audit', 'admin/audit')->name('audit');

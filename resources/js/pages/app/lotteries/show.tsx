@@ -8,6 +8,7 @@ import {
     Plus,
     Sparkles,
     Ticket as TicketIcon,
+    Trophy,
     Wallet,
 } from 'lucide-react';
 import { useMemo, useState } from 'react';
@@ -87,8 +88,19 @@ export default function AppLotteryShow({
     const maxAffordable =
         unitPrice > 0 ? Math.floor(numericWalletBalance / unitPrice) : 0;
     const maxAllowed = Math.min(lottery.remaining_tickets, 100);
-
     const isAvailable = lottery.is_open && lottery.status === 'active';
+    const isCompleted = lottery.status === 'completed';
+
+    const winningUserTicket = useMemo(() => {
+        return userTickets.find(
+            (t) =>
+                t.is_won ||
+                (lottery.winning_ticket_code &&
+                    t.ticket_code === lottery.winning_ticket_code),
+        );
+    }, [userTickets, lottery.winning_ticket_code]);
+
+    const isUserWinner = Boolean(winningUserTicket);
 
     const handleQuantityChange = (val: number) => {
         if (isNaN(val)) {
@@ -521,6 +533,151 @@ export default function AppLotteryShow({
                                                     : `Buy ${quantity} Ticket${quantity > 1 ? 's' : ''} — ${formatMoney(totalCost)}`}
                                             </Button>
                                         </div>
+                                    </div>
+                                ) : isCompleted ? (
+                                    <div className="space-y-4">
+                                        {isUserWinner ? (
+                                            <div className="relative overflow-hidden rounded-2xl border-2 border-amber-500/40 bg-gradient-to-b from-amber-500/20 via-amber-500/10 to-transparent p-6 text-center shadow-lg shadow-amber-500/10">
+                                                <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-amber-500/20 text-amber-500 ring-8 ring-amber-500/10">
+                                                    <Trophy className="size-8 text-amber-400" />
+                                                </div>
+                                                <div className="mt-4 space-y-1">
+                                                    <Badge className="bg-amber-500 px-2.5 py-0.5 text-xs font-bold text-black hover:bg-amber-500">
+                                                        OFFICIAL WINNER
+                                                    </Badge>
+                                                    <h3 className="text-foreground pt-2 text-xl font-extrabold tracking-tight">
+                                                        You Won This Raffle! 🎉
+                                                    </h3>
+                                                    <p className="text-muted-foreground mx-auto max-w-xs text-xs leading-relaxed">
+                                                        Your ticket was randomly
+                                                        selected as the winning
+                                                        entry in this draw.
+                                                    </p>
+                                                </div>
+
+                                                <div className="bg-background/80 mt-4 rounded-xl border border-amber-500/30 p-3.5 backdrop-blur-xs">
+                                                    <span className="text-muted-foreground block text-[11px] font-medium">
+                                                        Winning Ticket Code
+                                                    </span>
+                                                    <span className="font-mono text-lg font-bold tracking-wider text-amber-500">
+                                                        {
+                                                            lottery.winning_ticket_code
+                                                        }
+                                                    </span>
+                                                </div>
+
+                                                <Button
+                                                    asChild
+                                                    className="mt-4 w-full bg-amber-500 font-bold text-black hover:bg-amber-400"
+                                                >
+                                                    <Link href={ticketsRoute()}>
+                                                        View in My Tickets
+                                                    </Link>
+                                                </Button>
+                                            </div>
+                                        ) : userTickets.length > 0 ? (
+                                            <div className="bg-muted/40 space-y-4 rounded-xl border p-5 text-center">
+                                                <div className="bg-muted text-muted-foreground mx-auto flex size-10 items-center justify-center rounded-full">
+                                                    <TicketIcon className="size-5" />
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <h4 className="text-sm font-semibold">
+                                                        Draw Completed
+                                                    </h4>
+                                                    <p className="text-muted-foreground text-xs">
+                                                        The drawing for this
+                                                        raffle has concluded.
+                                                        Your tickets were
+                                                        entered, but another
+                                                        ticket was selected as
+                                                        the winner.
+                                                    </p>
+                                                </div>
+
+                                                <div className="bg-background space-y-1 rounded-lg border p-3 text-left text-xs">
+                                                    <div className="text-muted-foreground flex justify-between">
+                                                        <span>
+                                                            Winning Ticket:
+                                                        </span>
+                                                        <span className="text-foreground font-mono font-semibold">
+                                                            {
+                                                                lottery.winning_ticket_code
+                                                            }
+                                                        </span>
+                                                    </div>
+                                                    <div className="text-muted-foreground flex justify-between">
+                                                        <span>Winner:</span>
+                                                        <span className="text-foreground font-medium">
+                                                            {lottery.winner_name ??
+                                                                'Player'}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <Button
+                                                    variant="outline"
+                                                    size="sm"
+                                                    asChild
+                                                    className="w-full"
+                                                >
+                                                    <Link href={lotteries()}>
+                                                        Browse Live Raffles
+                                                    </Link>
+                                                </Button>
+                                            </div>
+                                        ) : (
+                                            <div className="bg-muted/30 space-y-4 rounded-xl border p-5 text-center">
+                                                <div className="bg-muted text-muted-foreground mx-auto flex size-10 items-center justify-center rounded-full">
+                                                    <CheckCircle2 className="size-5 text-emerald-500" />
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <h4 className="text-sm font-semibold">
+                                                        Raffle Concluded
+                                                    </h4>
+                                                    <p className="text-muted-foreground text-xs">
+                                                        This raffle was drawn on{' '}
+                                                        {
+                                                            lottery.draw_at_formatted
+                                                        }
+                                                        .
+                                                    </p>
+                                                </div>
+
+                                                <div className="bg-background space-y-1.5 rounded-lg border p-3 text-left text-xs">
+                                                    <div className="text-muted-foreground flex justify-between">
+                                                        <span>
+                                                            Winning Ticket:
+                                                        </span>
+                                                        <span className="font-mono font-bold text-amber-500">
+                                                            {
+                                                                lottery.winning_ticket_code
+                                                            }
+                                                        </span>
+                                                    </div>
+                                                    <div className="text-muted-foreground flex justify-between">
+                                                        <span>
+                                                            Total Participants:
+                                                        </span>
+                                                        <span className="text-foreground font-medium">
+                                                            {
+                                                                lottery.participant_count
+                                                            }
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <Button
+                                                    variant="outline"
+                                                    size="sm"
+                                                    asChild
+                                                    className="w-full"
+                                                >
+                                                    <Link href={lotteries()}>
+                                                        Browse Other Raffles
+                                                    </Link>
+                                                </Button>
+                                            </div>
+                                        )}
                                     </div>
                                 ) : (
                                     <div className="bg-muted/50 space-y-3 rounded-xl border p-6 text-center">
