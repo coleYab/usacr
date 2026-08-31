@@ -1,16 +1,21 @@
-import AppLayoutTemplate from '@/layouts/app/app-sidebar-layout';
+import AppTopnavLayout from '@/layouts/app/app-topnav-layout';
 import type { BreadcrumbItem } from '@/types';
 
 export default function AppLayout({
     breadcrumbs = [],
     children,
+    walletBalance,
 }: {
     breadcrumbs?: BreadcrumbItem[];
     children: React.ReactNode;
+    walletBalance?: string;
 }) {
     return (
-        <AppLayoutTemplate breadcrumbs={breadcrumbs}>
+        <AppTopnavLayout
+            breadcrumbs={breadcrumbs}
+            walletBalance={walletBalance}
+        >
             {children}
-        </AppLayoutTemplate>
+        </AppTopnavLayout>
     );
 }

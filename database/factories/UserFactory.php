@@ -29,11 +29,43 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
+            'role' => User::ROLE_USER,
+            'status' => User::STATUS_ACTIVE,
             'remember_token' => Str::random(10),
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
             'two_factor_confirmed_at' => null,
         ];
+    }
+
+    /**
+     * Indicate that the user is an administrator.
+     */
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => User::ROLE_ADMIN,
+        ]);
+    }
+
+    /**
+     * Indicate that the user account is suspended.
+     */
+    public function suspended(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => User::STATUS_SUSPENDED,
+        ]);
+    }
+
+    /**
+     * Indicate that the user account is banned.
+     */
+    public function banned(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => User::STATUS_BANNED,
+        ]);
     }
 
     /**

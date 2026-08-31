@@ -20,6 +20,8 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property string $email
  * @property Carbon|null $email_verified_at
  * @property string $password
+ * @property string $role
+ * @property string $status
  * @property string|null $two_factor_secret
  * @property string|null $two_factor_recovery_codes
  * @property Carbon|null $two_factor_confirmed_at
@@ -27,10 +29,20 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'role', 'status'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 class User extends Authenticatable implements PasskeyUser
 {
+    public const ROLE_USER = 'user';
+
+    public const ROLE_ADMIN = 'admin';
+
+    public const STATUS_ACTIVE = 'active';
+
+    public const STATUS_SUSPENDED = 'suspended';
+
+    public const STATUS_BANNED = 'banned';
+
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, PasskeyAuthenticatable, TwoFactorAuthenticatable;
 
@@ -46,5 +58,21 @@ class User extends Authenticatable implements PasskeyUser
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Determine whether the user has the admin role.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    /**
+     * Determine whether the user account is active.
+     */
+    public function isActive(): bool
+    {
+        return $this->status === self::STATUS_ACTIVE;
     }
 }

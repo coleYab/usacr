@@ -7,10 +7,17 @@ test('guests are redirected to the login page', function () {
     $response->assertRedirect(route('login'));
 });
 
-test('authenticated users can visit the dashboard', function () {
+test('authenticated users are redirected from the legacy dashboard route', function () {
     $user = User::factory()->create();
     $this->actingAs($user);
 
-    $response = $this->get(route('dashboard'));
+    $this->get(route('dashboard'))->assertRedirect(route('app.dashboard'));
+});
+
+test('authenticated users can visit the app dashboard', function () {
+    $user = User::factory()->create();
+    $this->actingAs($user);
+
+    $response = $this->get(route('app.dashboard'));
     $response->assertOk();
 });
