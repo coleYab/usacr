@@ -1,3 +1,40 @@
+# Project Overview
+
+This repository builds **Item Lottery** — a platform where users deposit funds into a
+wallet and spend that balance buying tickets in item-based lotteries (raffles).
+
+- **Stack:** Laravel 13 · Inertia.js (React + TypeScript) · shadcn/ui · Tailwind CSS.
+- **Status:** the foundation and design system are in place; the product is being
+  shipped in 5 phased prompts in `docs/phases/` (see the index there for the plan).
+
+## Architectural invariants (keep consistent across every session)
+
+- **Wallet ledger is immutable.** Balance changes never happen without a matching
+  `wallet_transactions` row. Use `WalletService::credit()` / `debit()` — both wrap the
+  wallet row with `lockForUpdate` inside a DB transaction and throw
+  `InsufficientFundsException` on an overdraft. Never mutate `wallets.balance` directly.
+- **Atomic ticket purchase.** Lock the lottery row, verify remaining capacity, lock the
+  wallet, debit it, generate ticket rows, and increment `tickets_sold` all in one
+  transaction — all succeed or all roll back.
+- **Shared draw engine.** Draw logic lives in a single `DrawService` used by both the
+  scheduled `lotteries:process-draws` command and the admin manual trigger — never dup it.
+- **Audit every admin action.** Approve/reject, create/cancel, suspend/ban, and manual
+  wallet adjustments all log to `admin_actions` (immutable — no update/delete UI/routes).
+- **Don't redefine the design system.** Use the existing theme tokens (colors, fonts,
+  radius, shadows). Do not hardcode new colors or swap the font stack.
+- **Use the existing `route()` / route-generation helper** for every link and Inertia
+  visit — never hand-write URL strings, and don't install a second routing helper.
+- **Reuse shared primitives** (`AppLayout`, `AdminLayout`, `StatCard`, `EmptyState`,
+  `PageHeader`, `DataTable`) and keep the same visual language across all pages.
+
+## Workflow (mandatory)
+
+- **Always run `composer ci:check` after completing a task** to verify formatting, lint,
+  type checking, and tests all pass before finishing.
+- **Automatically commit and push to GitHub after each finished prompt/task** — do not
+  wait to be asked. Commit only the intended files, write a concise commit message in the
+  repo's style, and push to `origin/main`.
+
 <laravel-boost-guidelines>
 === foundation rules ===
 
