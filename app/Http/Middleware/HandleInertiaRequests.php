@@ -35,13 +35,38 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $user = $request->user();
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user,
+            ],
+            'walletBalance' => $user?->wallet ? money($user->wallet->balance) : money(0),
+            'flash' => [
+                'toast' => $this->buildToast($request),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
+    }
+
+    /**
+     * Map a one-time flash message into a sonner toast payload.
+     *
+     * @return array{type: string, message: string}|null
+     */
+    private function buildToast(Request $request): ?array
+    {
+        foreach (['success', 'error', 'warning', 'info'] as $type) {
+            if ($request->session()->get($type)) {
+                return [
+                    'type' => $type,
+                    'message' => $request->session()->get($type),
+                ];
+            }
+        }
+
+        return null;
     }
 }

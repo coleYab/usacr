@@ -7,6 +7,8 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -74,5 +76,45 @@ class User extends Authenticatable implements PasskeyUser
     public function isActive(): bool
     {
         return $this->status === self::STATUS_ACTIVE;
+    }
+
+    /**
+     * The user's wallet, automatically created at registration.
+     *
+     * @return HasOne<Wallet, $this>
+     */
+    public function wallet(): HasOne
+    {
+        return $this->hasOne(Wallet::class);
+    }
+
+    /**
+     * Deposits submitted by the user.
+     *
+     * @return HasMany<Deposit, $this>
+     */
+    public function deposits(): HasMany
+    {
+        return $this->hasMany(Deposit::class);
+    }
+
+    /**
+     * Deposits this admin has reviewed.
+     *
+     * @return HasMany<Deposit, $this>
+     */
+    public function reviewedDeposits(): HasMany
+    {
+        return $this->hasMany(Deposit::class, 'reviewed_by');
+    }
+
+    /**
+     * Audit actions performed by this admin.
+     *
+     * @return HasMany<AdminAction, $this>
+     */
+    public function adminActions(): HasMany
+    {
+        return $this->hasMany(AdminAction::class, 'admin_id');
     }
 }

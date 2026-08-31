@@ -12,6 +12,7 @@ declare module '@inertiajs/core' {
             name: string;
             auth: Auth;
             sidebarOpen: boolean;
+            walletBalance?: string;
             [key: string]: unknown;
         };
     }

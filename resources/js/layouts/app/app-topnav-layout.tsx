@@ -39,9 +39,12 @@ const mainNavItems: NavItem[] = [
 export default function AppTopnavLayout({
     children,
     breadcrumbs = [],
-    walletBalance = '$0.00',
+    walletBalance,
 }: Props) {
-    const { auth } = usePage().props;
+    const page = usePage();
+    const { auth } = page.props;
+    const sharedWalletBalance = page.props.walletBalance as string | undefined;
+    const effectiveBalance = walletBalance ?? sharedWalletBalance ?? '$0.00';
     const getInitials = useInitials();
     const { whenCurrentUrl } = useCurrentUrl();
 
@@ -134,7 +137,7 @@ export default function AppTopnavLayout({
                                 <Wallet className="size-3.5" />
                             </div>
                             <span className="font-mono text-sm font-semibold tabular-nums">
-                                {walletBalance}
+                                {effectiveBalance}
                             </span>
                         </div>
                         <ThemeToggle />
