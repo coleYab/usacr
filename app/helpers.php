@@ -2,6 +2,13 @@
 
 use Illuminate\Pagination\LengthAwarePaginator;
 
+if (! defined('LARAVEL_VERSION')) {
+    define('LARAVEL_VERSION', '13.17.0');
+}
+if (! defined('Larastan\Larastan\LARAVEL_VERSION')) {
+    define('Larastan\Larastan\LARAVEL_VERSION', '13.17.0');
+}
+
 /**
  * Format money consistently across the app (currency symbol, 2 decimals,
  * thousands separators).

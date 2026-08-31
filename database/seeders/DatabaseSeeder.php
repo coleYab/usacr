@@ -17,9 +17,16 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        User::firstOrCreate(
+            ['email' => 'yabume13@gmail.com'],
+            [
+                'name' => 'Yabu Admin',
+                'password' => bcrypt('password'),
+                'role' => User::ROLE_ADMIN,
+                'status' => User::STATUS_ACTIVE,
+            ]
+        );
+
+        $this->call(LotterySeeder::class);
     }
 }
