@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\AuditController as AdminAuditController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\DepositController as AdminDepositController;
 use App\Http\Controllers\Admin\DrawController as AdminDrawController;
 use App\Http\Controllers\Admin\LotteryController as AdminLotteryController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LotteryController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ResultController;
@@ -17,7 +21,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('dashboard', '/app/dashboard')->name('dashboard');
 
     Route::prefix('app')->name('app.')->group(function () {
-        Route::inertia('dashboard', 'app/dashboard')->name('dashboard');
+        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::get('lotteries', [LotteryController::class, 'index'])->name('lotteries');
         Route::get('lotteries/{lottery}', [LotteryController::class, 'show'])->name('lotteries.show');
@@ -37,7 +41,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::redirect('/', '/admin/dashboard');
 
-    Route::inertia('dashboard', 'admin/dashboard')->name('dashboard');
+    Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('deposits', [AdminDepositController::class, 'index'])->name('deposits');
     Route::post('deposits/{deposit}/approve', [AdminDepositController::class, 'approve'])->name('deposits.approve');
     Route::post('deposits/{deposit}/reject', [AdminDepositController::class, 'reject'])->name('deposits.reject');
@@ -51,8 +55,12 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::get('draws', [AdminDrawController::class, 'index'])->name('draws');
     Route::post('draws/run', [AdminDrawController::class, 'run'])->name('draws.run');
 
-    Route::inertia('users', 'admin/users')->name('users');
-    Route::inertia('audit', 'admin/audit')->name('audit');
+    Route::get('users', [AdminUserController::class, 'index'])->name('users');
+    Route::get('users/{user}', [AdminUserController::class, 'show'])->name('users.show');
+    Route::post('users/{user}/status', [AdminUserController::class, 'updateStatus'])->name('users.status');
+    Route::post('users/{user}/adjust-wallet', [AdminUserController::class, 'adjustWallet'])->name('users.adjust-wallet');
+
+    Route::get('audit', [AdminAuditController::class, 'index'])->name('audit');
 });
 
 require __DIR__.'/settings.php';

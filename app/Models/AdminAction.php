@@ -27,6 +27,20 @@ class AdminAction extends Model
     use HasFactory;
 
     /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::updating(function () {
+            throw new \LogicException('AdminAction records are immutable and cannot be updated.');
+        });
+
+        static::deleting(function () {
+            throw new \LogicException('AdminAction records are immutable and cannot be deleted.');
+        });
+    }
+
+    /**
      * The admin who performed the action.
      *
      * @return BelongsTo<User, $this>

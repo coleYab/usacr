@@ -4,6 +4,7 @@ includes:
 
 parameters:
     bootstrapFiles:
+        - vendor/larastan/larastan/bootstrap.php
         - bootstrap/phpstan.php
     paths:
         - app/

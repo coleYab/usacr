@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureUserIsActive;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\HandleAppearance;
 use App\Http\Middleware\HandleInertiaRequests;
@@ -8,6 +9,10 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Http\Request;
+
+if (! defined('LARAVEL_VERSION')) {
+    define('LARAVEL_VERSION', Application::VERSION);
+}
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -20,9 +25,11 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'admin' => EnsureUserIsAdmin::class,
+            'active' => EnsureUserIsActive::class,
         ]);
 
         $middleware->web(append: [
+            EnsureUserIsActive::class,
             HandleAppearance::class,
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
