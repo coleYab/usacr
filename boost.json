@@ -1,11 +1,5 @@
 {
-    "agents": [
-        "claude_code",
-        "codex",
-        "grok_build",
-        "opencode",
-        "pi"
-    ],
+    "agents": ["claude_code", "codex", "grok_build", "opencode", "pi"],
     "cloud": false,
     "guidelines": true,
     "mcp": true,
