@@ -2,7 +2,6 @@ import { useForm } from '@inertiajs/react';
 import {
     ArrowLeft,
     ArrowRight,
-    Building2,
     Check,
     Copy,
     FileText,
@@ -32,61 +31,12 @@ import { store } from '@/routes/app/wallet/deposits';
 const ACCEPTED = '.jpg,.jpeg,.png,.pdf';
 const MAX_SIZE_MB = 5;
 
-type PaymentMethod = {
-    id: string;
-    name: string;
-    type: 'telebirr' | 'cbe' | 'cbe_birr' | 'boa';
-    accountNumber: string;
-    accountName: string;
-    description: string;
-    badge?: string;
-    isRecommended?: boolean;
-    icon: typeof Smartphone;
+const TELEBIRR_DETAILS = {
+    name: 'ቴሌብር (Telebirr)',
+    phoneNumber: '0978665676',
+    accountName: 'yirgalem',
+    badge: 'ፈጣን ክፍያ',
 };
-
-const PAYMENT_METHODS: PaymentMethod[] = [
-    {
-        id: 'telebirr',
-        name: 'ቴሌብር (Telebirr)',
-        type: 'telebirr',
-        accountNumber: '0978665676',
-        accountName: 'yirgalem',
-        description: 'በቴሌብር ስልክ ቁጥር በቀጥታ ገንዘቡን ይላኩ',
-        badge: 'ፈጣን ክፍያ',
-        isRecommended: true,
-        icon: Smartphone,
-    },
-    {
-        id: 'cbe',
-        name: 'የኢትዮጵያ ንግድ ባንክ (CBE)',
-        type: 'cbe',
-        accountNumber: '1000458923412',
-        accountName: 'yirgalem',
-        description: 'በ CBE ሞባይል ባንኪንግ ወይም በቅርንጫፍ በቀጥታ ያስተላልፉ',
-        badge: 'ባንክ',
-        icon: Building2,
-    },
-    {
-        id: 'cbe_birr',
-        name: 'ሲቢኢ ብር (CBEBirr)',
-        type: 'cbe_birr',
-        accountNumber: '0978665676',
-        accountName: 'yirgalem',
-        description: 'በሲቢኢ ብር መተግበሪያ ወይም በ *847# ይላኩ',
-        badge: 'ፈጣን ክፍያ',
-        icon: Smartphone,
-    },
-    {
-        id: 'boa',
-        name: 'አቢሲኒያ ባንክ (Bank of Abyssinia)',
-        type: 'boa',
-        accountNumber: '89234156',
-        accountName: 'yirgalem',
-        description: 'በ BoA ሞባይል ባንኪንግ በቀጥታ ያስተላልፉ',
-        badge: 'ባንክ',
-        icon: Building2,
-    },
-];
 
 type RequestDepositDialogProps = {
     open: boolean;
@@ -98,17 +48,11 @@ export function RequestDepositDialog({
     onOpenChange,
 }: RequestDepositDialogProps) {
     const [step, setStep] = useState<1 | 2>(1);
-    const [selectedMethodId, setSelectedMethodId] =
-        useState<string>('telebirr');
-    const [copiedField, setCopiedField] = useState<'account' | 'name' | null>(
+    const [copiedField, setCopiedField] = useState<'phone' | 'name' | null>(
         null,
     );
     const [dragActive, setDragActive] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
-
-    const selectedMethod =
-        PAYMENT_METHODS.find((m) => m.id === selectedMethodId) ??
-        PAYMENT_METHODS[0];
 
     const form = useForm<{
         amount: string;
@@ -121,7 +65,6 @@ export function RequestDepositDialog({
     const reset = () => {
         form.reset();
         setStep(1);
-        setSelectedMethodId('telebirr');
         setCopiedField(null);
         setDragActive(false);
     };
@@ -135,7 +78,7 @@ export function RequestDepositDialog({
         }
     };
 
-    const copyToClipboard = (text: string, field: 'account' | 'name') => {
+    const copyToClipboard = (text: string, field: 'phone' | 'name') => {
         if (typeof navigator !== 'undefined' && navigator.clipboard) {
             void navigator.clipboard.writeText(text);
             setCopiedField(field);
@@ -175,7 +118,7 @@ export function RequestDepositDialog({
 
     return (
         <Dialog open={open} onOpenChange={handleClose}>
-            <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-xl">
+            <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
                 {/* Stepper Header */}
                 <div className="mb-1 flex items-center justify-between border-b pb-3">
                     <div className="flex items-center gap-2">
@@ -197,7 +140,7 @@ export function RequestDepositDialog({
                                     : 'text-muted-foreground',
                             )}
                         >
-                            የክፍያ ዘዴ
+                            የቴሌብር መረጃ
                         </span>
                     </div>
 
@@ -222,7 +165,7 @@ export function RequestDepositDialog({
                                     : 'text-muted-foreground',
                             )}
                         >
-                            የገንዘብ መጠን እና ደረሰኝ
+                            መጠን እና ደረሰኝ
                         </span>
                     </div>
                 </div>
@@ -231,114 +174,45 @@ export function RequestDepositDialog({
                     <div className="space-y-4">
                         <DialogHeader>
                             <DialogTitle className="text-xl">
-                                የክፍያ ዘዴ ይምረጡ
+                                የተቀማጭ ገንዘብ ክፍያ መረጃ
                             </DialogTitle>
                             <DialogDescription>
-                                ክፍያ የሚፈጽሙበትን የክፍያ መንገድ ይምረጡ፤ ከዚያም የተሰጠውን የሂሳብ
-                                መረጃ በመጠቀም ክፍያዎን ያጠናቅቁ።
+                                በቴሌብር (Telebirr) በኩል ክፍያ ለመፈጸም ከታች የተሰጠውን የሂሳብ
+                                መረጃ ይጠቀሙ።
                             </DialogDescription>
                         </DialogHeader>
 
-                        {/* List of Payment Methods */}
-                        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-                            {PAYMENT_METHODS.map((method) => {
-                                const IconComponent = method.icon;
-                                const isSelected =
-                                    selectedMethodId === method.id;
-
-                                return (
-                                    <button
-                                        key={method.id}
-                                        type="button"
-                                        onClick={() =>
-                                            setSelectedMethodId(method.id)
-                                        }
-                                        className={cn(
-                                            'relative flex flex-col items-start gap-2 rounded-xl border p-3.5 text-left transition-all',
-                                            isSelected
-                                                ? 'border-primary bg-primary/5 ring-primary/20 shadow-xs ring-2'
-                                                : 'border-border bg-card hover:border-foreground/30 hover:bg-muted/30',
-                                        )}
-                                    >
-                                        <div className="flex w-full items-center justify-between">
-                                            <div className="flex items-center gap-2.5">
-                                                <div
-                                                    className={cn(
-                                                        'flex size-8 items-center justify-center rounded-lg',
-                                                        isSelected
-                                                            ? 'bg-primary text-primary-foreground'
-                                                            : 'bg-muted text-foreground',
-                                                    )}
-                                                >
-                                                    <IconComponent className="size-4" />
-                                                </div>
-                                                <span className="text-sm font-semibold">
-                                                    {method.name}
-                                                </span>
-                                            </div>
-                                            {isSelected && (
-                                                <div className="bg-primary text-primary-foreground flex size-5 items-center justify-center rounded-full">
-                                                    <Check className="size-3 stroke-[3]" />
-                                                </div>
-                                            )}
-                                        </div>
-
-                                        <p className="text-muted-foreground text-xs leading-relaxed">
-                                            {method.description}
+                        {/* Telebirr Method Card & Details */}
+                        <div className="border-primary/30 bg-primary/5 space-y-4 rounded-xl border p-4">
+                            <div className="border-primary/10 flex items-center justify-between border-b pb-3">
+                                <div className="flex items-center gap-2.5">
+                                    <div className="bg-primary text-primary-foreground flex size-9 items-center justify-center rounded-lg shadow-xs">
+                                        <Smartphone className="size-5" />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-sm font-bold">
+                                            {TELEBIRR_DETAILS.name}
+                                        </h4>
+                                        <p className="text-muted-foreground text-xs">
+                                            በቴሌብር ስልክ ቁጥር በቀጥታ ይላኩ
                                         </p>
-
-                                        {method.badge && (
-                                            <div className="mt-0.5 flex items-center gap-1">
-                                                <Badge
-                                                    variant="secondary"
-                                                    className={cn(
-                                                        'h-4.5 px-1.5 py-0 text-[10px]',
-                                                        method.isRecommended &&
-                                                            'border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
-                                                    )}
-                                                >
-                                                    {method.isRecommended && (
-                                                        <Sparkles className="mr-1 size-2.5" />
-                                                    )}
-                                                    {method.badge}
-                                                </Badge>
-                                            </div>
-                                        )}
-                                    </button>
-                                );
-                            })}
-                        </div>
-
-                        {/* Payment Details Box */}
-                        <div className="border-primary/20 bg-primary/5 space-y-3 rounded-xl border p-4">
-                            <div className="border-primary/10 flex items-center justify-between border-b pb-2.5">
-                                <div className="flex items-center gap-2">
-                                    <selectedMethod.icon className="text-primary size-5" />
-                                    <h4 className="text-sm font-bold">
-                                        የ {selectedMethod.name} የክፍያ መረጃ
-                                    </h4>
+                                    </div>
                                 </div>
-                                <Badge
-                                    variant="outline"
-                                    className="border-primary/30 text-primary text-xs"
-                                >
-                                    የተመረጠ
+                                <Badge className="border-emerald-500/20 bg-emerald-500/10 text-[10px] text-emerald-600 dark:text-emerald-400">
+                                    <Sparkles className="mr-1 size-2.5" />
+                                    {TELEBIRR_DETAILS.badge}
                                 </Badge>
                             </div>
 
                             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                                {/* Account / Phone Number */}
-                                <div className="bg-background/80 flex items-center justify-between rounded-lg border p-2.5">
+                                {/* Phone Number */}
+                                <div className="bg-background/90 flex items-center justify-between rounded-lg border p-3 shadow-2xs">
                                     <div className="space-y-0.5">
-                                        <p className="text-muted-foreground text-[11px]">
-                                            {selectedMethod.type ===
-                                                'telebirr' ||
-                                            selectedMethod.type === 'cbe_birr'
-                                                ? 'የስልክ ቁጥር'
-                                                : 'የሂሳብ ቁጥር'}
+                                        <p className="text-muted-foreground text-[11px] font-medium">
+                                            የቴሌብር ስልክ ቁጥር
                                         </p>
                                         <p className="font-mono text-base font-bold tracking-wider">
-                                            {selectedMethod.accountNumber}
+                                            {TELEBIRR_DETAILS.phoneNumber}
                                         </p>
                                     </div>
                                     <Button
@@ -348,12 +222,12 @@ export function RequestDepositDialog({
                                         className="h-8 gap-1 text-xs"
                                         onClick={() =>
                                             copyToClipboard(
-                                                selectedMethod.accountNumber,
-                                                'account',
+                                                TELEBIRR_DETAILS.phoneNumber,
+                                                'phone',
                                             )
                                         }
                                     >
-                                        {copiedField === 'account' ? (
+                                        {copiedField === 'phone' ? (
                                             <>
                                                 <Check className="size-3.5 text-emerald-500" />
                                                 ተቀድቷል!
@@ -368,13 +242,13 @@ export function RequestDepositDialog({
                                 </div>
 
                                 {/* Account Holder Name */}
-                                <div className="bg-background/80 flex items-center justify-between rounded-lg border p-2.5">
+                                <div className="bg-background/90 flex items-center justify-between rounded-lg border p-3 shadow-2xs">
                                     <div className="space-y-0.5">
-                                        <p className="text-muted-foreground text-[11px]">
+                                        <p className="text-muted-foreground text-[11px] font-medium">
                                             የመለያው ባለቤት ስም
                                         </p>
                                         <p className="font-mono text-base font-bold">
-                                            {selectedMethod.accountName}
+                                            {TELEBIRR_DETAILS.accountName}
                                         </p>
                                     </div>
                                     <Button
@@ -384,7 +258,7 @@ export function RequestDepositDialog({
                                         className="h-8 gap-1 text-xs"
                                         onClick={() =>
                                             copyToClipboard(
-                                                selectedMethod.accountName,
+                                                TELEBIRR_DETAILS.accountName,
                                                 'name',
                                             )
                                         }
@@ -404,15 +278,30 @@ export function RequestDepositDialog({
                                 </div>
                             </div>
 
-                            <div className="text-muted-foreground flex items-start gap-2 pt-1 text-xs">
-                                <Info className="text-primary mt-0.5 size-4 shrink-0" />
-                                <p>
-                                    ገንዘቡን ወደተጠቀሰው መረጃ ከላኩ በኋላ{' '}
-                                    <strong className="text-foreground">
-                                        የክፍያውን ማረጋገጫ ደረሰኝ (ስክሪንሾት)
-                                    </strong>{' '}
-                                    በማስቀመጥ "ቀጥል" የሚለውን ይጫኑ።
-                                </p>
+                            {/* Instructions Box */}
+                            <div className="bg-background/60 border-primary/10 text-muted-foreground space-y-2 rounded-lg border p-3 text-xs">
+                                <div className="text-foreground flex items-center gap-1.5 font-semibold">
+                                    <Info className="text-primary size-4 shrink-0" />
+                                    <span>የክፍያ ቅደም ተከተል፦</span>
+                                </div>
+                                <ol className="list-decimal space-y-1 pl-5">
+                                    <li>የቴሌብር መተግበሪያዎን ወይም *127# ይክፈቱ።</li>
+                                    <li>
+                                        ወደ ስልክ ቁጥር{' '}
+                                        <strong className="text-foreground font-mono">
+                                            {TELEBIRR_DETAILS.phoneNumber}
+                                        </strong>{' '}
+                                        (ስም፦{' '}
+                                        <strong className="text-foreground font-mono">
+                                            {TELEBIRR_DETAILS.accountName}
+                                        </strong>
+                                        ) ማስገባት የሚፈልጉትን የገንዘብ መጠን ይላኩ።
+                                    </li>
+                                    <li>
+                                        ክፍያው ሲጠናቀቅ የክፍያውን ማረጋገጫ ደረሰኝ (ስክሪንሾት)
+                                        ያስቀምጡ።
+                                    </li>
+                                </ol>
                             </div>
                         </div>
 
@@ -443,8 +332,8 @@ export function RequestDepositDialog({
                                 ያስገቡት የገንዘብ መጠን እና ደረሰኝ
                             </DialogTitle>
                             <DialogDescription>
-                                ያስተላለፉትን ትክክለኛ የገንዘብ መጠን ይጻፉ እና የክፍያውን ደረሰኝ
-                                (ስክሪንሾት) እዚህ ይስቀሉ።
+                                በቴሌብር ያስተላለፉትን ትክክለኛ የገንዘብ መጠን ይጻፉ እና የክፍያውን
+                                ደረሰኝ (ስክሪንሾት) እዚህ ይስቀሉ።
                             </DialogDescription>
                         </DialogHeader>
 
@@ -452,15 +341,15 @@ export function RequestDepositDialog({
                         <div className="bg-muted/60 flex items-center justify-between rounded-xl border p-3">
                             <div className="flex items-center gap-2.5">
                                 <div className="bg-primary/10 text-primary flex size-8 items-center justify-center rounded-lg">
-                                    <selectedMethod.icon className="size-4" />
+                                    <Smartphone className="size-4" />
                                 </div>
                                 <div className="space-y-0.5">
                                     <p className="text-xs font-semibold">
-                                        {selectedMethod.name}
+                                        {TELEBIRR_DETAILS.name}
                                     </p>
                                     <p className="text-muted-foreground font-mono text-xs">
-                                        {selectedMethod.accountNumber} (
-                                        {selectedMethod.accountName})
+                                        {TELEBIRR_DETAILS.phoneNumber} (
+                                        {TELEBIRR_DETAILS.accountName})
                                     </p>
                                 </div>
                             </div>
@@ -471,7 +360,7 @@ export function RequestDepositDialog({
                                 className="text-primary hover:text-primary h-7 text-xs"
                                 onClick={() => setStep(1)}
                             >
-                                ዘዴ ቀይር
+                                መረጃ ይመልከቱ
                             </Button>
                         </div>
 
