@@ -14,11 +14,14 @@ class NotificationSeeder extends Seeder
      */
     public function run(): void
     {
+        $yabuUser = User::where('email', 'yabume123@gmail.com')->first();
         $testUser = User::where('email', 'user@itemlottery.com')->first();
         $admin = User::where('email', 'yabume13@gmail.com')->first();
 
-        if ($testUser) {
-            DB::table('notifications')->where('notifiable_id', $testUser->id)->delete();
+        $targetUsers = array_filter([$yabuUser, $testUser]);
+
+        foreach ($targetUsers as $user) {
+            DB::table('notifications')->where('notifiable_id', $user->id)->delete();
 
             $notifications = [
                 // Unread Winner notification
@@ -26,14 +29,14 @@ class NotificationSeeder extends Seeder
                     'id' => (string) Str::uuid(),
                     'type' => 'App\Notifications\LotteryDrawResultNotification',
                     'notifiable_type' => User::class,
-                    'notifiable_id' => $testUser->id,
+                    'notifiable_id' => $user->id,
                     'data' => json_encode([
                         'type' => 'lottery.draw_result',
                         'lottery_id' => 16,
                         'lottery_title' => 'Rolex Cosmograph Daytona 40mm (18ct White Gold & Oysterflex Bracelet)',
                         'is_winner' => true,
                         'winning_ticket_code' => 'WIN-DAYTONA7',
-                        'message' => "🎉 You won the 'Rolex Cosmograph Daytona 40mm' raffle!",
+                        'message' => "🎉 የ'Rolex Cosmograph Daytona 40mm' ዕጣ አሸንፈዋል!",
                         'url' => '/app/lotteries/16',
                         'icon' => 'trophy',
                     ]),
@@ -46,13 +49,13 @@ class NotificationSeeder extends Seeder
                     'id' => (string) Str::uuid(),
                     'type' => 'App\Notifications\DepositStatusNotification',
                     'notifiable_type' => User::class,
-                    'notifiable_id' => $testUser->id,
+                    'notifiable_id' => $user->id,
                     'data' => json_encode([
                         'type' => 'deposit.status',
-                        'deposit_id' => 4,
+                        'deposit_id' => 2,
                         'status' => 'approved',
-                        'amount' => '250.00',
-                        'message' => 'Your deposit of $250.00 was Approved.',
+                        'amount' => '750.00',
+                        'message' => 'የ $750.00 ተቀማጭ ገንዘብዎ የፀደቀ ሆኗል።',
                         'url' => '/app/wallet',
                         'icon' => 'wallet',
                     ]),
@@ -65,14 +68,14 @@ class NotificationSeeder extends Seeder
                     'id' => (string) Str::uuid(),
                     'type' => 'App\Notifications\LotteryDrawResultNotification',
                     'notifiable_type' => User::class,
-                    'notifiable_id' => $testUser->id,
+                    'notifiable_id' => $user->id,
                     'data' => json_encode([
                         'type' => 'lottery.draw_result',
                         'lottery_id' => 17,
                         'lottery_title' => 'Apple Vision Pro 1TB Spatial Computer & Dual Loop Band Set',
                         'is_winner' => true,
                         'winning_ticket_code' => 'WIN-VISPRO1',
-                        'message' => "🎉 You won the 'Apple Vision Pro 1TB Spatial Computer' raffle!",
+                        'message' => "🎉 የ'Apple Vision Pro 1TB Spatial Computer' ዕጣ አሸንፈዋል!",
                         'url' => '/app/lotteries/17',
                         'icon' => 'trophy',
                     ]),
@@ -85,13 +88,13 @@ class NotificationSeeder extends Seeder
                     'id' => (string) Str::uuid(),
                     'type' => 'App\Notifications\DepositStatusNotification',
                     'notifiable_type' => User::class,
-                    'notifiable_id' => $testUser->id,
+                    'notifiable_id' => $user->id,
                     'data' => json_encode([
                         'type' => 'deposit.status',
                         'deposit_id' => 3,
                         'status' => 'rejected',
-                        'amount' => '50.00',
-                        'message' => 'Your deposit of $50.00 was Rejected. Reason: Deposit receipt illegible / blurred reference ID.',
+                        'amount' => '100.00',
+                        'message' => 'የ $100.00 ተቀማጭ ገንዘብዎ ውድቅ የተደረገ ሆኗል። ምክንያት፦ የባንክ ደረሰኝ ስም አልተዛመደም።',
                         'url' => '/app/wallet',
                         'icon' => 'wallet',
                     ]),

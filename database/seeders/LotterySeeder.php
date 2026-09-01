@@ -21,10 +21,11 @@ class LotterySeeder extends Seeder
         $admin = User::where('email', 'yabume13@gmail.com')->first()
             ?? User::where('role', User::ROLE_ADMIN)->first();
 
+        $yabuUser = User::where('email', 'yabume123@gmail.com')->first();
         $testUser = User::where('email', 'user@itemlottery.com')->first();
 
         $communityUsers = User::where('role', User::ROLE_USER)
-            ->whereNotIn('email', ['user@itemlottery.com', 'demo@itemlottery.com', 'suspended@itemlottery.com', 'banned@itemlottery.com'])
+            ->whereNotIn('email', ['yabume123@gmail.com', 'user@itemlottery.com', 'demo@itemlottery.com', 'suspended@itemlottery.com', 'banned@itemlottery.com'])
             ->get();
 
         if ($communityUsers->isEmpty()) {
@@ -263,8 +264,8 @@ class LotterySeeder extends Seeder
             $ticketRows = [];
             $assignedToUser = 0;
             for ($i = 0; $i < $soldCount; $i++) {
-                if ($assignedToUser < $userTicketsCount && $testUser) {
-                    $ownerId = $testUser->id;
+                if ($assignedToUser < $userTicketsCount && ($yabuUser || $testUser)) {
+                    $ownerId = $yabuUser ? $yabuUser->id : $testUser->id;
                     $assignedToUser++;
                 } else {
                     $ownerId = $communityUserIds[$i % $userCount];
@@ -279,6 +280,19 @@ class LotterySeeder extends Seeder
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
+            }
+
+            if ($yabuUser && $testUser && $assignedToUser > 0) {
+                $ticketRows[] = [
+                    'lottery_id' => $lottery->id,
+                    'user_id' => $testUser->id,
+                    'ticket_code' => 'TKT-'.strtoupper(Str::random(7)),
+                    'price_paid' => $lottery->ticket_price,
+                    'status' => TicketStatus::Active->value,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+                $lottery->increment('tickets_sold');
             }
 
             foreach (array_chunk($ticketRows, 250) as $chunk) {
@@ -301,7 +315,7 @@ class LotterySeeder extends Seeder
                 'total_tickets' => 400,
                 'tickets_sold' => 400,
                 'draw_at' => now()->subHours(4),
-                'winner_email' => 'user@itemlottery.com', // Test user won!
+                'winner_email' => 'yabume123@gmail.com', // Yabu won!
             ],
             [
                 'title' => 'Apple Vision Pro 1TB Spatial Computer & Dual Loop Band Set',
@@ -314,7 +328,7 @@ class LotterySeeder extends Seeder
                 'total_tickets' => 200,
                 'tickets_sold' => 200,
                 'draw_at' => now()->subDays(1)->subHours(3),
-                'winner_email' => 'user@itemlottery.com', // Test user won!
+                'winner_email' => 'yabume123@gmail.com', // Yabu won!
             ],
             [
                 'title' => '2024 BMW M4 Competition Coupe VIP Track Experience & Pro Coaching',
@@ -514,23 +528,26 @@ class LotterySeeder extends Seeder
 
             // 2. Build remaining lost tickets in bulk
             $lostBatch = [];
-            if ($winningUser->id !== $testUser->id && in_array($lottery->title, [
-                '2024 BMW M4 Competition Coupe VIP Track Experience & Pro Coaching',
-                'Patek Philippe Aquanaut 5167A Stainless Steel Watch (Black Embossed Dial)',
-                'Sony Alpha A1 Flagship Mirrorless Camera & FE 24-70mm F2.8 GM II Lens',
-                'Luxury 5-Star Private Overwater Villa in Maldives (7 Nights All-Inclusive)',
-                'Rolex GMT-Master II "Pepsi" 126710BLRO (Oystersteel & Jubilee Bracelet)',
-                'Alienware Aurora R16 RTX 4090 Liquid-Cooled Gaming Battlestation',
-            ])) {
-                $lostBatch[] = [
-                    'lottery_id' => $lottery->id,
-                    'user_id' => $testUser->id,
-                    'ticket_code' => 'TKT-'.strtoupper(Str::random(7)),
-                    'price_paid' => $lottery->ticket_price,
-                    'status' => TicketStatus::Lost->value,
-                    'created_at' => $lottery->draw_at->subHours(3),
-                    'updated_at' => $lottery->draw_at,
-                ];
+            $participatingUsers = array_filter([$yabuUser, $testUser]);
+            foreach ($participatingUsers as $pUser) {
+                if ($winningUser->id !== $pUser->id && in_array($lottery->title, [
+                    '2024 BMW M4 Competition Coupe VIP Track Experience & Pro Coaching',
+                    'Patek Philippe Aquanaut 5167A Stainless Steel Watch (Black Embossed Dial)',
+                    'Sony Alpha A1 Flagship Mirrorless Camera & FE 24-70mm F2.8 GM II Lens',
+                    'Luxury 5-Star Private Overwater Villa in Maldives (7 Nights All-Inclusive)',
+                    'Rolex GMT-Master II "Pepsi" 126710BLRO (Oystersteel & Jubilee Bracelet)',
+                    'Alienware Aurora R16 RTX 4090 Liquid-Cooled Gaming Battlestation',
+                ])) {
+                    $lostBatch[] = [
+                        'lottery_id' => $lottery->id,
+                        'user_id' => $pUser->id,
+                        'ticket_code' => 'TKT-'.strtoupper(Str::random(7)),
+                        'price_paid' => $lottery->ticket_price,
+                        'status' => TicketStatus::Lost->value,
+                        'created_at' => $lottery->draw_at->subHours(3),
+                        'updated_at' => $lottery->draw_at,
+                    ];
+                }
             }
 
             $needed = $lottery->tickets_sold - 1 - count($lostBatch);
@@ -601,18 +618,19 @@ class LotterySeeder extends Seeder
             $lottery = Lottery::create($canData);
 
             $refBatch = [];
-            // Test user bought 3 tickets on Harley-Davidson
-            if ($lottery->title === '2023 Harley-Davidson CVO Road Glide Limited Custom Edition' && $testUser) {
-                for ($k = 0; $k < 3; $k++) {
-                    $refBatch[] = [
-                        'lottery_id' => $lottery->id,
-                        'user_id' => $testUser->id,
-                        'ticket_code' => 'TKT-'.strtoupper(Str::random(7)),
-                        'price_paid' => $lottery->ticket_price,
-                        'status' => TicketStatus::Refunded->value,
-                        'created_at' => now()->subDays(6),
-                        'updated_at' => now()->subDays(5),
-                    ];
+            if ($lottery->title === '2023 Harley-Davidson CVO Road Glide Limited Custom Edition') {
+                foreach (array_filter([$yabuUser, $testUser]) as $pUser) {
+                    for ($k = 0; $k < 3; $k++) {
+                        $refBatch[] = [
+                            'lottery_id' => $lottery->id,
+                            'user_id' => $pUser->id,
+                            'ticket_code' => 'TKT-'.strtoupper(Str::random(7)),
+                            'price_paid' => $lottery->ticket_price,
+                            'status' => TicketStatus::Refunded->value,
+                            'created_at' => now()->subDays(6),
+                            'updated_at' => now()->subDays(5),
+                        ];
+                    }
                 }
             }
 

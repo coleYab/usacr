@@ -28,6 +28,19 @@ class UserSeeder extends Seeder
         );
         $admin1->wallet()->firstOrCreate(['balance' => '0.00']);
 
+        // 1b. Yabume Primary User Account
+        $yabuUser = User::updateOrCreate(
+            ['email' => 'yabume123@gmail.com'],
+            [
+                'name' => 'Yeabsira Moges',
+                'password' => $password,
+                'role' => User::ROLE_USER,
+                'status' => User::STATUS_ACTIVE,
+                'email_verified_at' => now(),
+            ]
+        );
+        $yabuUser->wallet()->firstOrCreate(['balance' => '0.00']);
+
         // 2. Secondary Compliance & Operations Admin
         $admin2 = User::updateOrCreate(
             ['email' => 'admin@itemlottery.com'],

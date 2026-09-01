@@ -17,8 +17,59 @@ class DepositSeeder extends Seeder
         $admin1 = User::where('email', 'yabume13@gmail.com')->first();
         $admin2 = User::where('email', 'admin@itemlottery.com')->first() ?? $admin1;
 
+        $yabuUser = User::where('email', 'yabume123@gmail.com')->first();
         $testUser = User::where('email', 'user@itemlottery.com')->first();
         $demoUser = User::where('email', 'demo@itemlottery.com')->first();
+
+        // 0. Deposits for Yabume User (yabume123@gmail.com)
+        if ($yabuUser) {
+            Deposit::create([
+                'user_id' => $yabuUser->id,
+                'amount' => '1000.00',
+                'receipt_path' => 'receipts/wire_transfer.png',
+                'status' => DepositStatus::Approved,
+                'reviewed_by' => $admin1->id,
+                'reviewed_at' => now()->subDays(12),
+                'created_at' => now()->subDays(12)->subMinutes(30),
+            ]);
+
+            Deposit::create([
+                'user_id' => $yabuUser->id,
+                'amount' => '750.00',
+                'receipt_path' => 'receipts/deposit_proof.png',
+                'status' => DepositStatus::Approved,
+                'reviewed_by' => $admin1->id,
+                'reviewed_at' => now()->subDays(7),
+                'created_at' => now()->subDays(7)->subMinutes(15),
+            ]);
+
+            Deposit::create([
+                'user_id' => $yabuUser->id,
+                'amount' => '100.00',
+                'receipt_path' => 'receipts/sample_receipt.png',
+                'status' => DepositStatus::Rejected,
+                'rejection_reason' => 'የተላከው የባንክ ደረሰኝ ስም እና የመለያው ስም አልተዛመደም። እባክዎ ትክክለኛ ደረሰኝ ይላኩ።',
+                'reviewed_by' => $admin2->id,
+                'reviewed_at' => now()->subDays(3),
+                'created_at' => now()->subDays(3)->subMinutes(40),
+            ]);
+
+            Deposit::create([
+                'user_id' => $yabuUser->id,
+                'amount' => '350.00',
+                'receipt_path' => 'receipts/wire_transfer.png',
+                'status' => DepositStatus::Pending,
+                'created_at' => now()->subHours(2),
+            ]);
+
+            Deposit::create([
+                'user_id' => $yabuUser->id,
+                'amount' => '500.00',
+                'receipt_path' => 'receipts/deposit_proof.png',
+                'status' => DepositStatus::Pending,
+                'created_at' => now()->subMinutes(25),
+            ]);
+        }
 
         // 1. Deposits for Primary Test User (user@itemlottery.com)
         if ($testUser) {
