@@ -1,19 +1,21 @@
 import { Head } from '@inertiajs/react';
 import {
+    AlertCircle,
     ArrowDownRight,
     ArrowUpRight,
+    CheckCircle2,
+    Clock,
     ListChecks,
+    Receipt,
     ReceiptText,
     Wallet,
 } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { DataTable, type DataTableColumn } from '@/components/data-table';
 import { DepositStatusBadge } from '@/components/deposit-status-badge';
-import { navigate } from '@/lib/navigate';
+import { EmptyState } from '@/components/empty-state';
 import { PageHeader } from '@/components/page-header';
 import { ReceiptDialog } from '@/components/receipt-dialog';
 import { RequestDepositDialog } from '@/components/request-deposit-dialog';
@@ -26,7 +28,7 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { TransactionTypeBadge } from '@/components/transaction-type-badge';
-import { toDataTablePagination } from '@/lib/pagination';
+import { navigate } from '@/lib/navigate';
 import { wallet } from '@/routes/app';
 import { cn } from '@/lib/utils';
 import type { DepositRow, Paginated, TransactionRow } from '@/types';
@@ -38,133 +40,57 @@ type Props = {
     transactions: Paginated<TransactionRow>;
     filters: {
         type: string;
-        from: string;
-        to: string;
+        from?: string;
+        to?: string;
     };
 };
 
 const navToPage = (params: Record<string, string | number | undefined>) =>
     navigate(wallet.url(), params);
 
-function depositColumns(
-    viewReceipt: (d: DepositRow) => void,
-): DataTableColumn<DepositRow>[] {
-    return [
-        {
-            header: 'Date',
-            cell: (d) => (
-                <div>
-                    <p className="font-medium">{d.created_at_formatted}</p>
-                    <p className="text-muted-foreground text-xs">
-                        {d.created_at_diff}
-                    </p>
-                </div>
-            ),
-        },
-        {
-            header: 'Amount',
-            cell: (d) => (
-                <span className="font-mono font-medium">
-                    {d.amount_formatted}
-                </span>
-            ),
-        },
-        {
-            header: 'Status',
-            cell: (d) => (
-                <DepositStatusBadge status={d.status} label={d.status_label} />
-            ),
-        },
-        {
-            header: 'Receipt',
-            cell: (d) =>
-                d.receipt_url ? (
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => viewReceipt(d)}
-                    >
-                        View
-                    </Button>
-                ) : (
-                    <span className="text-muted-foreground text-xs">—</span>
-                ),
-        },
-        {
-            header: 'Rejection Reason',
-            className: 'max-w-xs',
-            cell: (d) =>
-                d.status === 'rejected' && d.rejection_reason ? (
-                    <span className="text-destructive line-clamp-2 text-xs">
-                        {d.rejection_reason}
-                    </span>
-                ) : (
-                    <span className="text-muted-foreground text-xs">—</span>
-                ),
-        },
-    ];
-}
+function PaginationControls({
+    pagination,
+    onPageChange,
+}: {
+    pagination: Paginated<unknown>['pagination'];
+    onPageChange: (page: number) => void;
+}) {
+    if (pagination.last_page <= 1) {
+        return null;
+    }
 
-function transactionsColumns(): DataTableColumn<TransactionRow>[] {
-    return [
-        {
-            header: 'Date',
-            cell: (t) => (
-                <div>
-                    <p className="font-medium">{t.created_at_formatted}</p>
-                    <p className="text-muted-foreground text-xs">
-                        {t.created_at_diff}
-                    </p>
-                </div>
-            ),
-        },
-        {
-            header: 'Type',
-            cell: (t) => (
-                <TransactionTypeBadge
-                    isCredit={t.is_credit}
-                    label={t.type_label}
-                />
-            ),
-        },
-        {
-            header: 'Description',
-            cell: (t) => (
-                <span className="text-muted-foreground">
-                    {t.description ?? '—'}
+    return (
+        <div className="text-muted-foreground flex items-center justify-between border-t pt-4 text-xs sm:text-sm">
+            <p>
+                Showing page{' '}
+                <span className="text-foreground font-medium">
+                    {pagination.current_page}
+                </span>{' '}
+                of{' '}
+                <span className="text-foreground font-medium">
+                    {pagination.last_page}
                 </span>
-            ),
-        },
-        {
-            header: 'Amount',
-            className: 'text-right',
-            cell: (t) => (
-                <span
-                    className={cn(
-                        'inline-flex items-center gap-1 font-mono font-medium',
-                        t.is_credit ? 'text-primary' : 'text-destructive',
-                        !t.is_credit && !t.amount.startsWith('-') && '-',
-                    )}
+            </p>
+            <div className="flex items-center gap-2">
+                <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={pagination.current_page <= 1}
+                    onClick={() => onPageChange(pagination.current_page - 1)}
                 >
-                    {t.is_credit ? (
-                        <ArrowUpRight className="size-3.5" />
-                    ) : (
-                        <ArrowDownRight className="size-3.5" />
-                    )}
-                    {t.amount_formatted}
-                </span>
-            ),
-        },
-        {
-            header: 'Balance',
-            className: 'text-right',
-            cell: (t) => (
-                <span className="text-muted-foreground font-mono">
-                    {t.balance_after_formatted}
-                </span>
-            ),
-        },
-    ];
+                    Previous
+                </Button>
+                <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={pagination.current_page >= pagination.last_page}
+                    onClick={() => onPageChange(pagination.current_page + 1)}
+                >
+                    Next
+                </Button>
+            </div>
+        </div>
+    );
 }
 
 export default function AppWallet({
@@ -190,24 +116,31 @@ export default function AppWallet({
     });
     const [requestOpen, setRequestOpen] = useState(false);
     const [receipt, setReceipt] = useState<DepositRow | null>(null);
+    const [localType, setLocalType] = useState(filters.type || 'all');
 
-    const [localType, setLocalType] = useState(filters.type);
-    const [localFrom, setLocalFrom] = useState(filters.from);
-    const [localTo, setLocalTo] = useState(filters.to);
+    const handleTabChange = (val: string) => {
+        setTab(val);
+        navToPage({
+            tab: val,
+            type:
+                val === 'transactions' && localType !== 'all'
+                    ? localType
+                    : undefined,
+        });
+    };
 
-    const applyFilters = () => {
+    const handleTypeChange = (val: string) => {
+        setLocalType(val);
         navToPage({
             tab: 'transactions',
-            type: localType,
-            from: localFrom,
-            to: localTo,
+            type: val === 'all' ? undefined : val,
         });
     };
 
     return (
         <>
             <Head title="Wallet" />
-            <div className="flex flex-col gap-6">
+            <div className="flex min-h-[100dvh] flex-col gap-6 pb-12">
                 <PageHeader
                     title="Wallet"
                     description="Deposit funds and track your balance and history."
@@ -222,55 +155,151 @@ export default function AppWallet({
                     />
 
                     <div className="flex items-center gap-2">
-                        <Button onClick={() => setRequestOpen(true)}>
+                        <Button
+                            onClick={() => setRequestOpen(true)}
+                            className="gap-2"
+                        >
                             <ReceiptText className="size-4" />
                             Request Deposit
                         </Button>
                     </div>
                 </div>
 
-                <Tabs value={tab} onValueChange={(v) => setTab(v)}>
-                    <TabsList>
-                        <TabsTrigger value="pending">
-                            Pending Deposits
+                <Tabs
+                    value={tab}
+                    onValueChange={handleTabChange}
+                    className="space-y-4"
+                >
+                    <TabsList className="w-full justify-start sm:w-auto">
+                        <TabsTrigger
+                            value="pending"
+                            className="flex-1 sm:flex-initial"
+                        >
+                            Pending{' '}
+                            {pending.pagination.total > 0 &&
+                                `(${pending.pagination.total})`}
                         </TabsTrigger>
-                        <TabsTrigger value="transactions">
-                            Transaction History
+                        <TabsTrigger
+                            value="transactions"
+                            className="flex-1 sm:flex-initial"
+                        >
+                            Transactions{' '}
+                            {transactions.pagination.total > 0 &&
+                                `(${transactions.pagination.total})`}
                         </TabsTrigger>
-                        <TabsTrigger value="history">
-                            Deposit History
+                        <TabsTrigger
+                            value="history"
+                            className="flex-1 sm:flex-initial"
+                        >
+                            Deposits{' '}
+                            {history.pagination.total > 0 &&
+                                `(${history.pagination.total})`}
                         </TabsTrigger>
                     </TabsList>
 
-                    <TabsContent value="pending" className="space-y-4 pt-4">
-                        <DataTable
-                            columns={depositColumns(setReceipt)}
-                            rows={pending.data}
-                            keyExtractor={(d) => d.id}
-                            emptyIcon={ListChecks}
-                            emptyTitle="No pending deposits"
-                            emptyDescription="Requests you submit awaiting review will appear here."
-                            pagination={toDataTablePagination(
-                                pending.pagination,
-                                (page) => navToPage({ tab: 'pending', page }),
-                            )}
+                    {/* Pending Tab */}
+                    <TabsContent value="pending" className="space-y-3 pt-2">
+                        {pending.data.length > 0 ? (
+                            <div className="grid grid-cols-1 gap-3">
+                                {pending.data.map((d) => (
+                                    <Card
+                                        key={d.id}
+                                        className="border-border overflow-hidden transition-all hover:shadow-xs"
+                                    >
+                                        <CardContent className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+                                            <div className="flex items-start gap-3.5">
+                                                <div className="mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/10 font-bold text-amber-600 dark:text-amber-400">
+                                                    <Clock className="size-5" />
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <div className="flex flex-wrap items-center gap-2">
+                                                        <span className="text-foreground font-mono text-lg font-bold sm:text-xl">
+                                                            {d.amount_formatted}
+                                                        </span>
+                                                        <DepositStatusBadge
+                                                            status={d.status}
+                                                            label={
+                                                                d.status_label
+                                                            }
+                                                        />
+                                                    </div>
+                                                    <p className="text-muted-foreground text-xs">
+                                                        Submitted{' '}
+                                                        {d.created_at_formatted}{' '}
+                                                        ({d.created_at_diff})
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-center justify-end border-t pt-2.5 sm:border-0 sm:pt-0">
+                                                {d.receipt_url ? (
+                                                    <Button
+                                                        variant="outline"
+                                                        size="sm"
+                                                        className="h-8 gap-1.5 text-xs"
+                                                        onClick={() =>
+                                                            setReceipt(d)
+                                                        }
+                                                    >
+                                                        <Receipt className="size-3.5" />
+                                                        View Receipt
+                                                    </Button>
+                                                ) : (
+                                                    <span className="text-muted-foreground text-xs">
+                                                        No receipt attached
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="bg-card rounded-xl border p-10">
+                                <EmptyState
+                                    icon={ListChecks}
+                                    title="No pending deposits"
+                                    description="Requests you submit awaiting review will appear here."
+                                    action={
+                                        <Button
+                                            size="sm"
+                                            onClick={() => setRequestOpen(true)}
+                                            className="mt-2"
+                                        >
+                                            <ReceiptText className="mr-1.5 size-4" />
+                                            Request Deposit
+                                        </Button>
+                                    }
+                                />
+                            </div>
+                        )}
+
+                        <PaginationControls
+                            pagination={pending.pagination}
+                            onPageChange={(page) =>
+                                navToPage({ tab: 'pending', page })
+                            }
                         />
                     </TabsContent>
 
+                    {/* Transactions Tab */}
                     <TabsContent
                         value="transactions"
-                        className="space-y-4 pt-4"
+                        className="space-y-4 pt-2"
                     >
-                        <div className="flex flex-wrap items-end gap-3 rounded-lg border p-3">
-                            <div className="space-y-1">
-                                <Label htmlFor="tx-type">Type</Label>
+                        {/* Type Filter only (Date filters removed per user request) */}
+                        <div className="flex items-center justify-between gap-3">
+                            <div className="flex items-center gap-2.5">
+                                <span className="text-muted-foreground text-xs font-medium">
+                                    Type:
+                                </span>
                                 <Select
                                     value={localType}
-                                    onValueChange={(v) => setLocalType(v)}
+                                    onValueChange={handleTypeChange}
                                 >
                                     <SelectTrigger
                                         id="tx-type"
-                                        className="h-9 w-40"
+                                        className="h-8 w-40 text-xs"
                                     >
                                         <SelectValue placeholder="All types" />
                                     </SelectTrigger>
@@ -296,77 +325,209 @@ export default function AppWallet({
                                     </SelectContent>
                                 </Select>
                             </div>
-                            <div className="space-y-1">
-                                <Label htmlFor="tx-from">From</Label>
-                                <Input
-                                    id="tx-from"
-                                    type="date"
-                                    value={localFrom}
-                                    onChange={(e) =>
-                                        setLocalFrom(e.target.value)
-                                    }
-                                    className="h-9 w-40"
-                                />
-                            </div>
-                            <div className="space-y-1">
-                                <Label htmlFor="tx-to">To</Label>
-                                <Input
-                                    id="tx-to"
-                                    type="date"
-                                    value={localTo}
-                                    onChange={(e) => setLocalTo(e.target.value)}
-                                    className="h-9 w-40"
-                                />
-                            </div>
-                            <div className="flex gap-2">
-                                <Button size="sm" onClick={applyFilters}>
-                                    Apply
-                                </Button>
-                                <Button
-                                    size="sm"
-                                    variant="ghost"
-                                    onClick={() => {
-                                        setLocalType('all');
-                                        setLocalFrom('');
-                                        setLocalTo('');
-                                        navToPage({ tab: 'transactions' });
-                                    }}
-                                >
-                                    Reset
-                                </Button>
-                            </div>
                         </div>
-                        <DataTable
-                            columns={transactionsColumns()}
-                            rows={transactions.data}
-                            keyExtractor={(t) => t.id}
-                            emptyIcon={ReceiptText}
-                            emptyTitle="No transactions yet"
-                            emptyDescription="Credits and debits will appear here."
-                            pagination={toDataTablePagination(
-                                transactions.pagination,
-                                (page) =>
-                                    navToPage({
-                                        tab: 'transactions',
-                                        page,
-                                        ...filters,
-                                    }),
-                            )}
+
+                        {transactions.data.length > 0 ? (
+                            <div className="grid grid-cols-1 gap-3">
+                                {transactions.data.map((t) => (
+                                    <Card
+                                        key={t.id}
+                                        className="border-border overflow-hidden transition-all hover:shadow-xs"
+                                    >
+                                        <CardContent className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+                                            <div className="flex items-start gap-3.5">
+                                                <div
+                                                    className={cn(
+                                                        'mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-xl font-bold',
+                                                        t.is_credit
+                                                            ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                                                            : 'bg-rose-500/10 text-rose-600 dark:text-rose-400',
+                                                    )}
+                                                >
+                                                    {t.is_credit ? (
+                                                        <ArrowUpRight className="size-5" />
+                                                    ) : (
+                                                        <ArrowDownRight className="size-5" />
+                                                    )}
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <div className="flex flex-wrap items-center gap-2">
+                                                        <TransactionTypeBadge
+                                                            isCredit={
+                                                                t.is_credit
+                                                            }
+                                                            label={t.type_label}
+                                                        />
+                                                        <span className="text-muted-foreground text-xs">
+                                                            {
+                                                                t.created_at_formatted
+                                                            }{' '}
+                                                            ({t.created_at_diff}
+                                                            )
+                                                        </span>
+                                                    </div>
+                                                    <p className="text-foreground text-sm font-medium">
+                                                        {t.description ?? '—'}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-center justify-between border-t pt-2.5 sm:flex-col sm:items-end sm:justify-center sm:border-0 sm:pt-0">
+                                                <span
+                                                    className={cn(
+                                                        'font-mono text-base font-bold sm:text-lg',
+                                                        t.is_credit
+                                                            ? 'text-emerald-600 dark:text-emerald-400'
+                                                            : 'text-rose-600 dark:text-rose-400',
+                                                    )}
+                                                >
+                                                    {t.is_credit ? '+' : '-'}
+                                                    {t.amount_formatted.replace(
+                                                        '-',
+                                                        '',
+                                                    )}
+                                                </span>
+                                                <span className="text-muted-foreground font-mono text-xs">
+                                                    Balance:{' '}
+                                                    {t.balance_after_formatted}
+                                                </span>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="bg-card rounded-xl border p-10">
+                                <EmptyState
+                                    icon={ReceiptText}
+                                    title="No transactions yet"
+                                    description="Credits and debits will appear here."
+                                />
+                            </div>
+                        )}
+
+                        <PaginationControls
+                            pagination={transactions.pagination}
+                            onPageChange={(page) =>
+                                navToPage({
+                                    tab: 'transactions',
+                                    page,
+                                    type:
+                                        localType !== 'all'
+                                            ? localType
+                                            : undefined,
+                                })
+                            }
                         />
                     </TabsContent>
 
-                    <TabsContent value="history" className="space-y-4 pt-4">
-                        <DataTable
-                            columns={depositColumns(setReceipt)}
-                            rows={history.data}
-                            keyExtractor={(d) => d.id}
-                            emptyIcon={ListChecks}
-                            emptyTitle="No deposit history yet"
-                            emptyDescription="Your approved and rejected deposits will appear here."
-                            pagination={toDataTablePagination(
-                                history.pagination,
-                                (page) => navToPage({ tab: 'history', page }),
-                            )}
+                    {/* Deposits (History) Tab */}
+                    <TabsContent value="history" className="space-y-3 pt-2">
+                        {history.data.length > 0 ? (
+                            <div className="grid grid-cols-1 gap-3">
+                                {history.data.map((d) => (
+                                    <Card
+                                        key={d.id}
+                                        className="border-border overflow-hidden transition-all hover:shadow-xs"
+                                    >
+                                        <CardContent className="flex flex-col gap-3 p-4 sm:p-5">
+                                            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                                                <div className="flex items-start gap-3.5">
+                                                    <div
+                                                        className={cn(
+                                                            'mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-xl font-bold',
+                                                            d.status ===
+                                                                'approved'
+                                                                ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                                                                : 'bg-destructive/10 text-destructive',
+                                                        )}
+                                                    >
+                                                        {d.status ===
+                                                        'approved' ? (
+                                                            <CheckCircle2 className="size-5" />
+                                                        ) : (
+                                                            <AlertCircle className="size-5" />
+                                                        )}
+                                                    </div>
+                                                    <div className="space-y-1">
+                                                        <div className="flex flex-wrap items-center gap-2">
+                                                            <span className="text-foreground font-mono text-lg font-bold sm:text-xl">
+                                                                {
+                                                                    d.amount_formatted
+                                                                }
+                                                            </span>
+                                                            <DepositStatusBadge
+                                                                status={
+                                                                    d.status
+                                                                }
+                                                                label={
+                                                                    d.status_label
+                                                                }
+                                                            />
+                                                        </div>
+                                                        <p className="text-muted-foreground text-xs">
+                                                            {
+                                                                d.created_at_formatted
+                                                            }{' '}
+                                                            ({d.created_at_diff}
+                                                            )
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex items-center justify-end">
+                                                    {d.receipt_url && (
+                                                        <Button
+                                                            variant="outline"
+                                                            size="sm"
+                                                            className="h-8 gap-1.5 text-xs"
+                                                            onClick={() =>
+                                                                setReceipt(d)
+                                                            }
+                                                        >
+                                                            <Receipt className="size-3.5" />
+                                                            View Receipt
+                                                        </Button>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            {d.status === 'rejected' &&
+                                                d.rejection_reason && (
+                                                    <div className="border-destructive/30 bg-destructive/10 text-destructive flex items-start gap-2 rounded-lg border p-3 text-xs">
+                                                        <AlertCircle className="mt-0.5 size-4 shrink-0" />
+                                                        <div>
+                                                            <span className="font-semibold">
+                                                                Rejection
+                                                                reason:{' '}
+                                                            </span>
+                                                            <span>
+                                                                {
+                                                                    d.rejection_reason
+                                                                }
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                        </CardContent>
+                                    </Card>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="bg-card rounded-xl border p-10">
+                                <EmptyState
+                                    icon={ListChecks}
+                                    title="No deposit history yet"
+                                    description="Your approved and rejected deposits will appear here."
+                                />
+                            </div>
+                        )}
+
+                        <PaginationControls
+                            pagination={history.pagination}
+                            onPageChange={(page) =>
+                                navToPage({ tab: 'history', page })
+                            }
                         />
                     </TabsContent>
                 </Tabs>
