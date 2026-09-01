@@ -70,8 +70,8 @@ class LotteryDrawResultNotification extends Notification
             'is_winner' => $this->isWinner,
             'winning_ticket_code' => $this->winningTicket?->ticket_code,
             'message' => $this->isWinner
-                ? "🎉 You won the '{$this->lottery->title}' raffle!"
-                : "The draw for '{$this->lottery->title}' has finished.",
+                ? "🎉 የ'{$this->lottery->title}' ዕጣ አሸንፈዋል!"
+                : "የ'{$this->lottery->title}' ዕጣ ማውጣት ተጠናቋል።",
             'url' => $actionUrl,
             'icon' => $this->isWinner ? 'trophy' : 'ticket',
         ];

@@ -15,10 +15,10 @@ enum LotteryStatus: string
     public function label(): string
     {
         return match ($this) {
-            self::Draft => 'Draft',
-            self::Active => 'Active',
-            self::Completed => 'Completed',
-            self::Cancelled => 'Cancelled',
+            self::Draft => 'ረቂቅ',
+            self::Active => 'የቀጥታ',
+            self::Completed => 'የተጠናቀቀ',
+            self::Cancelled => 'የተሰረዘ',
         };
     }
 }

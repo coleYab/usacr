@@ -42,7 +42,7 @@ export function UserMenuContent({ user }: Props) {
                         onClick={cleanup}
                     >
                         <UserRound className="mr-2" />
-                        Profile
+                        መገለጫ
                     </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
@@ -53,7 +53,7 @@ export function UserMenuContent({ user }: Props) {
                         onClick={cleanup}
                     >
                         <Settings className="mr-2" />
-                        Settings
+                        ቅንብሮች
                     </Link>
                 </DropdownMenuItem>
             </DropdownMenuGroup>
@@ -67,7 +67,7 @@ export function UserMenuContent({ user }: Props) {
                     data-test="logout-button"
                 >
                     <LogOut className="mr-2" />
-                    Log out
+                    ውጣ
                 </Link>
             </DropdownMenuItem>
         </>

@@ -144,7 +144,7 @@ export default function AppLotteryShow({
                     >
                         <Link href={lotteries()}>
                             <ArrowRight className="size-4 rotate-180" />
-                            Back to Lotteries
+                            ወደ ዕጣዎች ተመለስ
                         </Link>
                     </Button>
                     <div className="flex items-center gap-2">
@@ -204,7 +204,7 @@ export default function AppLotteryShow({
                         <Card>
                             <CardHeader>
                                 <CardTitle className="text-xl font-bold">
-                                    Raffle Details &amp; Specifications
+                                    የዕጣው ዝርዝር እና መግለጫ
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-4">
@@ -215,7 +215,7 @@ export default function AppLotteryShow({
                                 <div className="grid grid-cols-2 gap-4 border-t pt-4 text-sm sm:grid-cols-3">
                                     <div className="space-y-1">
                                         <p className="text-muted-foreground text-xs">
-                                            Draw Date
+                                            የዕጣ ቀን
                                         </p>
                                         <p className="text-foreground font-medium">
                                             {lottery.draw_at_formatted}
@@ -223,18 +223,18 @@ export default function AppLotteryShow({
                                     </div>
                                     <div className="space-y-1">
                                         <p className="text-muted-foreground text-xs">
-                                            Total Capacity
+                                            ጠቅላላ የቲኬት ብዛት
                                         </p>
                                         <p className="text-foreground font-medium">
-                                            {lottery.total_tickets} tickets
+                                            {lottery.total_tickets} ቲኬቶች
                                         </p>
                                     </div>
                                     <div className="space-y-1">
                                         <p className="text-muted-foreground text-xs">
-                                            Participants
+                                            ተሳታፊዎች
                                         </p>
                                         <p className="text-foreground font-medium">
-                                            {lottery.participant_count} players
+                                            {lottery.participant_count} ተጫዋቾች
                                         </p>
                                     </div>
                                 </div>
@@ -248,7 +248,7 @@ export default function AppLotteryShow({
                                     <div className="flex items-center justify-between">
                                         <CardTitle className="flex items-center gap-2 text-base font-semibold">
                                             <TicketIcon className="text-primary size-4" />
-                                            Your Tickets in this Raffle (
+                                            በዚህ ዕጣ ውስጥ ያሉዎት ቲኬቶች (
                                             {userTickets.length})
                                         </CardTitle>
                                         <Button
@@ -257,7 +257,7 @@ export default function AppLotteryShow({
                                             asChild
                                         >
                                             <Link href={ticketsRoute()}>
-                                                View All Tickets
+                                                ሁሉንም ቲኬቶች ይመልከቱ
                                             </Link>
                                         </Button>
                                     </div>
@@ -289,10 +289,10 @@ export default function AppLotteryShow({
                                         className="text-xs font-semibold"
                                     >
                                         <Sparkles className="text-primary mr-1 size-3" />
-                                        Official Raffle
+                                        ይፋዊ ዕጣ
                                     </Badge>
                                     <span className="text-muted-foreground text-xs">
-                                        {lottery.remaining_tickets} remaining
+                                        {lottery.remaining_tickets} ቀርተዋል
                                     </span>
                                 </div>
 
@@ -305,7 +305,7 @@ export default function AppLotteryShow({
                                         {lottery.ticket_price_formatted}
                                     </span>
                                     <span className="text-muted-foreground text-sm">
-                                        / ticket
+                                        / ቲኬት
                                     </span>
                                 </div>
                             </CardHeader>
@@ -315,7 +315,7 @@ export default function AppLotteryShow({
                                 <div className="space-y-2">
                                     <div className="flex items-center justify-between text-xs font-medium">
                                         <span className="text-muted-foreground">
-                                            Tickets Sold
+                                            የተሸጡ ቲኬቶች
                                         </span>
                                         <span className="font-mono font-semibold">
                                             {lottery.tickets_sold} /{' '}
@@ -339,10 +339,10 @@ export default function AppLotteryShow({
                                                     htmlFor="qty"
                                                     className="text-sm font-medium"
                                                 >
-                                                    Select Quantity
+                                                    ብዛት ይምረጡ
                                                 </label>
                                                 <span className="text-muted-foreground text-xs">
-                                                    Max {maxAllowed} per order
+                                                    ለአንድ ትዕዛዝ ከፍተኛ {maxAllowed}
                                                 </span>
                                             </div>
 
@@ -439,7 +439,7 @@ export default function AppLotteryShow({
                                                             )
                                                         }
                                                     >
-                                                        Max
+                                                        ከፍተኛ
                                                     </Button>
                                                 )}
                                             </div>
@@ -448,7 +448,7 @@ export default function AppLotteryShow({
                                         {/* Cost Breakdown */}
                                         <div className="bg-muted/40 space-y-2 rounded-xl border p-4 text-sm">
                                             <div className="text-muted-foreground flex justify-between">
-                                                <span>Price per ticket</span>
+                                                <span>የአንድ ቲኬት ዋጋ</span>
                                                 <span className="font-mono">
                                                     {
                                                         lottery.ticket_price_formatted
@@ -456,13 +456,13 @@ export default function AppLotteryShow({
                                                 </span>
                                             </div>
                                             <div className="text-muted-foreground flex justify-between">
-                                                <span>Quantity</span>
+                                                <span>ብዛት</span>
                                                 <span className="font-mono">
                                                     × {quantity}
                                                 </span>
                                             </div>
                                             <div className="text-foreground flex justify-between border-t pt-2 text-base font-semibold">
-                                                <span>Total Cost</span>
+                                                <span>ጠቅላላ ዋጋ</span>
                                                 <span className="text-primary font-mono">
                                                     {formatMoney(totalCost)}
                                                 </span>
@@ -474,7 +474,7 @@ export default function AppLotteryShow({
                                             <div className="flex items-center justify-between px-1 text-xs">
                                                 <span className="text-muted-foreground flex items-center gap-1">
                                                     <Wallet className="size-3.5" />
-                                                    Your Balance
+                                                    የእርስዎ ሂሳብ
                                                 </span>
                                                 <span
                                                     className={cn(
@@ -493,23 +493,21 @@ export default function AppLotteryShow({
                                                     <AlertCircle className="mt-0.5 size-4 shrink-0" />
                                                     <div className="space-y-1">
                                                         <p className="font-medium">
-                                                            Insufficient balance
+                                                            በቂ ያልሆነ ሂሳብ
                                                         </p>
                                                         <p>
-                                                            You need an
-                                                            additional{' '}
+                                                            ይህን ግዢ ለማጠናቀቅ ተጨማሪ{' '}
                                                             {formatMoney(
                                                                 totalCost -
                                                                     numericWalletBalance,
                                                             )}{' '}
-                                                            to complete this
-                                                            purchase.{' '}
+                                                            ያስፈልግዎታል።{' '}
                                                             <Link
                                                                 href={walletRoute()}
                                                                 className="font-semibold underline underline-offset-2"
                                                             >
-                                                                Deposit funds
-                                                                now &rarr;
+                                                                አሁን ገንዘብ ያስገቡ
+                                                                &rarr;
                                                             </Link>
                                                         </p>
                                                     </div>
@@ -529,8 +527,8 @@ export default function AppLotteryShow({
                                                 }
                                             >
                                                 {isPurchasing
-                                                    ? 'Processing Order…'
-                                                    : `Buy ${quantity} Ticket${quantity > 1 ? 's' : ''} — ${formatMoney(totalCost)}`}
+                                                    ? 'ትዕዛዝ በማስኬድ ላይ…'
+                                                    : `${quantity} ቲኬት ይግዙ — ${formatMoney(totalCost)}`}
                                             </Button>
                                         </div>
                                     </div>
@@ -543,21 +541,20 @@ export default function AppLotteryShow({
                                                 </div>
                                                 <div className="mt-4 space-y-1">
                                                     <Badge className="bg-amber-500 px-2.5 py-0.5 text-xs font-bold text-black hover:bg-amber-500">
-                                                        OFFICIAL WINNER
+                                                        ይፋዊ አሸናፊ
                                                     </Badge>
                                                     <h3 className="text-foreground pt-2 text-xl font-extrabold tracking-tight">
-                                                        You Won This Raffle! 🎉
+                                                        ይህን ዕጣ አሸንፈዋል! 🎉
                                                     </h3>
                                                     <p className="text-muted-foreground mx-auto max-w-xs text-xs leading-relaxed">
-                                                        Your ticket was randomly
-                                                        selected as the winning
-                                                        entry in this draw.
+                                                        የእርስዎ ቲኬት በዚህ ዕጣ ውስጥ እንደ
+                                                        አሸናፊ ተመርጧል።
                                                     </p>
                                                 </div>
 
                                                 <div className="bg-background/80 mt-4 rounded-xl border border-amber-500/30 p-3.5 backdrop-blur-xs">
                                                     <span className="text-muted-foreground block text-[11px] font-medium">
-                                                        Winning Ticket Code
+                                                        አሸናፊ የቲኬት ኮድ
                                                     </span>
                                                     <span className="font-mono text-lg font-bold tracking-wider text-amber-500">
                                                         {
@@ -571,7 +568,7 @@ export default function AppLotteryShow({
                                                     className="mt-4 w-full bg-amber-500 font-bold text-black hover:bg-amber-400"
                                                 >
                                                     <Link href={ticketsRoute()}>
-                                                        View in My Tickets
+                                                        በእኔ ቲኬቶች ውስጥ ይመልከቱ
                                                     </Link>
                                                 </Button>
                                             </div>
@@ -582,23 +579,18 @@ export default function AppLotteryShow({
                                                 </div>
                                                 <div className="space-y-1">
                                                     <h4 className="text-sm font-semibold">
-                                                        Draw Completed
+                                                        ዕጣው ተጠናቋል
                                                     </h4>
                                                     <p className="text-muted-foreground text-xs">
-                                                        The drawing for this
-                                                        raffle has concluded.
-                                                        Your tickets were
-                                                        entered, but another
-                                                        ticket was selected as
-                                                        the winner.
+                                                        የዚህ ዕጣ ማውጣት ተጠናቋል። የእርስዎ
+                                                        ቲኬቶች ተሳትፈዋል፣ ሆኖም ሌላ ቲኬት
+                                                        አሸናፊ ሆኖ ተመርጧል።
                                                     </p>
                                                 </div>
 
                                                 <div className="bg-background space-y-1 rounded-lg border p-3 text-left text-xs">
                                                     <div className="text-muted-foreground flex justify-between">
-                                                        <span>
-                                                            Winning Ticket:
-                                                        </span>
+                                                        <span>አሸናፊ ቲኬት፦</span>
                                                         <span className="text-foreground font-mono font-semibold">
                                                             {
                                                                 lottery.winning_ticket_code
@@ -606,10 +598,10 @@ export default function AppLotteryShow({
                                                         </span>
                                                     </div>
                                                     <div className="text-muted-foreground flex justify-between">
-                                                        <span>Winner:</span>
+                                                        <span>አሸናፊ፦</span>
                                                         <span className="text-foreground font-medium">
                                                             {lottery.winner_name ??
-                                                                'Player'}
+                                                                'ተጫዋች'}
                                                         </span>
                                                     </div>
                                                 </div>
@@ -621,7 +613,7 @@ export default function AppLotteryShow({
                                                     className="w-full"
                                                 >
                                                     <Link href={lotteries()}>
-                                                        Browse Live Raffles
+                                                        የቀጥታ ዕጣዎችን ይመልከቱ
                                                     </Link>
                                                 </Button>
                                             </div>
@@ -632,22 +624,20 @@ export default function AppLotteryShow({
                                                 </div>
                                                 <div className="space-y-1">
                                                     <h4 className="text-sm font-semibold">
-                                                        Raffle Concluded
+                                                        ዕጣው ተጠናቋል
                                                     </h4>
                                                     <p className="text-muted-foreground text-xs">
-                                                        This raffle was drawn on{' '}
+                                                        ይህ ዕጣ የወጣው በ{' '}
                                                         {
                                                             lottery.draw_at_formatted
-                                                        }
-                                                        .
+                                                        }{' '}
+                                                        ነው።
                                                     </p>
                                                 </div>
 
                                                 <div className="bg-background space-y-1.5 rounded-lg border p-3 text-left text-xs">
                                                     <div className="text-muted-foreground flex justify-between">
-                                                        <span>
-                                                            Winning Ticket:
-                                                        </span>
+                                                        <span>አሸናፊ ቲኬት፦</span>
                                                         <span className="font-mono font-bold text-amber-500">
                                                             {
                                                                 lottery.winning_ticket_code
@@ -656,7 +646,7 @@ export default function AppLotteryShow({
                                                     </div>
                                                     <div className="text-muted-foreground flex justify-between">
                                                         <span>
-                                                            Total Participants:
+                                                            ጠቅላላ ተሳታፊዎች፦
                                                         </span>
                                                         <span className="text-foreground font-medium">
                                                             {
@@ -673,7 +663,7 @@ export default function AppLotteryShow({
                                                     className="w-full"
                                                 >
                                                     <Link href={lotteries()}>
-                                                        Browse Other Raffles
+                                                        ሌሎች ዕጣዎችን ይመልከቱ
                                                     </Link>
                                                 </Button>
                                             </div>
@@ -685,13 +675,13 @@ export default function AppLotteryShow({
                                         <div className="space-y-1">
                                             <p className="text-foreground font-semibold">
                                                 {lottery.is_sold_out
-                                                    ? 'This Raffle is Sold Out'
-                                                    : 'Raffle Closed'}
+                                                    ? 'ይህ ዕጣ ተሽጦ አልቋል'
+                                                    : 'ዕጣው ተዘግቷል'}
                                             </p>
                                             <p className="text-muted-foreground text-xs">
                                                 {lottery.is_sold_out
-                                                    ? 'All available tickets have been purchased. Stay tuned for the drawing!'
-                                                    : 'Ticket sales for this lottery have concluded.'}
+                                                    ? 'ሁሉም ያሉ ቲኬቶች ተሽጠዋል። ዕጣው እስኪወጣ ይጠብቁ!'
+                                                    : 'ለዚህ ሎተሪ የቲኬት ሽያጭ ተጠናቋል።'}
                                             </p>
                                         </div>
                                         <Button
@@ -700,7 +690,7 @@ export default function AppLotteryShow({
                                             asChild
                                         >
                                             <Link href={lotteries()}>
-                                                Browse Other Lotteries
+                                                ሌሎች ዕጣዎችን ይመልከቱ
                                             </Link>
                                         </Button>
                                     </div>
@@ -715,40 +705,37 @@ export default function AppLotteryShow({
             <AlertDialog open={confirming} onOpenChange={setConfirming}>
                 <AlertDialogContent>
                     <AlertDialogHeader>
-                        <AlertDialogTitle>
-                            Confirm Ticket Purchase
-                        </AlertDialogTitle>
+                        <AlertDialogTitle>የቲኬት ግዢን ያረጋግጡ</AlertDialogTitle>
                         <AlertDialogDescription className="space-y-2 pt-2">
-                            <span>You are about to purchase </span>
+                            <span>እርስዎ </span>
                             <strong className="text-foreground">
-                                {quantity} ticket(s)
+                                {quantity} ቲኬት(ቶች)
                             </strong>
-                            <span> for </span>
+                            <span> ለ </span>
                             <strong className="text-foreground">
                                 "{lottery.title}"
                             </strong>
-                            <span> for a total of </span>
+                            <span> በጠቅላላ </span>
                             <strong className="text-primary font-mono">
                                 {formatMoney(totalCost)}
                             </strong>
-                            .
+                            <span> ሊገዙ ነው።</span>
                             <p className="text-muted-foreground pt-2 text-xs">
-                                This will debit your wallet balance immediately
-                                and cannot be refunded unless the raffle is
-                                cancelled.
+                                ይህ ወዲያውኑ ከቦርሳ ሂሳብዎ የሚቀነስ ሲሆን ዕጣው ካልተሰረዘ በስተቀር
+                                ተመላሽ አይሆንም።
                             </p>
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogCancel disabled={isPurchasing}>
-                            Cancel
+                            ይቅር
                         </AlertDialogCancel>
                         <AlertDialogAction
                             onClick={handleConfirmPurchase}
                             disabled={isPurchasing}
                             className="bg-primary text-primary-foreground"
                         >
-                            {isPurchasing ? 'Purchasing…' : 'Confirm & Buy'}
+                            {isPurchasing ? 'በመግዛት ላይ…' : 'አረጋግጥ እና ግዛ'}
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
@@ -762,14 +749,14 @@ export default function AppLotteryShow({
                             <CheckCircle2 className="size-6" />
                         </div>
                         <DialogTitle className="text-center text-xl font-bold">
-                            Tickets Purchased!
+                            ቲኬቶች ተገዝተዋል!
                         </DialogTitle>
                         <DialogDescription className="text-center">
-                            You're in! Here are your ticket numbers for{' '}
+                            እንኳን ደስ አለዎት! ለ{' '}
                             <strong className="text-foreground">
                                 {lottery.title}
-                            </strong>
-                            :
+                            </strong>{' '}
+                            የተሰጡዎት የቲኬት ቁጥሮች፦
                         </DialogDescription>
                     </DialogHeader>
 
@@ -781,7 +768,7 @@ export default function AppLotteryShow({
                                     className="bg-background flex items-center justify-between rounded-md border px-3 py-2 font-mono text-sm shadow-2xs"
                                 >
                                     <span className="text-muted-foreground text-xs">
-                                        Ticket #{idx + 1}
+                                        ቲኬት #{idx + 1}
                                     </span>
                                     <span className="text-primary font-semibold">
                                         {code}
@@ -790,8 +777,7 @@ export default function AppLotteryShow({
                             ))
                         ) : (
                             <p className="text-muted-foreground py-2 text-center text-sm">
-                                Check "My Tickets" to view your newly issued
-                                codes.
+                                አዲስ የተሰጡዎትን ኮዶች ለማየት "የእኔ ቲኬቶች" የሚለውን ይመልከቱ።
                             </p>
                         )}
                     </div>
@@ -803,10 +789,10 @@ export default function AppLotteryShow({
                             className="w-full sm:w-auto"
                             onClick={() => setShowSuccessModal(false)}
                         >
-                            Close
+                            ዝጋ
                         </Button>
                         <Button asChild className="w-full sm:w-auto">
-                            <Link href={ticketsRoute()}>View My Tickets</Link>
+                            <Link href={ticketsRoute()}>የእኔን ቲኬቶች ይመልከቱ</Link>
                         </Button>
                     </DialogFooter>
                 </DialogContent>
@@ -818,11 +804,11 @@ export default function AppLotteryShow({
 AppLotteryShow.layout = {
     breadcrumbs: [
         {
-            title: 'Lotteries',
+            title: 'ዕጣዎች',
             href: lotteries(),
         },
         {
-            title: 'Details',
+            title: 'ዝርዝር',
             href: '#',
         },
     ],

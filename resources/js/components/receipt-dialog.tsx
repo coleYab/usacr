@@ -28,7 +28,7 @@ export function ReceiptDialog({
             <DialogContent className="max-w-2xl">
                 <DialogHeader>
                     <DialogTitle>
-                        Receipt {user ? `for ${user.name}` : ''} — {amount}
+                        ደረሰኝ {user ? `ለ ${user.name}` : ''} — {amount}
                     </DialogTitle>
                 </DialogHeader>
 
@@ -37,14 +37,14 @@ export function ReceiptDialog({
                         isImage(url) ? (
                             <img
                                 src={url}
-                                alt="Deposit receipt"
+                                alt="የተቀማጭ ደረሰኝ"
                                 className="w-full object-contain"
                             />
                         ) : (
                             <div className="flex flex-col items-center gap-4 p-10 text-center">
                                 <FileText className="text-muted-foreground size-10" />
                                 <p className="text-muted-foreground text-sm">
-                                    This is a PDF receipt.
+                                    ይህ የፒዲኤፍ (PDF) ደረሰኝ ነው።
                                 </p>
                                 <Button asChild>
                                     <a
@@ -53,14 +53,14 @@ export function ReceiptDialog({
                                         rel="noreferrer"
                                     >
                                         <ExternalLink className="size-4" />
-                                        Open PDF
+                                        ፒዲኤፍ ክፈት
                                     </a>
                                 </Button>
                             </div>
                         )
                     ) : (
                         <p className="text-muted-foreground p-10 text-sm">
-                            No receipt was uploaded.
+                            ምንም ደረሰኝ አልተያያዘም።
                         </p>
                     )}
                 </div>

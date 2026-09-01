@@ -97,7 +97,7 @@ class LotteryController extends Controller
         $codes = array_map(fn ($ticket) => $ticket->ticket_code, $tickets);
 
         return back()
-            ->with('success', "Successfully purchased {$quantity} ticket(s)!")
+            ->with('success', "{$quantity} ቲኬት(ቶች) በተሳካ ሁኔታ ተገዝተዋል!")
             ->with('purchased_tickets', $codes);
     }
 }

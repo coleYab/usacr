@@ -58,7 +58,7 @@ class DepositStatusNotification extends Notification
             'deposit_id' => $this->deposit->id,
             'status' => $this->deposit->status->value,
             'amount' => $this->deposit->amount,
-            'message' => "Your deposit of {$amount} was {$status}.",
+            'message' => "የ {$amount} ተቀማጭ ገንዘብዎ {$status} ሆኗል።",
             'url' => route('app.wallet'),
             'icon' => 'wallet',
         ];

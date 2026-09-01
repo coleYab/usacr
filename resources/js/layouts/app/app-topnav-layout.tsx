@@ -38,11 +38,11 @@ type Props = AppLayoutProps & {
 };
 
 const mainNavItems: NavItem[] = [
-    { title: 'Dashboard', href: dashboard(), icon: LayoutGrid },
-    { title: 'Lotteries', href: lotteries(), icon: Sparkles },
-    { title: 'My Tickets', href: tickets(), icon: Ticket },
-    { title: 'Results', href: results(), icon: Trophy },
-    { title: 'Wallet', href: wallet(), icon: Wallet },
+    { title: 'ዳሽቦርድ', href: dashboard(), icon: LayoutGrid },
+    { title: 'ዕጣዎች', href: lotteries(), icon: Sparkles },
+    { title: 'የእኔ ቲኬቶች', href: tickets(), icon: Ticket },
+    { title: 'ውጤቶች', href: results(), icon: Trophy },
+    { title: 'ቦርሳ', href: wallet(), icon: Wallet },
 ];
 
 export default function AppTopnavLayout({

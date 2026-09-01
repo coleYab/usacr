@@ -114,13 +114,13 @@ export function NotificationBell() {
             <PopoverContent className="w-80 p-0 sm:w-96" align="end">
                 <div className="flex items-center justify-between border-b px-4 py-3">
                     <div className="flex items-center gap-2">
-                        <h4 className="text-sm font-semibold">Notifications</h4>
+                        <h4 className="text-sm font-semibold">ማሳወቂያዎች</h4>
                         {unreadCount > 0 && (
                             <Badge
                                 variant="secondary"
                                 className="px-1.5 py-0 text-xs"
                             >
-                                {unreadCount} new
+                                {unreadCount} አዲስ
                             </Badge>
                         )}
                     </div>
@@ -132,7 +132,7 @@ export function NotificationBell() {
                             className="text-muted-foreground hover:text-foreground h-7 gap-1 text-xs"
                         >
                             <CheckCheck className="size-3.5" />
-                            Mark all read
+                            ሁሉንም አንብብ
                         </Button>
                     )}
                 </div>
@@ -168,7 +168,7 @@ export function NotificationBell() {
                                                     )}
                                                 >
                                                     {item.data.lottery_title ??
-                                                        'Activity Alert'}
+                                                        'የእንቅስቃሴ ማንቂያ'}
                                                 </p>
                                                 <span className="text-muted-foreground shrink-0 text-[10px]">
                                                     {item.created_at_diff}
@@ -189,7 +189,7 @@ export function NotificationBell() {
                         <div className="space-y-2 py-10 text-center">
                             <Bell className="text-muted-foreground/40 mx-auto size-8" />
                             <p className="text-muted-foreground text-xs">
-                                You have no notifications yet.
+                                እስካሁን ምንም ማሳወቂያ የለዎትም።
                             </p>
                         </div>
                     )}

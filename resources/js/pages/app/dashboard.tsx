@@ -38,17 +38,17 @@ export default function AppDashboard({
 }: Props) {
     const page = usePage();
     const auth = page.props.auth as Auth;
-    const userName = auth?.user?.name ?? 'Player';
+    const userName = auth?.user?.name ?? 'ተጫዋች';
 
     return (
         <>
-            <Head title="Player Dashboard" />
+            <Head title="የተጫዋች ዳሽቦርድ" />
             <div className="flex flex-col gap-8 pb-12">
                 {/* Header & Quick Action CTAs */}
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <PageHeader
-                        title={`Welcome back, ${userName}!`}
-                        description="Here is an overview of your wallet liquidity, live entries, and ending lotteries."
+                        title={`እንኳን ደህና መጡ፣ ${userName}!`}
+                        description="የቦርሳ ሂሳብዎ፣ ንቁ የዕጣ ተሳትፎዎችዎ እና በቅርቡ የሚጠናቀቁ ዕጣዎች ዝርዝር።"
                     />
                     <div className="flex items-center gap-2">
                         <Button
@@ -59,13 +59,13 @@ export default function AppDashboard({
                         >
                             <Link href={wallet()}>
                                 <Wallet className="text-primary size-4" />
-                                Deposit Funds
+                                ገንዘብ አስገባ
                             </Link>
                         </Button>
                         <Button asChild size="sm" className="gap-1.5">
                             <Link href={lotteries()}>
                                 <Sparkles className="size-4" />
-                                Browse Raffles
+                                ዕጣዎችን ያስሱ
                             </Link>
                         </Button>
                     </div>
@@ -74,22 +74,22 @@ export default function AppDashboard({
                 {/* Primary Metric Grid */}
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                     <StatCard
-                        label="Wallet Balance"
+                        label="የቦርሳ ሂሳብ"
                         value={stats.wallet_balance}
                         icon={Wallet}
                     />
                     <StatCard
-                        label="Active Tickets"
+                        label="ንቁ ቲኬቶች"
                         value={stats.active_tickets_count}
                         icon={TicketIcon}
                     />
                     <StatCard
-                        label="Lotteries Won"
+                        label="ያሸነፏቸው ዕጣዎች"
                         value={stats.lotteries_won_count}
                         icon={Trophy}
                     />
                     <StatCard
-                        label="Total Spent"
+                        label="ጠቅላላ ወጪ"
                         value={stats.total_spent}
                         icon={Receipt}
                     />
@@ -101,11 +101,10 @@ export default function AppDashboard({
                         <div className="space-y-1">
                             <h2 className="text-foreground flex items-center gap-2 text-lg font-semibold tracking-tight">
                                 <Clock className="text-primary size-4" />
-                                Ending Soon &amp; Popular Raffles
+                                በቅርቡ የሚያበቁ እና ተወዳጅ ዕጣዎች
                             </h2>
                             <p className="text-muted-foreground text-xs">
-                                High-demand luxury items drawing in the next few
-                                hours.
+                                በቀጣዮቹ ጥቂት ሰዓታት ውስጥ የሚወጡ ተፈላጊ የቅንጦት ዕቃዎች።
                             </p>
                         </div>
                         <Button
@@ -115,7 +114,7 @@ export default function AppDashboard({
                             className="gap-1 text-xs"
                         >
                             <Link href={lotteries()}>
-                                View All ({ending_soon_lotteries.length})
+                                ሁሉንም ይመልከቱ ({ending_soon_lotteries.length})
                                 <ArrowRight className="size-3" />
                             </Link>
                         </Button>
@@ -124,8 +123,8 @@ export default function AppDashboard({
                     {ending_soon_lotteries.length === 0 ? (
                         <EmptyState
                             icon={Sparkles}
-                            title="No active raffles drawing soon"
-                            description="Check back shortly as new luxury items are launched daily."
+                            title="በቅርቡ የሚወጣ ንቁ ዕጣ የለም"
+                            description="ዕለታዊ አዳዲስ የቅንጦት ዕቃዎች ስለሚጨመሩ በቅርቡ ተመልሰው ይመልከቱ።"
                         />
                     ) : (
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -154,7 +153,7 @@ export default function AppDashboard({
                                                     {
                                                         lottery.ticket_price_formatted
                                                     }{' '}
-                                                    / ticket
+                                                    / ቲኬት
                                                 </Badge>
                                             </div>
                                         </div>
@@ -174,13 +173,13 @@ export default function AppDashboard({
                                                 <div className="flex justify-between font-mono text-xs">
                                                     <span className="text-muted-foreground">
                                                         {lottery.tickets_sold}{' '}
-                                                        sold
+                                                        ተሽጧል
                                                     </span>
                                                     <span className="text-foreground font-medium">
                                                         {
                                                             lottery.remaining_tickets
                                                         }{' '}
-                                                        left
+                                                        ቀርቷል
                                                     </span>
                                                 </div>
                                                 <Progress
@@ -204,7 +203,7 @@ export default function AppDashboard({
                                                     lottery: lottery.id,
                                                 })}
                                             >
-                                                View &amp; Buy Tickets
+                                                ይመልከቱ እና ቲኬት ይግዙ
                                                 <ArrowRight className="size-3.5" />
                                             </Link>
                                         </Button>
@@ -221,11 +220,10 @@ export default function AppDashboard({
                         <div className="space-y-1">
                             <h2 className="text-foreground flex items-center gap-2 text-lg font-semibold tracking-tight">
                                 <TicketIcon className="text-primary size-4" />
-                                Your Recent Tickets
+                                የቅርብ ጊዜ ቲኬቶችዎ
                             </h2>
                             <p className="text-muted-foreground text-xs">
-                                Entries you've purchased in active and past
-                                lotteries.
+                                በቀጥታ እና ባለፉት ዕጣዎች ውስጥ የገዟቸው ቲኬቶች።
                             </p>
                         </div>
                         <Button
@@ -235,7 +233,7 @@ export default function AppDashboard({
                             className="gap-1 text-xs"
                         >
                             <Link href={tickets()}>
-                                View All Tickets
+                                ሁሉንም ቲኬቶች ይመልከቱ
                                 <ArrowRight className="size-3" />
                             </Link>
                         </Button>
@@ -244,13 +242,11 @@ export default function AppDashboard({
                     {recent_tickets.length === 0 ? (
                         <EmptyState
                             icon={TicketIcon}
-                            title="You haven't bought any tickets yet"
-                            description="Explore available items and enter for a chance to win."
+                            title="እስካሁን ምንም ቲኬት አልገዙም"
+                            description="የቀረቡትን ዕቃዎች ይመልከቱ እና የማሸነፍ ዕድልዎን ይሞክሩ።"
                             action={
                                 <Button asChild size="sm">
-                                    <Link href={lotteries()}>
-                                        Explore Raffles
-                                    </Link>
+                                    <Link href={lotteries()}>ዕጣዎችን ያስሱ</Link>
                                 </Button>
                             }
                         />
@@ -274,8 +270,8 @@ export default function AppDashboard({
                                         <p className="text-muted-foreground truncate">
                                             {ticket.lottery
                                                 ? ticket.lottery.title
-                                                : 'Raffle'}{' '}
-                                            &bull; Paid{' '}
+                                                : 'ዕጣ'}{' '}
+                                            &bull; የተከፈለ{' '}
                                             <span className="text-foreground font-mono font-medium">
                                                 {ticket.price_paid_formatted}
                                             </span>
@@ -296,7 +292,7 @@ export default function AppDashboard({
                                                             ticket.lottery.id,
                                                     })}
                                                 >
-                                                    View Draw
+                                                    ዕጣውን ይመልከቱ
                                                 </Link>
                                             </Button>
                                         )}
@@ -314,7 +310,7 @@ export default function AppDashboard({
 AppDashboard.layout = {
     breadcrumbs: [
         {
-            title: 'Dashboard',
+            title: 'ዳሽቦርድ',
             href: dashboard(),
         },
     ],

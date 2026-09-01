@@ -14,9 +14,9 @@ enum DepositStatus: string
     public function label(): string
     {
         return match ($this) {
-            self::Pending => 'Pending',
-            self::Approved => 'Approved',
-            self::Rejected => 'Rejected',
+            self::Pending => 'በመጠባበቅ ላይ',
+            self::Approved => 'የፀደቀ',
+            self::Rejected => 'ውድቅ የተደረገ',
         };
     }
 }

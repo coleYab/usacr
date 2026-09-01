@@ -15,10 +15,10 @@ enum TicketStatus: string
     public function label(): string
     {
         return match ($this) {
-            self::Active => 'Active',
-            self::Won => 'Won',
-            self::Lost => 'Lost',
-            self::Refunded => 'Refunded',
+            self::Active => 'ንቁ',
+            self::Won => 'አሸናፊ',
+            self::Lost => 'ያላሸነፈ',
+            self::Refunded => 'ተመላሽ',
         };
     }
 }

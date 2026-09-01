@@ -73,6 +73,6 @@ class WalletController extends Controller
             'status' => DepositStatus::Pending,
         ]);
 
-        return back()->with('success', 'Deposit request submitted and pending review.');
+        return back()->with('success', 'የተቀማጭ ገንዘብ ጥያቄው ቀርቧል፤ በግምገማ ላይ ነው።');
     }
 }

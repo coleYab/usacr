@@ -62,11 +62,11 @@ function PaginationControls({
     return (
         <div className="text-muted-foreground flex items-center justify-between border-t pt-4 text-xs sm:text-sm">
             <p>
-                Showing page{' '}
+                ገጽ{' '}
                 <span className="text-foreground font-medium">
                     {pagination.current_page}
                 </span>{' '}
-                of{' '}
+                ከ{' '}
                 <span className="text-foreground font-medium">
                     {pagination.last_page}
                 </span>
@@ -78,7 +78,7 @@ function PaginationControls({
                     disabled={pagination.current_page <= 1}
                     onClick={() => onPageChange(pagination.current_page - 1)}
                 >
-                    Previous
+                    ቀዳሚ
                 </Button>
                 <Button
                     variant="outline"
@@ -86,7 +86,7 @@ function PaginationControls({
                     disabled={pagination.current_page >= pagination.last_page}
                     onClick={() => onPageChange(pagination.current_page + 1)}
                 >
-                    Next
+                    ቀጣይ
                 </Button>
             </div>
         </div>
@@ -139,16 +139,16 @@ export default function AppWallet({
 
     return (
         <>
-            <Head title="Wallet" />
+            <Head title="ቦርሳ" />
             <div className="flex min-h-[100dvh] flex-col gap-6 pb-12">
                 <PageHeader
-                    title="Wallet"
-                    description="Deposit funds and track your balance and history."
+                    title="ቦርሳ"
+                    description="ገንዘብ ያስገቡ፣ የሂሳብ መጠንዎን እና ታሪክዎን ይከታተሉ።"
                 />
 
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <StatCard
-                        label="Available Balance"
+                        label="ያለ ሂሳብ"
                         value={balance}
                         icon={Wallet}
                         className="w-full sm:max-w-md"
@@ -160,7 +160,7 @@ export default function AppWallet({
                             className="gap-2"
                         >
                             <ReceiptText className="size-4" />
-                            Request Deposit
+                            ገንዘብ ለማስገባት ይጠይቁ
                         </Button>
                     </div>
                 </div>
@@ -175,7 +175,7 @@ export default function AppWallet({
                             value="pending"
                             className="flex-1 sm:flex-initial"
                         >
-                            Pending{' '}
+                            በመጠባበቅ ላይ{' '}
                             {pending.pagination.total > 0 &&
                                 `(${pending.pagination.total})`}
                         </TabsTrigger>
@@ -183,7 +183,7 @@ export default function AppWallet({
                             value="transactions"
                             className="flex-1 sm:flex-initial"
                         >
-                            Transactions{' '}
+                            የግብይት ታሪክ{' '}
                             {transactions.pagination.total > 0 &&
                                 `(${transactions.pagination.total})`}
                         </TabsTrigger>
@@ -191,7 +191,7 @@ export default function AppWallet({
                             value="history"
                             className="flex-1 sm:flex-initial"
                         >
-                            Deposits{' '}
+                            ተቀማጭ ገንዘቦች{' '}
                             {history.pagination.total > 0 &&
                                 `(${history.pagination.total})`}
                         </TabsTrigger>
@@ -224,7 +224,7 @@ export default function AppWallet({
                                                         />
                                                     </div>
                                                     <p className="text-muted-foreground text-xs">
-                                                        Submitted{' '}
+                                                        የቀረበበት{' '}
                                                         {d.created_at_formatted}{' '}
                                                         ({d.created_at_diff})
                                                     </p>
@@ -242,11 +242,11 @@ export default function AppWallet({
                                                         }
                                                     >
                                                         <Receipt className="size-3.5" />
-                                                        View Receipt
+                                                        ደረሰኝ ይመልከቱ
                                                     </Button>
                                                 ) : (
                                                     <span className="text-muted-foreground text-xs">
-                                                        No receipt attached
+                                                        ምንም ደረሰኝ አልተያያዘም
                                                     </span>
                                                 )}
                                             </div>
@@ -258,8 +258,8 @@ export default function AppWallet({
                             <div className="bg-card rounded-xl border p-10">
                                 <EmptyState
                                     icon={ListChecks}
-                                    title="No pending deposits"
-                                    description="Requests you submit awaiting review will appear here."
+                                    title="በመጠባበቅ ላይ ያለ ተቀማጭ የለም"
+                                    description="ግምገማ የሚጠብቁ ያስገቧቸው ጥያቄዎች እዚህ ይታያሉ።"
                                     action={
                                         <Button
                                             size="sm"
@@ -267,7 +267,7 @@ export default function AppWallet({
                                             className="mt-2"
                                         >
                                             <ReceiptText className="mr-1.5 size-4" />
-                                            Request Deposit
+                                            ገንዘብ ለማስገባት ይጠይቁ
                                         </Button>
                                     }
                                 />
@@ -287,11 +287,11 @@ export default function AppWallet({
                         value="transactions"
                         className="space-y-4 pt-2"
                     >
-                        {/* Type Filter only (Date filters removed per user request) */}
+                        {/* Type Filter */}
                         <div className="flex items-center justify-between gap-3">
                             <div className="flex items-center gap-2.5">
                                 <span className="text-muted-foreground text-xs font-medium">
-                                    Type:
+                                    ዓይነት፦
                                 </span>
                                 <Select
                                     value={localType}
@@ -299,28 +299,28 @@ export default function AppWallet({
                                 >
                                     <SelectTrigger
                                         id="tx-type"
-                                        className="h-8 w-40 text-xs"
+                                        className="h-8 w-44 text-xs"
                                     >
-                                        <SelectValue placeholder="All types" />
+                                        <SelectValue placeholder="ሁሉም ዓይነቶች" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="all">
-                                            All types
+                                            ሁሉም ዓይነቶች
                                         </SelectItem>
                                         <SelectItem value="deposit_credit">
-                                            Deposit
+                                            ተቀማጭ ገንዘብ
                                         </SelectItem>
                                         <SelectItem value="ticket_purchase">
-                                            Ticket Purchase
+                                            የቲኬት ግዢ
                                         </SelectItem>
                                         <SelectItem value="admin_credit">
-                                            Admin Credit
+                                            የአድሚን ጭማሪ
                                         </SelectItem>
                                         <SelectItem value="admin_debit">
-                                            Admin Debit
+                                            የአድሚን ቅነሳ
                                         </SelectItem>
                                         <SelectItem value="refund">
-                                            Refund
+                                            ተመላሽ
                                         </SelectItem>
                                     </SelectContent>
                                 </Select>
@@ -388,7 +388,7 @@ export default function AppWallet({
                                                     )}
                                                 </span>
                                                 <span className="text-muted-foreground font-mono text-xs">
-                                                    Balance:{' '}
+                                                    ቀሪ ሂሳብ፦{' '}
                                                     {t.balance_after_formatted}
                                                 </span>
                                             </div>
@@ -400,8 +400,8 @@ export default function AppWallet({
                             <div className="bg-card rounded-xl border p-10">
                                 <EmptyState
                                     icon={ReceiptText}
-                                    title="No transactions yet"
-                                    description="Credits and debits will appear here."
+                                    title="እስካሁን ምንም ግብይት የለም"
+                                    description="ገቢ እና ወጪ ክፍያዎች እዚህ ይታያሉ።"
                                 />
                             </div>
                         )}
@@ -486,7 +486,7 @@ export default function AppWallet({
                                                             }
                                                         >
                                                             <Receipt className="size-3.5" />
-                                                            View Receipt
+                                                            ደረሰኝ ይመልከቱ
                                                         </Button>
                                                     )}
                                                 </div>
@@ -498,8 +498,8 @@ export default function AppWallet({
                                                         <AlertCircle className="mt-0.5 size-4 shrink-0" />
                                                         <div>
                                                             <span className="font-semibold">
-                                                                Rejection
-                                                                reason:{' '}
+                                                                ውድቅ የተደረገበት
+                                                                ምክንያት፦{' '}
                                                             </span>
                                                             <span>
                                                                 {
@@ -517,8 +517,8 @@ export default function AppWallet({
                             <div className="bg-card rounded-xl border p-10">
                                 <EmptyState
                                     icon={ListChecks}
-                                    title="No deposit history yet"
-                                    description="Your approved and rejected deposits will appear here."
+                                    title="እስካሁን ምንም የተጠናቀቀ ተቀማጭ የለም"
+                                    description="የፀደቁ እና ውድቅ የተደረጉ ተቀማጮች እዚህ ይታያሉ።"
                                 />
                             </div>
                         )}
@@ -552,7 +552,7 @@ export default function AppWallet({
 AppWallet.layout = {
     breadcrumbs: [
         {
-            title: 'Wallet',
+            title: 'ቦርሳ',
             href: wallet(),
         },
     ],

@@ -52,11 +52,11 @@ export default function AppLotteries({ lotteries, counts, filters }: Props) {
 
     return (
         <>
-            <Head title="Lotteries" />
+            <Head title="ዕጣዎች" />
             <div className="flex flex-col gap-6">
                 <PageHeader
-                    title="Live Lotteries"
-                    description="Explore item-based raffles, buy tickets with your wallet balance, and win exclusive prizes."
+                    title="የቀጥታ ዕጣዎች"
+                    description="የእቃ ሎተሪዎችን ያስሱ፣ በቦርሳ ሂሳብዎ ቲኬቶችን ይግዙ እና ልዩ ሽልማቶችን ያሸንፉ።"
                 />
 
                 {/* Filter and Search Bar */}
@@ -64,13 +64,13 @@ export default function AppLotteries({ lotteries, counts, filters }: Props) {
                     <Tabs value={tab} onValueChange={handleTabChange}>
                         <TabsList>
                             <TabsTrigger value="active">
-                                Active ({counts.active})
+                                የቀጥታ ({counts.active})
                             </TabsTrigger>
                             <TabsTrigger value="ending_soon">
-                                Ending Soon ({counts.ending_soon})
+                                በቅርቡ የሚያበቁ ({counts.ending_soon})
                             </TabsTrigger>
                             <TabsTrigger value="all">
-                                All ({counts.all})
+                                ሁሉም ({counts.all})
                             </TabsTrigger>
                         </TabsList>
                     </Tabs>
@@ -83,14 +83,14 @@ export default function AppLotteries({ lotteries, counts, filters }: Props) {
                             <Search className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
                             <Input
                                 type="search"
-                                placeholder="Search by raffle title…"
+                                placeholder="በዕጣ ርዕስ ይፈልጉ…"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                                 className="h-9 pr-8 pl-9"
                             />
                         </div>
                         <Button type="submit" size="sm" variant="secondary">
-                            Search
+                            ፈልግ
                         </Button>
                         {search && (
                             <Button
@@ -99,7 +99,7 @@ export default function AppLotteries({ lotteries, counts, filters }: Props) {
                                 variant="ghost"
                                 onClick={handleSearchClear}
                             >
-                                Clear
+                                አጽዳ
                             </Button>
                         )}
                     </form>
@@ -116,11 +116,11 @@ export default function AppLotteries({ lotteries, counts, filters }: Props) {
                     <div className="bg-card rounded-xl border p-12">
                         <EmptyState
                             icon={Sparkles}
-                            title="No lotteries found"
+                            title="ምንም ዕጣ አልተገኘም"
                             description={
                                 search
-                                    ? `No lotteries matched "${search}". Try clearing your search filter.`
-                                    : 'There are no active lotteries in this category right now. Check back soon!'
+                                    ? `ከ"${search}" ጋር የሚዛመድ ዕጣ አልተገኘም። እባክዎ የፍለጋ ማጣሪያውን ያጽዱ።`
+                                    : 'በዚህ ምድብ ውስጥ በአሁኑ ጊዜ ምንም ንቁ ዕጣ የለም። በቅርቡ ተመልሰው ይመልከቱ!'
                             }
                         />
                     </div>
@@ -130,11 +130,11 @@ export default function AppLotteries({ lotteries, counts, filters }: Props) {
                 {lotteries.pagination.last_page > 1 && (
                     <div className="text-muted-foreground flex items-center justify-between border-t pt-4 text-sm">
                         <p>
-                            Showing page{' '}
+                            ገጽ{' '}
                             <span className="text-foreground font-medium">
                                 {lotteries.pagination.current_page}
                             </span>{' '}
-                            of{' '}
+                            ከ{' '}
                             <span className="text-foreground font-medium">
                                 {lotteries.pagination.last_page}
                             </span>
@@ -156,7 +156,7 @@ export default function AppLotteries({ lotteries, counts, filters }: Props) {
                                     })
                                 }
                             >
-                                Previous
+                                ቀዳሚ
                             </Button>
                             <Button
                                 variant="outline"
@@ -175,7 +175,7 @@ export default function AppLotteries({ lotteries, counts, filters }: Props) {
                                     })
                                 }
                             >
-                                Next
+                                ቀጣይ
                             </Button>
                         </div>
                     </div>
@@ -188,7 +188,7 @@ export default function AppLotteries({ lotteries, counts, filters }: Props) {
 AppLotteries.layout = {
     breadcrumbs: [
         {
-            title: 'Lotteries',
+            title: 'ዕጣዎች',
             href: lotteriesRoute(),
         },
     ],

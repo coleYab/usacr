@@ -57,11 +57,11 @@ export default function TwoFactorRecoveryCodes({
             <CardHeader>
                 <CardTitle className="flex gap-3">
                     <LockKeyhole className="size-4" aria-hidden="true" />
-                    2FA recovery codes
+                    የ 2FA የማገገሚያ ኮዶች
                 </CardTitle>
                 <CardDescription>
-                    Recovery codes let you regain access if you lose your 2FA
-                    device. Store them in a secure password manager.
+                    የ 2FA ስልክዎ ወይም መሳሪያዎ ቢጠፋ የማገገሚያ ኮዶች ወደ መለያዎ እንዲገቡ ያስችሉዎታል።
+                    ደህንነቱ በተጠበቀ የይለፍ ቃል ማከማቻ ውስጥ ያስቀምጧቸው።
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -76,7 +76,7 @@ export default function TwoFactorRecoveryCodes({
                             className="size-4"
                             aria-hidden="true"
                         />
-                        {codesAreVisible ? 'Hide' : 'View'} recovery codes
+                        የማገገሚያ ኮዶችን {codesAreVisible ? 'ደብቅ' : 'አሳይ'}
                     </Button>
 
                     {canRegenerateCodes && (
@@ -92,7 +92,7 @@ export default function TwoFactorRecoveryCodes({
                                     disabled={processing}
                                     aria-describedby="regenerate-warning"
                                 >
-                                    <RefreshCw /> Regenerate codes
+                                    <RefreshCw /> ኮዶችን በድጋሚ አመንጭ
                                 </Button>
                             )}
                         </Form>
@@ -112,7 +112,7 @@ export default function TwoFactorRecoveryCodes({
                                     ref={codesSectionRef}
                                     className="bg-muted grid gap-1 rounded-lg p-4 font-mono text-sm"
                                     role="list"
-                                    aria-label="Recovery codes"
+                                    aria-label="የማገገሚያ ኮዶች"
                                 >
                                     {recoveryCodesList.length ? (
                                         recoveryCodesList.map((code, index) => (
@@ -127,7 +127,7 @@ export default function TwoFactorRecoveryCodes({
                                     ) : (
                                         <div
                                             className="space-y-2"
-                                            aria-label="Loading recovery codes"
+                                            aria-label="የማገገሚያ ኮዶች በመጫን ላይ"
                                         >
                                             {Array.from(
                                                 { length: 8 },
@@ -145,13 +145,13 @@ export default function TwoFactorRecoveryCodes({
 
                                 <div className="text-muted-foreground text-xs select-none">
                                     <p id="regenerate-warning">
-                                        Each recovery code can be used once to
-                                        access your account and will be removed
-                                        after use. If you need more, click{' '}
+                                        እያንዳንዱ የማገገሚያ ኮድ ወደ መለያዎ ለመግባት አንድ ጊዜ ብቻ
+                                        የሚያገለግል ሲሆን ከተጠቀሙበት በኋላ ይወገዳል። ተጨማሪ ኮዶች
+                                        የሚያስፈልጉዎ ከሆነ ከላይ{' '}
                                         <span className="font-bold">
-                                            Regenerate codes
+                                            ኮዶችን በድጋሚ አመንጭ
                                         </span>{' '}
-                                        above.
+                                        የሚለውን ይጫኑ።
                                     </p>
                                 </div>
                             </>

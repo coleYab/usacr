@@ -37,17 +37,17 @@ export default function AppTickets({ tickets, counts, filters }: Props) {
 
     return (
         <>
-            <Head title="My Tickets" />
+            <Head title="የእኔ ቲኬቶች" />
             <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <PageHeader
-                        title="My Tickets"
-                        description="Track your entries across active, won, and past raffles."
+                        title="የእኔ ቲኬቶች"
+                        description="በቀጥታ፣ ባሸነፏቸው እና ባለፉት ዕጣዎች ውስጥ ያሉዎትን ቲኬቶች ይከታተሉ።"
                     />
                     <Button asChild className="shrink-0 gap-2">
                         <Link href={lotteries()}>
                             <Sparkles className="size-4" />
-                            Browse More Lotteries
+                            ተጨማሪ ዕጣዎችን ያስሱ
                         </Link>
                     </Button>
                 </div>
@@ -56,22 +56,22 @@ export default function AppTickets({ tickets, counts, filters }: Props) {
                 <Tabs value={tab} onValueChange={handleTabChange}>
                     <TabsList>
                         <TabsTrigger value="active">
-                            Active ({counts.active})
+                            ንቁ ({counts.active})
                         </TabsTrigger>
                         <TabsTrigger value="won" className="gap-1.5">
                             {counts.won > 0 && (
                                 <Trophy className="size-3 text-amber-500" />
                             )}
-                            Won ({counts.won})
+                            ያሸነፉ ({counts.won})
                         </TabsTrigger>
                         <TabsTrigger value="lost">
-                            Lost ({counts.lost})
+                            ያላሸነፉ ({counts.lost})
                         </TabsTrigger>
                         <TabsTrigger value="refunded">
-                            Refunded ({counts.refunded})
+                            ተመላሽ ({counts.refunded})
                         </TabsTrigger>
                         <TabsTrigger value="all">
-                            All ({counts.all})
+                            ሁሉም ({counts.all})
                         </TabsTrigger>
                     </TabsList>
                 </Tabs>
@@ -104,7 +104,7 @@ export default function AppTickets({ tickets, counts, filters }: Props) {
                                                     src={image}
                                                     alt={
                                                         lottery?.title ??
-                                                        'Lottery item'
+                                                        'የዕጣ ዕቃ'
                                                     }
                                                     className="size-full object-cover"
                                                 />
@@ -137,7 +137,7 @@ export default function AppTickets({ tickets, counts, filters }: Props) {
                                                     className="hover:text-primary line-clamp-1 block text-sm font-semibold transition-colors"
                                                 >
                                                     {lottery?.title ??
-                                                        'Item Lottery'}
+                                                        'የእቃ ሎተሪ'}
                                                 </Link>
 
                                                 <div className="text-muted-foreground flex items-center gap-1 text-[11px]">
@@ -155,7 +155,7 @@ export default function AppTickets({ tickets, counts, filters }: Props) {
                                         <div className="bg-muted/40 flex items-center justify-between rounded-lg border p-2.5 text-xs">
                                             <span className="text-muted-foreground flex items-center gap-1.5">
                                                 <TicketIcon className="size-3.5" />
-                                                Ticket Code
+                                                የቲኬት ኮድ
                                             </span>
                                             <span className="text-foreground font-mono text-sm font-bold tracking-wider">
                                                 {ticket.ticket_code}
@@ -167,8 +167,8 @@ export default function AppTickets({ tickets, counts, filters }: Props) {
                                             <div className="flex items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-500/15 p-2.5 text-xs font-medium text-amber-700 dark:text-amber-300">
                                                 <Trophy className="size-4 shrink-0 text-amber-500" />
                                                 <span>
-                                                    Congratulations! This is the
-                                                    winning ticket.
+                                                    እንኳን ደስ አለዎት! ይህ አሸናፊ ቲኬት
+                                                    ነው።
                                                 </span>
                                             </div>
                                         ) : lottery ? (
@@ -184,7 +184,7 @@ export default function AppTickets({ tickets, counts, filters }: Props) {
                                                     })}
                                                 >
                                                     <span>
-                                                        View Raffle Details
+                                                        የዕጣውን ዝርዝር ይመልከቱ
                                                     </span>
                                                     <span className="text-primary font-medium">
                                                         &rarr;
@@ -201,18 +201,18 @@ export default function AppTickets({ tickets, counts, filters }: Props) {
                     <div className="bg-card rounded-xl border p-12">
                         <EmptyState
                             icon={TicketIcon}
-                            title="No tickets in this section"
+                            title="በዚህ ክፍል ውስጥ ምንም ቲኬት የለም"
                             description={
                                 tab === 'won'
-                                    ? "You haven't won any raffles yet. Keep trying your luck!"
+                                    ? 'እስካሁን ምንም ዕጣ አላሸነፉም። ዕድልዎን መሞከርዎን ይቀጥሉ!'
                                     : tab === 'active'
-                                      ? "You don't have any active lottery tickets. Enter a live raffle to get started!"
-                                      : 'No tickets found for this status.'
+                                      ? 'ምንም ንቁ የሎተሪ ቲኬት የለዎትም። ለመጀመር የቀጥታ ዕጣ ይሳተፉ!'
+                                      : 'ለዚህ ሁኔታ ምንም ቲኬቶች አልተገኙም።'
                             }
                             action={
                                 <Button asChild size="sm">
                                     <Link href={lotteries()}>
-                                        Browse Live Raffles
+                                        የቀጥታ ዕጣዎችን ያስሱ
                                     </Link>
                                 </Button>
                             }
@@ -224,11 +224,11 @@ export default function AppTickets({ tickets, counts, filters }: Props) {
                 {tickets.pagination.last_page > 1 && (
                     <div className="text-muted-foreground flex items-center justify-between border-t pt-4 text-sm">
                         <p>
-                            Showing page{' '}
+                            ገጽ{' '}
                             <span className="text-foreground font-medium">
                                 {tickets.pagination.current_page}
                             </span>{' '}
-                            of{' '}
+                            ከ{' '}
                             <span className="text-foreground font-medium">
                                 {tickets.pagination.last_page}
                             </span>
@@ -246,7 +246,7 @@ export default function AppTickets({ tickets, counts, filters }: Props) {
                                     })
                                 }
                             >
-                                Previous
+                                ቀዳሚ
                             </Button>
                             <Button
                                 variant="outline"
@@ -263,7 +263,7 @@ export default function AppTickets({ tickets, counts, filters }: Props) {
                                     })
                                 }
                             >
-                                Next
+                                ቀጣይ
                             </Button>
                         </div>
                     </div>
@@ -276,7 +276,7 @@ export default function AppTickets({ tickets, counts, filters }: Props) {
 AppTickets.layout = {
     breadcrumbs: [
         {
-            title: 'My Tickets',
+            title: 'የእኔ ቲኬቶች',
             href: ticketsRoute(),
         },
     ],

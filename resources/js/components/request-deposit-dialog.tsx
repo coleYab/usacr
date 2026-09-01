@@ -54,10 +54,7 @@ export function RequestDepositDialog({
 
     const setFile = (file: File | null) => {
         if (file && file.size > MAX_SIZE_MB * 1024 * 1024) {
-            form.setError(
-                'receipt',
-                `Receipt must be ${MAX_SIZE_MB}MB or smaller.`,
-            );
+            form.setError('receipt', `ደረሰኝ መጠን ከ ${MAX_SIZE_MB}MB ማነስ አለበት።`);
             return;
         }
         form.setData('receipt', file);
@@ -88,17 +85,16 @@ export function RequestDepositDialog({
             <DialogContent className="sm:max-w-md">
                 <form onSubmit={submit}>
                     <DialogHeader>
-                        <DialogTitle>Request a Deposit</DialogTitle>
+                        <DialogTitle>የተቀማጭ ገንዘብ ጥያቄ</DialogTitle>
                         <DialogDescription>
-                            Upload a proof-of-payment receipt. A member of our
-                            team will review it and credit your wallet once
-                            approved.
+                            የክፍያ ማረጋገጫ ደረሰኝ ይስቀሉ። የቡድናችን አባል ከመረመረው በኋላ ሲፀድቅ ወደ
+                            ቦርሳዎ ገቢ ይደረጋል።
                         </DialogDescription>
                     </DialogHeader>
 
                     <div className="space-y-4 py-4">
                         <div className="space-y-2">
-                            <Label htmlFor="amount">Amount (USD)</Label>
+                            <Label htmlFor="amount">የገንዘብ መጠን (USD)</Label>
                             <Input
                                 id="amount"
                                 type="number"
@@ -119,7 +115,7 @@ export function RequestDepositDialog({
                         </div>
 
                         <div className="space-y-2">
-                            <Label>Receipt</Label>
+                            <Label>ደረሰኝ</Label>
                             <div
                                 role="button"
                                 tabIndex={0}
@@ -162,22 +158,20 @@ export function RequestDepositDialog({
                                             className="text-destructive inline-flex items-center gap-1 text-xs font-medium"
                                         >
                                             <X className="size-3.5" />
-                                            Remove
+                                            አስወግድ
                                         </button>
                                     </>
                                 ) : (
                                     <>
                                         <UploadCloud className="text-muted-foreground size-8" />
                                         <p className="text-sm font-medium">
-                                            Drag &amp; drop your receipt here,
-                                            or{' '}
+                                            ደረሰኝዎን እዚህ ይጎትቱ እና ይልቀቁ፣ ወይም{' '}
                                             <span className="text-primary">
-                                                browse
+                                                ይምረጡ
                                             </span>
                                         </p>
                                         <p className="text-muted-foreground text-xs">
-                                            JPG, PNG or PDF up to {MAX_SIZE_MB}
-                                            MB
+                                            JPG, PNG ወይም PDF እስከ {MAX_SIZE_MB}MB
                                         </p>
                                     </>
                                 )}
@@ -206,7 +200,7 @@ export function RequestDepositDialog({
                             onClick={() => handleClose(false)}
                             disabled={form.processing}
                         >
-                            Cancel
+                            ይቅር
                         </Button>
                         <Button
                             type="submit"
@@ -216,7 +210,7 @@ export function RequestDepositDialog({
                                 !form.data.receipt
                             }
                         >
-                            {form.processing ? 'Submitting…' : 'Submit Request'}
+                            {form.processing ? 'በመላክ ላይ…' : 'ጥያቄውን ላክ'}
                         </Button>
                     </DialogFooter>
                 </form>

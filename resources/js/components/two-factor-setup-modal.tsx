@@ -104,7 +104,7 @@ function TwoFactorSetupStep({
                     <div className="relative flex w-full items-center justify-center">
                         <div className="bg-border absolute inset-0 top-1/2 h-px w-full" />
                         <span className="bg-card relative px-2 py-1">
-                            or, enter the code manually
+                            ወይም ኮዱን በእጅ ያስገቡ
                         </span>
                     </div>
 
@@ -210,7 +210,7 @@ function TwoFactorVerificationStep({
                                 onClick={onBack}
                                 disabled={processing}
                             >
-                                Back
+                                ወደ ኋላ
                             </Button>
                             <Button
                                 type="submit"
@@ -219,7 +219,7 @@ function TwoFactorVerificationStep({
                                     processing || code.length < OTP_MAX_LENGTH
                                 }
                             >
-                                Confirm
+                                አረጋግጥ
                             </Button>
                         </div>
                     </div>
@@ -262,27 +262,26 @@ export default function TwoFactorSetupModal({
     }>(() => {
         if (twoFactorEnabled) {
             return {
-                title: 'Two-factor authentication enabled',
+                title: 'ባለሁለት-ደረጃ ማረጋገጫ ነቅቷል',
                 description:
-                    'Two-factor authentication is now enabled. Scan the QR code or enter the setup key in your authenticator app.',
-                buttonText: 'Close',
+                    'ባለሁለት-ደረጃ ማረጋገጫ አሁን በርቷል። የQR ኮዱን ይቃኙ ወይም የማዋቀሪያውን ቁልፍ በማረጋገጫ መተግበሪያዎ ውስጥ ያስገቡ።',
+                buttonText: 'ዝጋ',
             };
         }
 
         if (showVerificationStep) {
             return {
-                title: 'Verify authentication code',
-                description:
-                    'Enter the 6-digit code from your authenticator app',
-                buttonText: 'Continue',
+                title: 'የማረጋገጫ ኮድ ያረጋግጡ',
+                description: 'ከማረጋገጫ መተግበሪያዎ ባለ 6-አሃዝ ኮድ ያስገቡ',
+                buttonText: 'ቀጥል',
             };
         }
 
         return {
-            title: 'Enable two-factor authentication',
+            title: 'ባለሁለት-ደረጃ ማረጋገጫን አንቃ',
             description:
-                'To finish enabling two-factor authentication, scan the QR code or enter the setup key in your authenticator app',
-            buttonText: 'Continue',
+                'ባለሁለት-ደረጃ ማረጋገጫን ማዋቀር ለማጠናቀቅ፣ የQR ኮዱን ይቃኙ ወይም የማዋቀሪያ ቁልፉን በማረጋገጫ መተግበሪያዎ ውስጥ ያስገቡ',
+            buttonText: 'ቀጥል',
         };
     }, [twoFactorEnabled, showVerificationStep]);
 

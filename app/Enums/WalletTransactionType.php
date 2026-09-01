@@ -27,11 +27,11 @@ enum WalletTransactionType: string
     public function label(): string
     {
         return match ($this) {
-            self::DepositCredit => 'Deposit',
-            self::TicketPurchase => 'Ticket Purchase',
-            self::AdminCredit => 'Admin Credit',
-            self::AdminDebit => 'Admin Debit',
-            self::Refund => 'Refund',
+            self::DepositCredit => 'ተቀማጭ ገንዘብ',
+            self::TicketPurchase => 'የቲኬት ግዢ',
+            self::AdminCredit => 'የአድሚን ጭማሪ',
+            self::AdminDebit => 'የአድሚን ቅነሳ',
+            self::Refund => 'ተመላሽ',
         };
     }
 }
