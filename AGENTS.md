@@ -34,6 +34,10 @@ wallet and spend that balance buying tickets in item-based lotteries (raffles).
 - **Automatically commit and push to GitHub after each finished prompt/task** — do not
   wait to be asked. Commit only the intended files, write a concise commit message in the
   repo's style, and push to `origin/main`.
+- **Always push the fresh `build.zip` on every finished prompt/task.** After the code
+  changes are committed, also `git add build.zip` (the fresh build artifact at the repo
+  root) and include it in the same push — the deployment/server relies on the current
+  `build.zip` being on `origin/main`. Never finish without pushing it.
 
 <laravel-boost-guidelines>
 === foundation rules ===
