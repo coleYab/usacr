@@ -14,7 +14,7 @@ test('guests cannot purchase lottery tickets', function () {
     $lottery = Lottery::factory()->active()->create();
 
     $this->post(route('app.lotteries.purchase', $lottery), ['quantity' => 1])
-        ->assertRedirect(route('login'));
+        ->assertRedirect(route('home'));
 });
 
 test('user can purchase tickets atomically when having sufficient balance', function () {

@@ -10,7 +10,7 @@ test('a guest cannot submit a deposit request', function () {
     $this->post(route('app.wallet.deposits.store'), [
         'amount' => '50.00',
         'receipt' => UploadedFile::fake()->image('receipt.png'),
-    ])->assertRedirect(route('login'));
+    ])->assertRedirect(route('home'));
 });
 
 test('a user can submit a deposit request that is stored as pending', function () {

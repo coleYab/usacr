@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DepositController as AdminDepositController;
 use App\Http\Controllers\Admin\DrawController as AdminDrawController;
 use App\Http\Controllers\Admin\LotteryController as AdminLotteryController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Auth\TelegramAuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LotteryController;
@@ -18,7 +19,19 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('results', [ResultController::class, 'index'])->name('results');
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::post('auth/telegram', [TelegramAuthController::class, 'authenticate'])
+    ->middleware('telegram')
+    ->name('auth.telegram');
+
+Route::post('auth/telegram/phone', [TelegramAuthController::class, 'storePhone'])
+    ->middleware(['auth', 'telegram'])
+    ->name('auth.telegram.phone');
+
+Route::post('auth/telegram/logout', [TelegramAuthController::class, 'logout'])
+    ->middleware('auth')
+    ->name('auth.telegram.logout');
+
+Route::middleware(['auth'])->group(function () {
     Route::redirect('dashboard', '/app/dashboard')->name('dashboard');
 
     Route::prefix('app')->name('app.')->group(function () {
@@ -39,7 +52,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 });
 
-Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::redirect('/', '/admin/dashboard');
 
     Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');

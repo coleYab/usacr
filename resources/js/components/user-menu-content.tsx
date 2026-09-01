@@ -1,4 +1,4 @@
-import { Link, router } from '@inertiajs/react';
+import { Link, router, useForm } from '@inertiajs/react';
 import { LogOut, Settings, UserRound } from 'lucide-react';
 import {
     DropdownMenuGroup,
@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { UserInfo } from '@/components/user-info';
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
-import { logout } from '@/routes';
+import { logout } from '@/routes/auth/telegram';
 import { edit as editAppearance } from '@/routes/appearance';
 import { edit } from '@/routes/profile';
 import type { User } from '@/types';
@@ -19,10 +19,12 @@ type Props = {
 
 export function UserMenuContent({ user }: Props) {
     const cleanup = useMobileNavigation();
+    const { post } = useForm();
 
     const handleLogout = () => {
         cleanup();
         router.flushAll();
+        post(logout.url());
     };
 
     return (
@@ -59,16 +61,15 @@ export function UserMenuContent({ user }: Props) {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-                <Link
-                    className="block w-full cursor-pointer"
-                    href={logout()}
-                    as="button"
+                <button
+                    type="button"
+                    className="flex w-full cursor-pointer items-center"
                     onClick={handleLogout}
                     data-test="logout-button"
                 >
                     <LogOut className="mr-2" />
                     ውጣ
-                </Link>
+                </button>
             </DropdownMenuItem>
         </>
     );

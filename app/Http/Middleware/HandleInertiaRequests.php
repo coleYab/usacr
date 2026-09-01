@@ -58,6 +58,9 @@ class HandleInertiaRequests extends Middleware
                 'toast' => $this->buildToast($request),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'telegram' => [
+                'bot_username' => config('telegram.bot_username') ?: null,
+            ],
         ];
     }
 

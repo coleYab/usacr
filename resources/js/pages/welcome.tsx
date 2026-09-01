@@ -1,4 +1,4 @@
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import {
     ArrowRight,
     CheckCircle2,
@@ -18,14 +18,14 @@ import {
     X,
     Zap,
 } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import AppLogo from '@/components/app-logo';
 import { LotteryCard } from '@/components/lottery-card';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { login, register } from '@/routes';
+import { TelegramLoginButton } from '@/components/telegram/telegram-login-button';
 import {
     dashboard as appDashboard,
     lotteries as lotteriesRoute,
@@ -33,6 +33,7 @@ import {
     wallet as walletRoute,
 } from '@/routes/app';
 import { show as showLottery } from '@/routes/app/lotteries';
+import { dashboard as adminDashboard } from '@/routes/admin';
 import type { Auth, LotteryRow } from '@/types';
 
 type RecentWinner = {
@@ -90,6 +91,19 @@ export default function Welcome({
     const [categoryFilter, setCategoryFilter] = useState<
         'all' | 'ending_soon' | 'under_25' | 'luxury'
     >('all');
+
+    useEffect(() => {
+        if (!auth.user) {
+            return;
+        }
+
+        const target =
+            auth.user.role === 'admin' ? adminDashboard() : appDashboard();
+
+        router.visit(target, {
+            preserveState: false,
+        });
+    }, [auth.user]);
 
     const filteredLotteries = useMemo(() => {
         if (!featured_lotteries) {
@@ -169,19 +183,7 @@ export default function Welcome({
                                 </Button>
                             ) : (
                                 <div className="hidden items-center gap-2 sm:flex">
-                                    <Button variant="ghost" size="sm" asChild>
-                                        <Link href={login()}>ግባ</Link>
-                                    </Button>
-                                    <Button
-                                        size="sm"
-                                        asChild
-                                        className="gap-1.5 shadow-xs"
-                                    >
-                                        <Link href={register()}>
-                                            ጀምር
-                                            <ArrowRight className="size-3.5" />
-                                        </Link>
-                                    </Button>
+                                    <TelegramLoginButton size="sm" />
                                 </div>
                             )}
 
@@ -271,35 +273,7 @@ export default function Welcome({
                                             </Link>
                                         </Button>
                                     ) : (
-                                        <div className="grid grid-cols-2 gap-2">
-                                            <Button
-                                                variant="outline"
-                                                asChild
-                                                className="w-full justify-center"
-                                            >
-                                                <Link
-                                                    href={login()}
-                                                    onClick={() =>
-                                                        setMobileMenuOpen(false)
-                                                    }
-                                                >
-                                                    ግባ
-                                                </Link>
-                                            </Button>
-                                            <Button
-                                                asChild
-                                                className="w-full justify-center"
-                                            >
-                                                <Link
-                                                    href={register()}
-                                                    onClick={() =>
-                                                        setMobileMenuOpen(false)
-                                                    }
-                                                >
-                                                    ተመዝገብ
-                                                </Link>
-                                            </Button>
-                                        </div>
+                                        <TelegramLoginButton className="w-full justify-center" />
                                     )}
                                 </div>
                             </div>
@@ -804,26 +778,7 @@ export default function Welcome({
                                         </Link>
                                     </Button>
                                 ) : (
-                                    <>
-                                        <Button
-                                            size="lg"
-                                            asChild
-                                            className="w-full gap-2 font-semibold sm:w-auto"
-                                        >
-                                            <Link href={register()}>
-                                                በነጻ ይመዝገቡ
-                                                <ArrowRight className="size-4" />
-                                            </Link>
-                                        </Button>
-                                        <Button
-                                            size="lg"
-                                            variant="outline"
-                                            asChild
-                                            className="w-full sm:w-auto"
-                                        >
-                                            <Link href={login()}>ግባ</Link>
-                                        </Button>
-                                    </>
+                                    <TelegramLoginButton className="w-full sm:w-auto" />
                                 )}
                             </div>
                         </div>
@@ -873,14 +828,14 @@ export default function Welcome({
                         ) : (
                             <>
                                 <Link
-                                    href={login()}
+                                    href={appDashboard()}
                                     className="text-muted-foreground hover:text-foreground flex flex-col items-center gap-1 py-1"
                                 >
                                     <User className="size-4" />
                                     <span>ግባ</span>
                                 </Link>
                                 <Link
-                                    href={register()}
+                                    href={appDashboard()}
                                     className="text-primary flex flex-col items-center gap-1 py-1 font-bold"
                                 >
                                     <Zap className="size-4" />
@@ -929,7 +884,7 @@ export default function Welcome({
                                 </Link>
                             ) : (
                                 <Link
-                                    href={login()}
+                                    href={appDashboard()}
                                     className="hover:text-foreground transition-colors"
                                 >
                                     ግባ

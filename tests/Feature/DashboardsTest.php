@@ -41,7 +41,7 @@ test('user can view player dashboard with wallet balance and ending lotteries', 
     );
 });
 
-test('guest is redirected to login when visiting dashboards', function () {
-    $this->get(route('admin.dashboard'))->assertRedirect(route('login'));
-    $this->get(route('app.dashboard'))->assertRedirect(route('login'));
+test('guest is redirected to landing when visiting dashboards', function () {
+    $this->get(route('admin.dashboard'))->assertRedirect(route('home'));
+    $this->get(route('app.dashboard'))->assertRedirect(route('home'));
 });

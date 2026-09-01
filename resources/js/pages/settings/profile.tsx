@@ -1,5 +1,4 @@
 import { Form, Head, usePage } from '@inertiajs/react';
-import { Link } from '@inertiajs/react';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import DeleteUser from '@/components/delete-user';
 import Heading from '@/components/heading';
@@ -8,21 +7,57 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { edit } from '@/routes/profile';
+import { phone } from '@/routes/auth/telegram';
+import { csrfHeaders } from '@/lib/csrf';
+import { useTelegram } from '@/providers/telegram-provider';
+import { useState } from 'react';
+import { toast } from 'sonner';
+import { Spinner } from '@/components/ui/spinner';
 import type { Auth } from '@/types';
-import { send } from '@/routes/verification';
 
 type PageProps = {
     auth: Auth;
 };
 
-export default function Profile({
-    mustVerifyEmail,
-    status,
-}: {
-    mustVerifyEmail: boolean;
-    status?: string;
-}) {
+export default function Profile() {
     const { auth } = usePage<PageProps>().props;
+    const { shareContact } = useTelegram();
+    const [phoneProcessing, setPhoneProcessing] = useState(false);
+
+    const handleUpdatePhone = async () => {
+        setPhoneProcessing(true);
+
+        try {
+            const contact = await shareContact();
+
+            if (!contact) {
+                toast.error('የስልክ ቁጥር መጋራት አልተሳካም።');
+
+                return;
+            }
+
+            const response = await fetch(phone.url(), {
+                method: 'POST',
+                headers: csrfHeaders(),
+                credentials: 'same-origin',
+                body: JSON.stringify({ contact: contact.raw }),
+            });
+
+            if (!response.ok) {
+                const payload = (await response.json().catch(() => null)) as {
+                    error?: string;
+                } | null;
+                toast.error(payload?.error ?? 'የስልክ ቁጥር ቆጣቢ አልተሳካም።');
+
+                return;
+            }
+
+            toast.success('የስልክ ቁጥርዎ ተሻሽሏል።');
+            setTimeout(() => window.location.reload(), 600);
+        } finally {
+            setPhoneProcessing(false);
+        }
+    };
 
     return (
         <>
@@ -34,7 +69,7 @@ export default function Profile({
                 <Heading
                     variant="small"
                     title="መገለጫ"
-                    description="ስምዎን እና የኢሜይል አድራሻዎን ያዘምኑ"
+                    description="ስምዎን ያዘምኑ እና የስልክ ቁጥርዎን ያስተዳድሩ"
                 />
 
                 <Form
@@ -66,48 +101,43 @@ export default function Profile({
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="email">የኢሜይል አድራሻ</Label>
+                                <Label>የስልክ ቁጥር</Label>
 
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    className="mt-1 block w-full"
-                                    defaultValue={auth.user.email}
-                                    name="email"
-                                    required
-                                    autoComplete="username"
-                                    placeholder="የኢሜይል አድራሻ"
-                                />
-
-                                <InputError
-                                    className="mt-2"
-                                    message={errors.email}
-                                />
+                                <div className="flex items-center gap-2">
+                                    <Input
+                                        value={auth.user.phone ?? '—'}
+                                        readOnly
+                                        disabled
+                                        className="bg-muted/40 mt-1 block w-full"
+                                    />
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        onClick={handleUpdatePhone}
+                                        disabled={phoneProcessing}
+                                        className="mt-1 shrink-0"
+                                    >
+                                        {phoneProcessing && <Spinner />}
+                                        አዘምን
+                                    </Button>
+                                </div>
                             </div>
 
-                            {mustVerifyEmail &&
-                                auth.user.email_verified_at === null && (
-                                    <div>
-                                        <p className="text-muted-foreground -mt-4 text-sm">
-                                            የኢሜይል አድራሻዎ አልተረጋገጠም።{' '}
-                                            <Link
-                                                href={send()}
-                                                as="button"
-                                                className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
-                                            >
-                                                የማረጋገጫ ኢሜይሉን በድጋሚ ለመላክ እዚህ ይጫኑ።
-                                            </Link>
-                                        </p>
+                            <div className="grid gap-2">
+                                <Label>የቴሌግራም መለያ</Label>
 
-                                        {status ===
-                                            'verification-link-sent' && (
-                                            <div className="mt-2 text-sm font-medium text-green-600">
-                                                አዲስ የማረጋገጫ ሊንክ ወደ ኢሜይል አድራሻዎ
-                                                ተልኳል።
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
+                                <Input
+                                    value={
+                                        auth.user.telegram_username
+                                            ? `@${auth.user.telegram_username}`
+                                            : (auth.user.telegram_id?.toString() ??
+                                              '—')
+                                    }
+                                    readOnly
+                                    disabled
+                                    className="bg-muted/40 mt-1 block w-full"
+                                />
+                            </div>
 
                             <div className="flex items-center gap-4">
                                 <Button

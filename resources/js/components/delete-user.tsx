@@ -1,24 +1,17 @@
 import { Form } from '@inertiajs/react';
-import { useRef } from 'react';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import Heading from '@/components/heading';
-import InputError from '@/components/input-error';
-import PasswordInput from '@/components/password-input';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
-    DialogClose,
     DialogContent,
     DialogDescription,
     DialogFooter,
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
 
 export default function DeleteUser() {
-    const passwordInput = useRef<HTMLInputElement>(null);
-
     return (
         <div className="space-y-6">
             <Heading
@@ -47,7 +40,6 @@ export default function DeleteUser() {
                         <DialogTitle>እርግጠኛ ነዎት መለያዎን መሰረዝ ይፈልጋሉ?</DialogTitle>
                         <DialogDescription>
                             መለያዎ አንዴ ከተሰረዘ፣ ሁሉም ተዛማጅ መረጃዎች እና ሀብቶች በቋሚነት ይጠፋሉ።
-                            መለያዎን በቋሚነት መሰረዝ እንደሚፈልጉ ለማረጋገጥ እባክዎ የይለፍ ቃልዎን ያስገቡ።
                         </DialogDescription>
 
                         <Form
@@ -55,57 +47,20 @@ export default function DeleteUser() {
                             options={{
                                 preserveScroll: true,
                             }}
-                            onError={() => passwordInput.current?.focus()}
                             resetOnSuccess
                             className="space-y-6"
                         >
-                            {({ resetAndClearErrors, processing, errors }) => (
-                                <>
-                                    <div className="grid gap-2">
-                                        <Label
-                                            htmlFor="password"
-                                            className="sr-only"
-                                        >
-                                            የይለፍ ቃል
-                                        </Label>
-
-                                        <PasswordInput
-                                            id="password"
-                                            name="password"
-                                            ref={passwordInput}
-                                            placeholder="የይለፍ ቃል"
-                                            autoComplete="current-password"
-                                        />
-
-                                        <InputError message={errors.password} />
-                                    </div>
-
-                                    <DialogFooter className="gap-2">
-                                        <DialogClose asChild>
-                                            <Button
-                                                variant="secondary"
-                                                onClick={() =>
-                                                    resetAndClearErrors()
-                                                }
-                                            >
-                                                ይቅር
-                                            </Button>
-                                        </DialogClose>
-
-                                        <Button
-                                            variant="destructive"
-                                            disabled={processing}
-                                            asChild
-                                        >
-                                            <button
-                                                type="submit"
-                                                data-test="confirm-delete-user-button"
-                                            >
-                                                መለያ ሰርዝ
-                                            </button>
-                                        </Button>
-                                    </DialogFooter>
-                                </>
+                            {({ processing }) => (
+                                <DialogFooter className="gap-2 sm:justify-start">
+                                    <Button
+                                        type="submit"
+                                        variant="destructive"
+                                        disabled={processing}
+                                        className="rounded-md"
+                                    >
+                                        {processing ? 'በሂደት ላይ…' : 'መለያ ሰርዝ'}
+                                    </Button>
+                                </DialogFooter>
                             )}
                         </Form>
                     </DialogContent>

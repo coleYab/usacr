@@ -17,9 +17,10 @@ class UserSeeder extends Seeder
 
         // 1. Super Admin
         $admin1 = User::updateOrCreate(
-            ['email' => 'yabume13@gmail.com'],
+            ['telegram_id' => 100000001],
             [
                 'name' => 'Yabu Admin',
+                'email' => 'yabume13@gmail.com',
                 'password' => $password,
                 'role' => User::ROLE_ADMIN,
                 'status' => User::STATUS_ACTIVE,
@@ -30,9 +31,10 @@ class UserSeeder extends Seeder
 
         // 1b. Yabume Primary User Account
         $yabuUser = User::updateOrCreate(
-            ['email' => 'yabume123@gmail.com'],
+            ['telegram_id' => 100000002],
             [
                 'name' => 'Yeabsira Moges',
+                'email' => 'yabume123@gmail.com',
                 'password' => $password,
                 'role' => User::ROLE_USER,
                 'status' => User::STATUS_ACTIVE,
@@ -43,9 +45,10 @@ class UserSeeder extends Seeder
 
         // 2. Secondary Compliance & Operations Admin
         $admin2 = User::updateOrCreate(
-            ['email' => 'admin@itemlottery.com'],
+            ['telegram_id' => 100000003],
             [
                 'name' => 'Chief Operations Admin',
+                'email' => 'admin@itemlottery.com',
                 'password' => $password,
                 'role' => User::ROLE_ADMIN,
                 'status' => User::STATUS_ACTIVE,
@@ -56,9 +59,10 @@ class UserSeeder extends Seeder
 
         // 3. Primary Tester / User Account
         $user1 = User::updateOrCreate(
-            ['email' => 'user@itemlottery.com'],
+            ['telegram_id' => 100000004],
             [
                 'name' => 'Alex Tester',
+                'email' => 'user@itemlottery.com',
                 'password' => $password,
                 'role' => User::ROLE_USER,
                 'status' => User::STATUS_ACTIVE,
@@ -69,9 +73,10 @@ class UserSeeder extends Seeder
 
         // 4. Secondary Test User
         $user2 = User::updateOrCreate(
-            ['email' => 'demo@itemlottery.com'],
+            ['telegram_id' => 100000005],
             [
                 'name' => 'Sarah Connor',
+                'email' => 'demo@itemlottery.com',
                 'password' => $password,
                 'role' => User::ROLE_USER,
                 'status' => User::STATUS_ACTIVE,
@@ -82,9 +87,10 @@ class UserSeeder extends Seeder
 
         // 5. Suspended User
         $userSuspended = User::updateOrCreate(
-            ['email' => 'suspended@itemlottery.com'],
+            ['telegram_id' => 100000006],
             [
                 'name' => 'Suspended Account',
+                'email' => 'suspended@itemlottery.com',
                 'password' => $password,
                 'role' => User::ROLE_USER,
                 'status' => User::STATUS_SUSPENDED,
@@ -95,9 +101,10 @@ class UserSeeder extends Seeder
 
         // 6. Banned User
         $userBanned = User::updateOrCreate(
-            ['email' => 'banned@itemlottery.com'],
+            ['telegram_id' => 100000007],
             [
                 'name' => 'Banned Spammer',
+                'email' => 'banned@itemlottery.com',
                 'password' => $password,
                 'role' => User::ROLE_USER,
                 'status' => User::STATUS_BANNED,
@@ -135,11 +142,12 @@ class UserSeeder extends Seeder
             ['name' => 'Clark Kent', 'email' => 'clark.kent@example.com'],
         ];
 
-        foreach ($communityUsers as $uData) {
+        foreach ($communityUsers as $index => $uData) {
             $user = User::updateOrCreate(
-                ['email' => $uData['email']],
+                ['telegram_id' => 101000000 + $index],
                 [
                     'name' => $uData['name'],
+                    'email' => $uData['email'],
                     'password' => $password,
                     'role' => User::ROLE_USER,
                     'status' => User::STATUS_ACTIVE,

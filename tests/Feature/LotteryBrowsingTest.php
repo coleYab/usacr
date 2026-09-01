@@ -7,7 +7,7 @@ use Inertia\Testing\AssertableInertia as Assert;
 
 test('guests are redirected to login when visiting lotteries list', function () {
     $this->get(route('app.lotteries'))
-        ->assertRedirect(route('login'));
+        ->assertRedirect(route('home'));
 });
 
 test('authenticated users can browse active lotteries', function () {
