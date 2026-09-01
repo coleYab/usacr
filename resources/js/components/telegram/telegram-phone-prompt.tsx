@@ -1,3 +1,4 @@
+import { router } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { Phone } from 'lucide-react';
@@ -20,13 +21,13 @@ type Props = {
 };
 
 export function TelegramPhonePrompt({ onSaved }: Props) {
-    const { phonePromptOpen, setPhonePromptOpen, shareContact } = useTelegram();
-    const [shareRaw, setShareRaw] = useState<string | null>(null);
+    const { phonePromptOpen, setPhonePromptOpen, shareContact, initDataRaw } =
+        useTelegram();
     const [processing, setProcessing] = useState(false);
 
     useEffect(() => {
         if (!phonePromptOpen) {
-            setShareRaw(null);
+            setProcessing(false);
         }
     }, [phonePromptOpen]);
 
@@ -42,25 +43,13 @@ export function TelegramPhonePrompt({ onSaved }: Props) {
                 return;
             }
 
-            setShareRaw(contact.raw);
-        } finally {
-            setProcessing(false);
-        }
-    };
-
-    const handleSubmit = async () => {
-        if (!shareRaw) {
-            return;
-        }
-
-        setProcessing(true);
-
-        try {
             const response = await fetch(phone.url(), {
                 method: 'POST',
-                headers: csrfHeaders(),
+                headers: csrfHeaders({
+                    'X-Telegram-Init-Data': initDataRaw,
+                }),
                 credentials: 'same-origin',
-                body: JSON.stringify({ contact: shareRaw }),
+                body: JSON.stringify({ contact: contact.raw }),
             });
 
             if (!response.ok) {
@@ -73,9 +62,11 @@ export function TelegramPhonePrompt({ onSaved }: Props) {
             }
 
             setPhonePromptOpen(false);
-            setShareRaw(null);
             toast.success('የስልክ ቁጥርዎ ተመዝግቧል።');
+            router.reload({ only: ['auth'] });
             onSaved?.();
+        } catch {
+            toast.error('ከተገናኘ አገልግሎት ጋር መገናኘት አልተቻለም።');
         } finally {
             setProcessing(false);
         }
@@ -92,32 +83,19 @@ export function TelegramPhonePrompt({ onSaved }: Props) {
                 </DialogHeader>
 
                 <DialogFooter>
-                    {shareRaw === null ? (
-                        <Button
-                            type="button"
-                            onClick={handleShare}
-                            disabled={processing}
-                            className="w-full"
-                            variant="secondary"
-                        >
-                            {processing ? (
-                                <Spinner />
-                            ) : (
-                                <Phone className="size-4" />
-                            )}
-                            የስልክ ቁጥር ከቴሌግራም ያግኙ
-                        </Button>
-                    ) : (
-                        <Button
-                            type="button"
-                            onClick={handleSubmit}
-                            disabled={processing}
-                            className="w-full"
-                        >
-                            {processing && <Spinner />}
-                            አስቀምጥ
-                        </Button>
-                    )}
+                    <Button
+                        type="button"
+                        onClick={handleShare}
+                        disabled={processing}
+                        className="w-full"
+                    >
+                        {processing ? (
+                            <Spinner />
+                        ) : (
+                            <Phone className="size-4" />
+                        )}
+                        የስልክ ቁጥር ከቴሌግራም ያግኙ
+                    </Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

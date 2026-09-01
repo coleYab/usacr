@@ -24,7 +24,7 @@ Route::post('auth/telegram', [TelegramAuthController::class, 'authenticate'])
     ->name('auth.telegram');
 
 Route::post('auth/telegram/phone', [TelegramAuthController::class, 'storePhone'])
-    ->middleware(['auth', 'telegram'])
+    ->middleware('auth')
     ->name('auth.telegram.phone');
 
 Route::post('auth/telegram/logout', [TelegramAuthController::class, 'logout'])

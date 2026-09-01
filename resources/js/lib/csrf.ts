@@ -5,14 +5,33 @@ function readCookie(name: string): string | undefined {
 }
 
 export function csrfToken(): string {
-    return readCookie('XSRF-TOKEN') ?? '';
+    const metaToken =
+        typeof document !== 'undefined'
+            ? document
+                  .querySelector('meta[name="csrf-token"]')
+                  ?.getAttribute('content')
+            : null;
+
+    return metaToken || readCookie('XSRF-TOKEN') || '';
 }
 
-export function csrfHeaders(): Record<string, string> {
-    return {
+export function csrfHeaders(
+    extra?: Record<string, string | undefined>,
+): Record<string, string> {
+    const headers: Record<string, string> = {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         'X-XSRF-TOKEN': csrfToken(),
         'X-Requested-With': 'XMLHttpRequest',
     };
+
+    if (extra) {
+        for (const [key, val] of Object.entries(extra)) {
+            if (val !== undefined) {
+                headers[key] = val;
+            }
+        }
+    }
+
+    return headers;
 }

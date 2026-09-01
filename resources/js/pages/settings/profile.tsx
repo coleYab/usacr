@@ -1,4 +1,4 @@
-import { Form, Head, usePage } from '@inertiajs/react';
+import { Form, Head, router, usePage } from '@inertiajs/react';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import DeleteUser from '@/components/delete-user';
 import Heading from '@/components/heading';
@@ -21,7 +21,7 @@ type PageProps = {
 
 export default function Profile() {
     const { auth } = usePage<PageProps>().props;
-    const { shareContact } = useTelegram();
+    const { shareContact, initDataRaw } = useTelegram();
     const [phoneProcessing, setPhoneProcessing] = useState(false);
 
     const handleUpdatePhone = async () => {
@@ -38,7 +38,9 @@ export default function Profile() {
 
             const response = await fetch(phone.url(), {
                 method: 'POST',
-                headers: csrfHeaders(),
+                headers: csrfHeaders({
+                    'X-Telegram-Init-Data': initDataRaw,
+                }),
                 credentials: 'same-origin',
                 body: JSON.stringify({ contact: contact.raw }),
             });
@@ -53,7 +55,9 @@ export default function Profile() {
             }
 
             toast.success('የስልክ ቁጥርዎ ተሻሽሏል።');
-            setTimeout(() => window.location.reload(), 600);
+            router.reload({ only: ['auth'] });
+        } catch {
+            toast.error('ከተገናኘ አገልግሎት ጋር መገናኘት አልተቻለም።');
         } finally {
             setPhoneProcessing(false);
         }

@@ -61,10 +61,8 @@ test('an admin telegram id is assigned the admin role', function () {
     expect($user->role)->toBe(User::ROLE_ADMIN);
 });
 
-test('a phone number can be stored for an authenticated telegram user', function () {
+test('a phone number can be stored for an authenticated telegram user without initData header', function () {
     $user = User::factory()->create(['telegram_id' => 888111]);
-
-    $initData = signedTelegramInitData(['id' => $user->telegram_id]);
 
     // Build a validly-signed contact payload (same signing scheme as initData).
     $contactData = ['auth_date' => now()->getTimestamp(), 'contact' => json_encode(['user_id' => $user->telegram_id, 'phone_number' => '+251911223344'])];
@@ -77,11 +75,56 @@ test('a phone number can be stored for an authenticated telegram user', function
     $rawContact = http_build_query($contactData).'&hash='.$hash;
 
     $this->actingAs($user)
-        ->postJson(route('auth.telegram.phone'), ['contact' => $rawContact], ['X-Telegram-Init-Data' => $initData])
+        ->postJson(route('auth.telegram.phone'), ['contact' => $rawContact])
         ->assertOk()
         ->assertJsonPath('phone', '+251911223344');
 
     expect($user->fresh()->phone)->toBe('+251911223344');
+});
+
+test('storing phone fails if contact user_id does not match authenticated user', function () {
+    $user = User::factory()->create(['telegram_id' => 888111]);
+
+    // Signed contact payload for a DIFFERENT user id (999222).
+    $contactData = ['auth_date' => now()->getTimestamp(), 'contact' => json_encode(['user_id' => 999222, 'phone_number' => '+251911223344'])];
+    ksort($contactData);
+    $dataCheckString = collect($contactData)
+        ->map(static fn ($value, $key): string => $key.'='.$value)
+        ->implode("\n");
+    $secretKey = hash_hmac('sha256', config('telegram.bot_token'), 'WebAppData', true);
+    $hash = hash_hmac('sha256', $dataCheckString, $secretKey);
+    $rawContact = http_build_query($contactData).'&hash='.$hash;
+
+    $this->actingAs($user)
+        ->postJson(route('auth.telegram.phone'), ['contact' => $rawContact])
+        ->assertStatus(422)
+        ->assertJsonPath('error', 'Contact does not match the authenticated user.');
+});
+
+test('storing phone fails if contact signature is invalid', function () {
+    $user = User::factory()->create(['telegram_id' => 888111]);
+
+    $contactData = ['auth_date' => now()->getTimestamp(), 'contact' => json_encode(['user_id' => $user->telegram_id, 'phone_number' => '+251911223344'])];
+    $rawContact = http_build_query($contactData).'&hash=invalid_signature';
+
+    $this->actingAs($user)
+        ->postJson(route('auth.telegram.phone'), ['contact' => $rawContact])
+        ->assertStatus(422)
+        ->assertJsonPath('error', 'Invalid contact data.');
+});
+
+test('storing phone fails if contact payload is missing', function () {
+    $user = User::factory()->create(['telegram_id' => 888111]);
+
+    $this->actingAs($user)
+        ->postJson(route('auth.telegram.phone'), [])
+        ->assertStatus(422)
+        ->assertJsonPath('error', 'Missing contact data.');
+});
+
+test('unauthenticated request to store phone is rejected', function () {
+    $this->postJson(route('auth.telegram.phone'), ['contact' => 'something'])
+        ->assertStatus(401);
 });
 
 test('a user can log out via the telegram logout endpoint', function () {
