@@ -1,12 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import {
-    LayoutGrid,
-    Menu,
-    Sparkles,
-    Ticket,
-    Trophy,
-    Wallet,
-} from 'lucide-react';
+import { Gift, LayoutGrid, Menu, Ticket, Trophy, Wallet } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { AppContent } from '@/components/app-content';
 import { Breadcrumbs } from '@/components/breadcrumbs';
@@ -39,7 +32,7 @@ type Props = AppLayoutProps & {
 
 const mainNavItems: NavItem[] = [
     { title: 'ዳሽቦርድ', href: dashboard(), icon: LayoutGrid },
-    { title: 'ዕጣዎች', href: lotteries(), icon: Sparkles },
+    { title: 'ዕጣዎች', href: lotteries(), icon: Gift },
     { title: 'የእኔ ቲኬቶች', href: tickets(), icon: Ticket },
     { title: 'ውጤቶች', href: results(), icon: Trophy },
     { title: 'ቦርሳ', href: wallet(), icon: Wallet },

@@ -2,9 +2,9 @@ import { Head, Link } from '@inertiajs/react';
 import {
     ArrowRight,
     CircleDollarSign,
+    Gift,
     Plus,
     Shield,
-    Sparkles,
     Ticket as TicketIcon,
     Trophy,
     Users,
@@ -106,7 +106,7 @@ export default function AdminDashboard({
                     <StatCard
                         label="Active Lotteries"
                         value={stats.active_lotteries_count}
-                        icon={Sparkles}
+                        icon={Gift}
                     />
                     <StatCard
                         label="Tickets Sold Today"

@@ -30,9 +30,7 @@ export function TicketStatusBadge({
                 className,
             )}
         >
-            {isWon && (
-                <Trophy className="size-3 animate-pulse text-amber-500" />
-            )}
+            {isWon && <Trophy className="size-3 text-amber-500" />}
             {label ?? status}
         </Badge>
     );

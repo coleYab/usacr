@@ -6,11 +6,11 @@ import {
     Flame,
     Hash,
     HelpCircle,
+    Home,
     Lock,
     Menu,
     Package,
     ShieldCheck,
-    Sparkles,
     Ticket,
     Trophy,
     User,
@@ -123,12 +123,6 @@ export default function Welcome({
                     <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
                         <div className="flex items-center gap-3">
                             <AppLogo />
-                            <Badge
-                                variant="outline"
-                                className="border-primary/30 text-primary hidden font-mono text-[10px] sm:inline-flex"
-                            >
-                                ፍትሃዊነቱ የተረጋገጠ
-                            </Badge>
                         </div>
 
                         <nav className="text-muted-foreground hidden items-center gap-6 text-sm font-medium md:flex">
@@ -320,14 +314,6 @@ export default function Welcome({
                         </div>
 
                         <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-                            <div className="border-primary/30 bg-primary/10 text-primary mb-6 inline-flex animate-pulse items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold">
-                                <Sparkles className="size-3.5" />
-                                <span>
-                                    100% ፍትሃዊነቱ የተረጋገጠ &bull; ዋስትና ያለው ዓለም አቀፍ
-                                    አቅርቦት
-                                </span>
-                            </div>
-
                             <h1 className="text-3xl font-extrabold tracking-tight text-balance sm:text-5xl lg:text-6xl">
                                 በእውነተኛ የቅንጦት ዕቃዎች፣{' '}
                                 <span className="from-primary bg-gradient-to-r to-amber-500 bg-clip-text text-transparent">
@@ -504,7 +490,7 @@ export default function Welcome({
                                 </div>
                             ) : (
                                 <div className="bg-card rounded-xl border p-12 text-center">
-                                    <Sparkles className="text-muted-foreground mx-auto size-8" />
+                                    <Ticket className="text-muted-foreground mx-auto size-8" />
                                     <h3 className="mt-3 text-base font-semibold">
                                         ምንም ዕጣ አልተገኘም
                                     </h3>
@@ -537,13 +523,7 @@ export default function Welcome({
                     >
                         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                             <div className="mx-auto mb-12 max-w-2xl text-center">
-                                <Badge
-                                    variant="outline"
-                                    className="border-primary/30 text-primary font-mono text-xs uppercase"
-                                >
-                                    ቀላል &bull; ግልጽ &bull; ፍትሃዊ
-                                </Badge>
-                                <h2 className="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">
+                                <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
                                     የእቃ ሎተሪ እንዴት ይሰራል?
                                 </h2>
                                 <p className="text-muted-foreground mt-2 text-xs sm:text-sm">
@@ -594,10 +574,6 @@ export default function Welcome({
                         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                             <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
                                 <div className="space-y-4 lg:col-span-6">
-                                    <Badge className="border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
-                                        <ShieldCheck className="mr-1 size-3.5" />
-                                        የተረጋገጠ ትክክለኛነት
-                                    </Badge>
                                     <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
                                         በሂሳባዊ ስሌት የተረጋገጠ አስተማማኝ ፍትሃዊነት
                                     </h2>
@@ -806,12 +782,6 @@ export default function Welcome({
                     <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
                         <div className="bg-card relative flex flex-col items-start justify-between gap-6 overflow-hidden rounded-3xl border p-8 shadow-lg sm:p-12 md:flex-row md:items-center">
                             <div className="max-w-xl space-y-2">
-                                <Badge
-                                    variant="secondary"
-                                    className="font-mono text-xs font-medium"
-                                >
-                                    ፈጣን አባልነት
-                                </Badge>
                                 <h2 className="text-foreground text-2xl font-extrabold tracking-tight sm:text-3xl">
                                     የህልምዎን ዕቃ ለማሸነፍ ዝግጁ ነዎት?
                                 </h2>
@@ -866,7 +836,7 @@ export default function Welcome({
                             href="#"
                             className="text-primary flex flex-col items-center gap-1 py-1"
                         >
-                            <Sparkles className="size-4" />
+                            <Home className="size-4" />
                             <span>መነሻ</span>
                         </a>
                         <a

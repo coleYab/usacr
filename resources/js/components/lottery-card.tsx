@@ -1,12 +1,5 @@
 import { Link } from '@inertiajs/react';
-import {
-    ChevronLeft,
-    ChevronRight,
-    Sparkles,
-    Tag,
-    Ticket,
-    Users,
-} from 'lucide-react';
+import { ChevronLeft, ChevronRight, Tag, Ticket, Users } from 'lucide-react';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -94,7 +87,6 @@ export function LotteryCard({ lottery }: { lottery: LotteryRow }) {
                         </Badge>
                     ) : (
                         <Badge className="bg-primary/90 text-primary-foreground font-semibold shadow-xs backdrop-blur-xs">
-                            <Sparkles className="mr-1 size-3" />
                             የቀጥታ ዕጣ
                         </Badge>
                     )}

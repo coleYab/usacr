@@ -4,7 +4,6 @@ import {
     Hash,
     Search,
     ShieldCheck,
-    Sparkles,
     Ticket,
     Trophy,
     Users,
@@ -59,7 +58,7 @@ export default function AppResults({
                     />
                     <Button asChild className="shrink-0 gap-2">
                         <Link href={lotteries()}>
-                            <Sparkles className="size-4" />
+                            <Ticket className="size-4" />
                             የቀጥታ ዕጣዎችን ይመልከቱ
                         </Link>
                     </Button>

@@ -6,7 +6,6 @@ import {
     Clock,
     Minus,
     Plus,
-    Sparkles,
     Ticket as TicketIcon,
     Trophy,
     Wallet,
@@ -288,7 +287,6 @@ export default function AppLotteryShow({
                                         variant="outline"
                                         className="text-xs font-semibold"
                                     >
-                                        <Sparkles className="text-primary mr-1 size-3" />
                                         ይፋዊ ዕጣ
                                     </Badge>
                                     <span className="text-muted-foreground text-xs">

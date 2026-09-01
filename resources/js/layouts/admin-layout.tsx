@@ -1,10 +1,10 @@
 import { Link } from '@inertiajs/react';
 import {
     Clock,
+    Gift,
     History,
     LayoutDashboard,
     ListChecks,
-    Sparkles,
     Users,
     Wallet,
 } from 'lucide-react';
@@ -56,7 +56,7 @@ const navGroups: GroupedNav[] = [
         label: 'Management',
         items: [
             { title: 'Deposits', href: deposits(), icon: Wallet },
-            { title: 'Lotteries', href: lotteries(), icon: Sparkles },
+            { title: 'Lotteries', href: lotteries(), icon: Gift },
             { title: 'Draws', href: draws(), icon: Clock },
             { title: 'Users', href: users(), icon: Users },
         ],

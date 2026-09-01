@@ -3,7 +3,6 @@ import {
     ArrowRight,
     Clock,
     Receipt,
-    Sparkles,
     Ticket as TicketIcon,
     Trophy,
     Wallet,
@@ -64,7 +63,7 @@ export default function AppDashboard({
                         </Button>
                         <Button asChild size="sm" className="gap-1.5">
                             <Link href={lotteries()}>
-                                <Sparkles className="size-4" />
+                                <TicketIcon className="size-4" />
                                 ዕጣዎችን ያስሱ
                             </Link>
                         </Button>
@@ -122,7 +121,7 @@ export default function AppDashboard({
 
                     {ending_soon_lotteries.length === 0 ? (
                         <EmptyState
-                            icon={Sparkles}
+                            icon={TicketIcon}
                             title="በቅርቡ የሚወጣ ንቁ ዕጣ የለም"
                             description="ዕለታዊ አዳዲስ የቅንጦት ዕቃዎች ስለሚጨመሩ በቅርቡ ተመልሰው ይመልከቱ።"
                         />

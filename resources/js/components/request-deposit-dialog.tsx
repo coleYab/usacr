@@ -7,13 +7,11 @@ import {
     FileText,
     Info,
     Smartphone,
-    Sparkles,
     UploadCloud,
     Wallet,
     X,
 } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -35,7 +33,6 @@ const TELEBIRR_DETAILS = {
     name: 'ቴሌብር (Telebirr)',
     phoneNumber: '0978665676',
     accountName: 'yirgalem',
-    badge: 'ፈጣን ክፍያ',
 };
 
 type RequestDepositDialogProps = {
@@ -198,10 +195,6 @@ export function RequestDepositDialog({
                                         </p>
                                     </div>
                                 </div>
-                                <Badge className="border-emerald-500/20 bg-emerald-500/10 text-[10px] text-emerald-600 dark:text-emerald-400">
-                                    <Sparkles className="mr-1 size-2.5" />
-                                    {TELEBIRR_DETAILS.badge}
-                                </Badge>
                             </div>
 
                             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">

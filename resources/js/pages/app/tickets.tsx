@@ -1,5 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
-import { Calendar, Sparkles, Ticket as TicketIcon, Trophy } from 'lucide-react';
+import { Calendar, Ticket as TicketIcon, Trophy } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -46,7 +46,7 @@ export default function AppTickets({ tickets, counts, filters }: Props) {
                     />
                     <Button asChild className="shrink-0 gap-2">
                         <Link href={lotteries()}>
-                            <Sparkles className="size-4" />
+                            <TicketIcon className="size-4" />
                             ተጨማሪ ዕጣዎችን ያስሱ
                         </Link>
                     </Button>

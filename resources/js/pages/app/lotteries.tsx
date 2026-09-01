@@ -1,5 +1,5 @@
 import { Head } from '@inertiajs/react';
-import { Search, Sparkles } from 'lucide-react';
+import { Search, Ticket } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -115,7 +115,7 @@ export default function AppLotteries({ lotteries, counts, filters }: Props) {
                 ) : (
                     <div className="bg-card rounded-xl border p-12">
                         <EmptyState
-                            icon={Sparkles}
+                            icon={Ticket}
                             title="ምንም ዕጣ አልተገኘም"
                             description={
                                 search

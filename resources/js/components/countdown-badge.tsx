@@ -37,7 +37,7 @@ export function CountdownBadge({
             <Badge
                 variant="outline"
                 className={cn(
-                    'bg-destructive/15 text-destructive border-destructive/30 animate-pulse text-xs font-semibold',
+                    'bg-destructive/15 text-destructive border-destructive/30 text-xs font-semibold',
                     className,
                 )}
             >

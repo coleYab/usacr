@@ -2,8 +2,8 @@ import { Head, Link } from '@inertiajs/react';
 import {
     CircleDollarSign,
     Eye,
+    Gift,
     Plus,
-    Sparkles,
     Ticket as TicketIcon,
     Users,
     XCircle,
@@ -193,7 +193,7 @@ export default function AdminLotteriesIndex({
                     <StatCard
                         label="Active Lotteries"
                         value={stats.active_count}
-                        icon={Sparkles}
+                        icon={Gift}
                     />
                     <StatCard
                         label="Total Tickets Sold"
@@ -237,7 +237,7 @@ export default function AdminLotteriesIndex({
                     columns={columns}
                     rows={paginated.data}
                     keyExtractor={(row) => row.id}
-                    emptyIcon={Sparkles}
+                    emptyIcon={Gift}
                     emptyTitle="No lotteries in this section"
                     emptyDescription="Created lotteries matching this status filter will appear here."
                     pagination={toDataTablePagination(
