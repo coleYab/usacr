@@ -50,17 +50,17 @@ export default function AppResults({
 
     return (
         <>
-            <Head title="Raffle Results" />
+            <Head title="የዕጣ ውጤቶች" />
             <div className="flex flex-col gap-6 pb-12">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <PageHeader
-                        title="Past Raffle Results"
-                        description={`Browse winning tickets, verified draws, and winners across ${totalCompleted} concluded lotteries.`}
+                        title="ያለፉት የዕጣ ውጤቶች"
+                        description={`በተጠናቀቁ ${totalCompleted} ዕጣዎች ውስጥ የአሸናፊ ቲኬቶችን፣ የተረጋገጡ ዕጣዎችን እና አሸናፊዎችን ይመልከቱ።`}
                     />
                     <Button asChild className="shrink-0 gap-2">
                         <Link href={lotteries()}>
                             <Sparkles className="size-4" />
-                            Browse Live Raffles
+                            የቀጥታ ዕጣዎችን ይመልከቱ
                         </Link>
                     </Button>
                 </div>
@@ -70,8 +70,8 @@ export default function AppResults({
                     <div className="text-muted-foreground bg-muted/50 flex w-fit items-center gap-2 rounded-lg border px-3 py-1.5 text-xs">
                         <ShieldCheck className="size-4 shrink-0 text-emerald-500" />
                         <span>
-                            All draws use cryptographically secure seeds and
-                            immutable ledger verifications.
+                            ሁሉም ዕጣዎች ደህንነታቸው የተጠበቀ የምስጠራ ቁልፎችን እና የማይለወጥ የሂሳብ
+                            ማረጋገጫዎችን ይጠቀማሉ።
                         </span>
                     </div>
 
@@ -83,14 +83,14 @@ export default function AppResults({
                             <Search className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
                             <Input
                                 type="search"
-                                placeholder="Search concluded raffles…"
+                                placeholder="የተጠናቀቁ ዕጣዎችን ይፈልጉ…"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                                 className="h-9 pr-8 pl-9"
                             />
                         </div>
                         <Button type="submit" size="sm" variant="secondary">
-                            Search
+                            ፈልግ
                         </Button>
                         {search && (
                             <Button
@@ -99,7 +99,7 @@ export default function AppResults({
                                 variant="ghost"
                                 onClick={handleSearchClear}
                             >
-                                Clear
+                                አጽዳ
                             </Button>
                         )}
                     </form>
@@ -135,7 +135,7 @@ export default function AppResults({
                                                 className="bg-background/90 font-semibold shadow-xs backdrop-blur-xs"
                                             >
                                                 <CheckCircle2 className="mr-1 size-3 text-emerald-500" />
-                                                Concluded
+                                                የተጠናቀቀ
                                             </Badge>
                                             <span className="rounded-full bg-black/50 px-2.5 py-1 text-[11px] font-medium text-white/90 backdrop-blur-xs">
                                                 {lottery.draw_at_formatted}
@@ -147,8 +147,7 @@ export default function AppResults({
                                             <div className="flex items-center gap-1.5 truncate">
                                                 <Trophy className="size-4 shrink-0 text-amber-400" />
                                                 <span className="truncate font-semibold">
-                                                    Winner:{' '}
-                                                    {lottery.winner_name}
+                                                    አሸናፊ፦ {lottery.winner_name}
                                                 </span>
                                             </div>
                                         </div>
@@ -174,7 +173,7 @@ export default function AppResults({
                                         <div className="flex items-center justify-between rounded-xl border border-amber-500/30 bg-amber-500/10 p-3">
                                             <span className="flex items-center gap-1.5 text-xs font-medium text-amber-800 dark:text-amber-300">
                                                 <Ticket className="size-3.5" />
-                                                Winning Ticket
+                                                አሸናፊ ቲኬት
                                             </span>
                                             <span className="font-mono text-sm font-bold tracking-wider text-amber-600 dark:text-amber-400">
                                                 {lottery.winning_ticket_code}
@@ -186,15 +185,15 @@ export default function AppResults({
                                             <div className="flex items-center gap-1">
                                                 <Ticket className="size-3" />
                                                 <span>
-                                                    {lottery.tickets_sold}{' '}
-                                                    tickets sold
+                                                    {lottery.tickets_sold} ቲኬቶች
+                                                    ተሽጠዋል
                                                 </span>
                                             </div>
                                             <div className="flex items-center justify-end gap-1">
                                                 <Users className="size-3" />
                                                 <span>
                                                     {lottery.participant_count}{' '}
-                                                    players
+                                                    ተጫዋቾች
                                                 </span>
                                             </div>
                                         </div>
@@ -204,7 +203,7 @@ export default function AppResults({
                                             <div className="bg-muted/40 text-muted-foreground flex items-center justify-between gap-1 overflow-hidden rounded-lg p-2 text-[10px]">
                                                 <span className="flex shrink-0 items-center gap-1 font-medium">
                                                     <Hash className="size-2.5" />
-                                                    Audit Hash:
+                                                    የኦዲት ሃሽ፦
                                                 </span>
                                                 <span className="truncate font-mono select-all">
                                                     {lottery.verification_hash.slice(
@@ -230,8 +229,7 @@ export default function AppResults({
                                                     lottery: lottery.id,
                                                 })}
                                             >
-                                                View Raffle Details &amp;
-                                                Outcome
+                                                የዕጣውን ዝርዝር እና ውጤት ይመልከቱ
                                             </Link>
                                         </Button>
                                     </CardContent>
@@ -243,16 +241,16 @@ export default function AppResults({
                     <div className="bg-card rounded-xl border p-12">
                         <EmptyState
                             icon={Trophy}
-                            title="No concluded raffle results yet"
+                            title="እስካሁን ምንም የተጠናቀቀ የዕጣ ውጤት የለም"
                             description={
                                 search
-                                    ? `No completed raffles matched "${search}". Try clearing your search filter.`
-                                    : 'Completed raffles with their winning tickets and draw logs will appear here once drawn.'
+                                    ? `ከ"${search}" ጋር የሚዛመድ የተጠናቀቀ ዕጣ አልተገኘም። እባክዎ የፍለጋ ማጣሪያውን ያጽዱ።`
+                                    : 'የተጠናቀቁ ዕጣዎች ከአሸናፊ ቲኬቶቻቸው እና ከዕጣ ምዝገባዎቻቸው ጋር ልክ እንደወጡ እዚህ ይታያሉ።'
                             }
                             action={
                                 <Button asChild size="sm">
                                     <Link href={lotteries()}>
-                                        Browse Live Raffles
+                                        የቀጥታ ዕጣዎችን ይመልከቱ
                                     </Link>
                                 </Button>
                             }
@@ -264,11 +262,11 @@ export default function AppResults({
                 {paginated.pagination.last_page > 1 && (
                     <div className="text-muted-foreground flex items-center justify-between border-t pt-4 text-sm">
                         <p>
-                            Showing page{' '}
+                            ገጽ{' '}
                             <span className="text-foreground font-medium">
                                 {paginated.pagination.current_page}
                             </span>{' '}
-                            of{' '}
+                            ከ{' '}
                             <span className="text-foreground font-medium">
                                 {paginated.pagination.last_page}
                             </span>
@@ -289,7 +287,7 @@ export default function AppResults({
                                     })
                                 }
                             >
-                                Previous
+                                ቀዳሚ
                             </Button>
                             <Button
                                 variant="outline"
@@ -307,7 +305,7 @@ export default function AppResults({
                                     })
                                 }
                             >
-                                Next
+                                ቀጣይ
                             </Button>
                         </div>
                     </div>
@@ -320,7 +318,7 @@ export default function AppResults({
 AppResults.layout = {
     breadcrumbs: [
         {
-            title: 'Results',
+            title: 'ውጤቶች',
             href: results(),
         },
     ],

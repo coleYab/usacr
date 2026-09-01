@@ -34,7 +34,7 @@ class ResultController extends Controller
                     $winner = $winningTicket?->user;
 
                     // Mask winner name for privacy while building platform trust
-                    $maskedName = 'Anonymous Winner';
+                    $maskedName = 'ስም-አልባ አሸናፊ';
                     if ($winner && $winner->name) {
                         $parts = explode(' ', trim($winner->name));
                         $masked = array_map(function ($part) {

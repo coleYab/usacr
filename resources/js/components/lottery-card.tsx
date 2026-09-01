@@ -76,26 +76,26 @@ export function LotteryCard({ lottery }: { lottery: LotteryRow }) {
                             variant="destructive"
                             className="font-semibold shadow-xs"
                         >
-                            Sold Out
+                            ተሽጦ ያለቀ
                         </Badge>
                     ) : lottery.status === 'completed' ? (
                         <Badge
                             variant="secondary"
                             className="font-semibold shadow-xs"
                         >
-                            Completed
+                            የተጠናቀቀ
                         </Badge>
                     ) : lottery.status === 'cancelled' ? (
                         <Badge
                             variant="destructive"
                             className="font-semibold shadow-xs"
                         >
-                            Cancelled
+                            የተሰረዘ
                         </Badge>
                     ) : (
                         <Badge className="bg-primary/90 text-primary-foreground font-semibold shadow-xs backdrop-blur-xs">
                             <Sparkles className="mr-1 size-3" />
-                            Live Raffle
+                            የቀጥታ ዕጣ
                         </Badge>
                     )}
                 </div>
@@ -146,7 +146,7 @@ export function LotteryCard({ lottery }: { lottery: LotteryRow }) {
                         {lottery.ticket_price_formatted}
                     </span>
                     <span className="text-muted-foreground text-[10px]">
-                        / ticket
+                        / ቲኬት
                     </span>
                 </div>
             </div>
@@ -170,7 +170,7 @@ export function LotteryCard({ lottery }: { lottery: LotteryRow }) {
                     <div className="flex items-center justify-between text-xs font-medium">
                         <span className="text-muted-foreground flex items-center gap-1">
                             <Ticket className="size-3.5" />
-                            Progress
+                            ሂደት
                         </span>
                         <span className="text-foreground font-mono font-semibold">
                             {lottery.tickets_sold} / {lottery.total_tickets}{' '}
@@ -186,10 +186,10 @@ export function LotteryCard({ lottery }: { lottery: LotteryRow }) {
                     />
 
                     <div className="text-muted-foreground flex items-center justify-between pt-1 text-[11px]">
-                        <span>{lottery.remaining_tickets} tickets left</span>
+                        <span>{lottery.remaining_tickets} ቲኬቶች ቀርተዋል</span>
                         <span className="flex items-center gap-1">
                             <Users className="size-3" />
-                            {lottery.participant_count} players
+                            {lottery.participant_count} ተጫዋቾች
                         </span>
                     </div>
                 </div>
@@ -205,10 +205,10 @@ export function LotteryCard({ lottery }: { lottery: LotteryRow }) {
                 >
                     <Link href={show.url({ lottery: lottery.id })}>
                         {lottery.is_sold_out
-                            ? 'View Sold Out Raffle'
+                            ? 'የተሸጠውን ዕጣ ይመልከቱ'
                             : isClosed
-                              ? 'View Details'
-                              : 'Buy Tickets'}
+                              ? 'ዝርዝሩን ይመልከቱ'
+                              : 'ቲኬት ይግዙ'}
                     </Link>
                 </Button>
             </CardContent>

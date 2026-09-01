@@ -27,7 +27,7 @@ export function ThemeToggle({ className }: { className?: string }) {
                     variant="ghost"
                     size="icon"
                     className={cn('size-9', className)}
-                    aria-label="Toggle theme"
+                    aria-label="ገጽታ ቀይር"
                 >
                     <Icon className="size-5" />
                 </Button>
@@ -35,15 +35,15 @@ export function ThemeToggle({ className }: { className?: string }) {
             <DropdownMenuContent align="end" className="w-40">
                 <DropdownMenuItem onClick={() => updateAppearance('light')}>
                     <Sun className="mr-2 size-4" />
-                    Light
+                    ብርሃን
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => updateAppearance('dark')}>
                     <Moon className="mr-2 size-4" />
-                    Dark
+                    ጨለማ
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => updateAppearance('system')}>
                     <Monitor className="mr-2 size-4" />
-                    System
+                    ሲስተም
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

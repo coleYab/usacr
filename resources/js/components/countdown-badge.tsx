@@ -27,7 +27,7 @@ export function CountdownBadge({
                 )}
             >
                 <Clock className="mr-1 size-3" />
-                Ended
+                ተጠናቋል
             </Badge>
         );
     }
@@ -42,7 +42,7 @@ export function CountdownBadge({
                 )}
             >
                 <Flame className="text-destructive mr-1 size-3" />
-                {formatted} left
+                {formatted} ቀርቷል
             </Badge>
         );
     }
@@ -57,7 +57,7 @@ export function CountdownBadge({
                 )}
             >
                 <Clock className="mr-1 size-3" />
-                {formatted} left
+                {formatted} ቀርቷል
             </Badge>
         );
     }
@@ -71,7 +71,7 @@ export function CountdownBadge({
             )}
         >
             <Clock className="text-muted-foreground mr-1 size-3" />
-            {formatted} left
+            {formatted} ቀርቷል
         </Badge>
     );
 }

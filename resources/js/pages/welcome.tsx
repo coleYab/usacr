@@ -59,23 +59,23 @@ const steps = [
     {
         icon: Wallet,
         step: '01',
-        title: 'Top Up Your Balance',
+        title: 'ሂሳብዎን ይሙሉ',
         description:
-            'Deposit funds securely via card or payment proof into your double-entry audited wallet.',
+            'በክፍያ ማረጋገጫ ወይም በካርድ አማካኝነት ደህንነቱ በተጠበቀ መንገድ ወደ ኦዲት ወደተደረገው የሂሳብ ቦርሳዎ ገንዘብ ያስገቡ።',
     },
     {
         icon: Ticket,
         step: '02',
-        title: 'Choose Items & Grab Tickets',
+        title: 'ዕቃዎችን ይምረጡ እና ቲኬት ይግዙ',
         description:
-            'Pick luxury watches, tech, or superbike experiences with transparent fixed odds.',
+            'የቅንጦት ሰዓቶችን፣ ዘመናዊ ቴክኖሎጂዎችን ወይም ምርጥ ተሽከርካሪዎችን ግልጽ እና ቋሚ በሆነ ዕድል ይምረጡ።',
     },
     {
         icon: Trophy,
         step: '03',
-        title: 'Verifiable Draw & Delivery',
+        title: 'የተረጋገጠ ዕጣ እና ርክክብ',
         description:
-            'Our SHA-256 automated engine picks the winner. The genuine item ships insured worldwide.',
+            'የእኛ አውቶማቲክ የSHA-256 ሲስተም አሸናፊውን ይመርጣል። እውነተኛው እቃ ዋስትና ተሰጥቶት በዓለም ዙሪያ ይላካል።',
     },
 ];
 
@@ -117,7 +117,7 @@ export default function Welcome({
 
     return (
         <>
-            <Head title="Item Lottery — Provably Fair Luxury Raffles & Item Draws" />
+            <Head title="የእቃ ሎተሪ — ፍትሃዊነቱ የተረጋገጠ የቅንጦት ዕቃዎች እና ሽልማቶች ዕጣ" />
             <div className="bg-background text-foreground selection:bg-primary selection:text-primary-foreground flex min-h-screen flex-col">
                 <header className="border-border/60 bg-background/85 sticky top-0 z-40 border-b backdrop-blur-md">
                     <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -127,7 +127,7 @@ export default function Welcome({
                                 variant="outline"
                                 className="border-primary/30 text-primary hidden font-mono text-[10px] sm:inline-flex"
                             >
-                                Provably Fair
+                                ፍትሃዊነቱ የተረጋገጠ
                             </Badge>
                         </div>
 
@@ -136,25 +136,25 @@ export default function Welcome({
                                 href="#raffles"
                                 className="hover:text-foreground transition-colors"
                             >
-                                Live Raffles
+                                የቀጥታ ዕጣዎች
                             </a>
                             <a
                                 href="#how-it-works"
                                 className="hover:text-foreground transition-colors"
                             >
-                                How It Works
+                                እንዴት እንደሚሰራ
                             </a>
                             <a
                                 href="#fairness"
                                 className="hover:text-foreground transition-colors"
                             >
-                                Provable Fairness
+                                አስተማማኝ ፍትሃዊነት
                             </a>
                             <Link
                                 href={resultsRoute()}
                                 className="hover:text-foreground transition-colors"
                             >
-                                Past Winners
+                                ያለፉት አሸናፊዎች
                             </Link>
                         </nav>
 
@@ -169,14 +169,14 @@ export default function Welcome({
                                 >
                                     <Link href={appDashboard()}>
                                         <User className="size-4" />
-                                        Dashboard
+                                        ዳሽቦርድ
                                         <ArrowRight className="size-3.5" />
                                     </Link>
                                 </Button>
                             ) : (
                                 <div className="hidden items-center gap-2 sm:flex">
                                     <Button variant="ghost" size="sm" asChild>
-                                        <Link href={login()}>Log in</Link>
+                                        <Link href={login()}>ግባ</Link>
                                     </Button>
                                     <Button
                                         size="sm"
@@ -184,7 +184,7 @@ export default function Welcome({
                                         className="gap-1.5 shadow-xs"
                                     >
                                         <Link href={register()}>
-                                            Get Started
+                                            ጀምር
                                             <ArrowRight className="size-3.5" />
                                         </Link>
                                     </Button>
@@ -219,13 +219,13 @@ export default function Welcome({
                                 >
                                     <span className="flex items-center gap-2">
                                         <Flame className="text-primary size-4" />
-                                        Live Raffles
+                                        የቀጥታ ዕጣዎች
                                     </span>
                                     <Badge
                                         variant="secondary"
                                         className="font-mono text-xs"
                                     >
-                                        {stats.active_count} Active
+                                        {stats.active_count} ንቁ
                                     </Badge>
                                 </a>
                                 <Link
@@ -235,7 +235,7 @@ export default function Welcome({
                                 >
                                     <span className="flex items-center gap-2">
                                         <Trophy className="size-4 text-amber-500" />
-                                        Past Winners &amp; Draws
+                                        ያለፉት አሸናፊዎች እና ዕጣዎች
                                     </span>
                                     <ArrowRight className="text-muted-foreground size-4" />
                                 </Link>
@@ -246,7 +246,7 @@ export default function Welcome({
                                 >
                                     <span className="flex items-center gap-2">
                                         <HelpCircle className="text-primary size-4" />
-                                        How It Works
+                                        እንዴት እንደሚሰራ
                                     </span>
                                 </a>
                                 <a
@@ -256,7 +256,7 @@ export default function Welcome({
                                 >
                                     <span className="flex items-center gap-2">
                                         <ShieldCheck className="size-4 text-emerald-500" />
-                                        Provable Fairness
+                                        አስተማማኝ ፍትሃዊነት
                                     </span>
                                 </a>
 
@@ -272,7 +272,7 @@ export default function Welcome({
                                                     setMobileMenuOpen(false)
                                                 }
                                             >
-                                                Open Dashboard
+                                                ዳሽቦርድ ክፈት
                                                 <ArrowRight className="ml-1.5 size-4" />
                                             </Link>
                                         </Button>
@@ -289,7 +289,7 @@ export default function Welcome({
                                                         setMobileMenuOpen(false)
                                                     }
                                                 >
-                                                    Log in
+                                                    ግባ
                                                 </Link>
                                             </Button>
                                             <Button
@@ -302,7 +302,7 @@ export default function Welcome({
                                                         setMobileMenuOpen(false)
                                                     }
                                                 >
-                                                    Register
+                                                    ተመዝገብ
                                                 </Link>
                                             </Button>
                                         </div>
@@ -323,23 +323,23 @@ export default function Welcome({
                             <div className="border-primary/30 bg-primary/10 text-primary mb-6 inline-flex animate-pulse items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold">
                                 <Sparkles className="size-3.5" />
                                 <span>
-                                    100% Provably Fair &bull; Insured Worldwide
-                                    Delivery
+                                    100% ፍትሃዊነቱ የተረጋገጠ &bull; ዋስትና ያለው ዓለም አቀፍ
+                                    አቅርቦት
                                 </span>
                             </div>
 
                             <h1 className="text-3xl font-extrabold tracking-tight text-balance sm:text-5xl lg:text-6xl">
-                                Enter Raffles for Real Luxury Items,{' '}
+                                በእውነተኛ የቅንጦት ዕቃዎች፣{' '}
                                 <span className="from-primary bg-gradient-to-r to-amber-500 bg-clip-text text-transparent">
-                                    Watches &amp; Supercars
-                                </span>
+                                    ሰዓቶች እና ዘመናዊ መኪኖች
+                                </span>{' '}
+                                ዕጣ ላይ ይሳተፉ
                             </h1>
 
                             <p className="text-muted-foreground mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-pretty sm:text-lg">
-                                Deposit into your audited double-entry wallet,
-                                purchase tickets with guaranteed fixed odds, and
-                                verify every single draw on-chain or via
-                                cryptographic SHA-256 seeds.
+                                ወደ ኦዲት የተደረገው የሂሳብ ቦርሳዎ ገንዘብ ያስገቡ፣ ቋሚ እና አስተማማኝ
+                                በሆነ ዕድል ቲኬቶችን ይግዙ፣ እና እያንዳንዱን ዕጣ በSHA-256 ምስጠራ
+                                ያረጋግጡ።
                             </p>
 
                             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
@@ -350,7 +350,7 @@ export default function Welcome({
                                 >
                                     <a href="#raffles">
                                         <Flame className="size-5 text-amber-300" />
-                                        Explore Live Raffles
+                                        የቀጥታ ዕጣዎችን ይመልከቱ
                                         <ArrowRight className="size-4" />
                                     </a>
                                 </Button>
@@ -363,7 +363,7 @@ export default function Welcome({
                                 >
                                     <Link href={resultsRoute()}>
                                         <Trophy className="mr-1.5 size-4 text-amber-500" />
-                                        View Past Winners
+                                        ያለፉትን አሸናፊዎች ይመልከቱ
                                     </Link>
                                 </Button>
                             </div>
@@ -375,11 +375,10 @@ export default function Welcome({
                                     </div>
                                     <div>
                                         <h4 className="text-foreground text-xs font-bold tracking-wider uppercase">
-                                            Instant Top-Ups
+                                            ፈጣን ሂሳብ መሙላት
                                         </h4>
                                         <p className="text-muted-foreground text-xs">
-                                            Instant deposit receipts &amp;
-                                            wallet ledger
+                                            ፈጣን የገቢ ደረሰኞች እና የቦርሳ ሂሳብ መዝገብ
                                         </p>
                                     </div>
                                 </div>
@@ -390,11 +389,10 @@ export default function Welcome({
                                     </div>
                                     <div>
                                         <h4 className="text-foreground text-xs font-bold tracking-wider uppercase">
-                                            SHA-256 Fair Draws
+                                            የSHA-256 ፍትሃዊ ዕጣ
                                         </h4>
                                         <p className="text-muted-foreground text-xs">
-                                            Deterministic seed &amp; hash
-                                            verification
+                                            በምስጠራ ቁልፍ እና ሃሽ የተረጋገጠ
                                         </p>
                                     </div>
                                 </div>
@@ -405,10 +403,10 @@ export default function Welcome({
                                     </div>
                                     <div>
                                         <h4 className="text-foreground text-xs font-bold tracking-wider uppercase">
-                                            Insured Shipping
+                                            ዋስትና ያለው አቅርቦት
                                         </h4>
                                         <p className="text-muted-foreground text-xs">
-                                            Worldwide tracked luxury delivery
+                                            ክትትል የሚደረግበት ዓለም አቀፍ የዕቃዎች ማድረሻ
                                         </p>
                                     </div>
                                 </div>
@@ -425,14 +423,14 @@ export default function Welcome({
                                 <div>
                                     <div className="text-primary flex items-center gap-2 font-mono text-xs font-bold tracking-wider uppercase">
                                         <Flame className="size-4" />
-                                        Featured Item Raffles
+                                        ተወዳጅ የዕቃዎች ዕጣዎች
                                     </div>
                                     <h2 className="text-foreground mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl">
-                                        Live &amp; Ending Soon Draws
+                                        የቀጥታ እና በቅርቡ የሚጠናቀቁ ዕጣዎች
                                     </h2>
                                     <p className="text-muted-foreground mt-1 text-xs sm:text-sm">
-                                        Limited-ticket luxury goods drawing as
-                                        soon as timer expires.
+                                        የጊዜ ቆጣሪው እንዳበቃ ወዲያውኑ ዕጣ የሚወጣላቸው ውስን ቲኬት
+                                        ያላቸው የቅንጦት ዕቃዎች።
                                     </p>
                                 </div>
 
@@ -447,7 +445,7 @@ export default function Welcome({
                                         onClick={() => setCategoryFilter('all')}
                                         className="shrink-0 rounded-full text-xs"
                                     >
-                                        All ({featured_lotteries.length})
+                                        ሁሉም ({featured_lotteries.length})
                                     </Button>
                                     <Button
                                         size="sm"
@@ -462,7 +460,7 @@ export default function Welcome({
                                         className="shrink-0 gap-1 rounded-full text-xs"
                                     >
                                         <Clock className="text-primary size-3" />
-                                        Ending Soon
+                                        በቅርቡ የሚያበቁ
                                     </Button>
                                     <Button
                                         size="sm"
@@ -476,7 +474,7 @@ export default function Welcome({
                                         }
                                         className="shrink-0 rounded-full text-xs"
                                     >
-                                        &le; $25 / Ticket
+                                        &le; $25 / ቲኬት
                                     </Button>
                                     <Button
                                         size="sm"
@@ -490,7 +488,7 @@ export default function Welcome({
                                         }
                                         className="shrink-0 rounded-full text-xs"
                                     >
-                                        Luxury VIP
+                                        የቅንጦት ቪአይፒ
                                     </Button>
                                 </div>
                             </div>
@@ -508,11 +506,11 @@ export default function Welcome({
                                 <div className="bg-card rounded-xl border p-12 text-center">
                                     <Sparkles className="text-muted-foreground mx-auto size-8" />
                                     <h3 className="mt-3 text-base font-semibold">
-                                        No raffles found
+                                        ምንም ዕጣ አልተገኘም
                                     </h3>
                                     <p className="text-muted-foreground mt-1 text-xs">
-                                        Try adjusting your filter selection or
-                                        check back shortly.
+                                        እባክዎ የተመረጡትን ማጣሪያዎች ይቀይሩ ወይም ትንሽ ቆይተው
+                                        እንደገና ይመልከቱ።
                                     </p>
                                 </div>
                             )}
@@ -525,7 +523,7 @@ export default function Welcome({
                                     className="gap-2 font-medium"
                                 >
                                     <Link href={lotteriesRoute()}>
-                                        View All Active Raffles &amp; Catalog
+                                        ሁሉንም ንቁ ዕጣዎች እና ዝርዝር ይመልከቱ
                                         <ArrowRight className="size-4" />
                                     </Link>
                                 </Button>
@@ -543,14 +541,14 @@ export default function Welcome({
                                     variant="outline"
                                     className="border-primary/30 text-primary font-mono text-xs uppercase"
                                 >
-                                    Simple &bull; Transparent &bull; Fair
+                                    ቀላል &bull; ግልጽ &bull; ፍትሃዊ
                                 </Badge>
                                 <h2 className="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">
-                                    How Item Lottery Works
+                                    የእቃ ሎተሪ እንዴት ይሰራል?
                                 </h2>
                                 <p className="text-muted-foreground mt-2 text-xs sm:text-sm">
-                                    Three effortless steps between you and
-                                    winning authentic high-value prizes.
+                                    እርስዎ እና ውድ ዋጋ ያላቸውን እውነተኛ ሽልማቶች የሚያገናኙ ሦስት
+                                    ቀላል ደረጃዎች።
                                 </p>
                             </div>
 
@@ -598,51 +596,46 @@ export default function Welcome({
                                 <div className="space-y-4 lg:col-span-6">
                                     <Badge className="border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
                                         <ShieldCheck className="mr-1 size-3.5" />
-                                        Deterministic Verification
+                                        የተረጋገጠ ትክክለኛነት
                                     </Badge>
                                     <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
-                                        Mathematically Guaranteed Provable
-                                        Fairness
+                                        በሂሳባዊ ስሌት የተረጋገጠ አስተማማኝ ፍትሃዊነት
                                     </h2>
                                     <p className="text-muted-foreground text-xs leading-relaxed sm:text-sm">
-                                        Every draw is calculated
-                                        deterministically using a 16-byte
-                                        cryptographically secure random server
-                                        seed and the exact pool of sold tickets.
+                                        እያንዳንዱ ዕጣ በ16-ባይት አስተማማኝ የምስጠራ ቁልፍ
+                                        (Server Seed) እና በተሸጡት ቲኬቶች ድምር አማካኝነት
+                                        በትክክል ይሰላል።
                                     </p>
                                     <div className="text-muted-foreground space-y-2.5 text-xs">
                                         <div className="flex items-start gap-2.5">
                                             <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-emerald-500" />
                                             <span>
                                                 <strong>
-                                                    SHA-256 Audit Trail:
+                                                    የSHA-256 ኦዲት ታሪክ፦
                                                 </strong>{' '}
-                                                Each concluded draw stores an
-                                                immutable SHA-256 verification
-                                                hash accessible in the public
-                                                results archive.
+                                                እያንዳንዱ የተጠናቀቀ ዕጣ በውጤቶች ማህደር ውስጥ
+                                                የሚገኝ የማይለወጥ የSHA-256 ማረጋገጫ ሃሽ
+                                                ያስቀምጣል።
                                             </span>
                                         </div>
                                         <div className="flex items-start gap-2.5">
                                             <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-emerald-500" />
                                             <span>
                                                 <strong>
-                                                    No House Manipulation:
+                                                    ምንም ዓይነት ጣልቃ ገብነት የለም፦
                                                 </strong>{' '}
-                                                Once drawn, seeds and ticket
-                                                codes cannot be altered or
-                                                removed from the ledger.
+                                                አንዴ ዕጣው ከወጣ በኋላ፣ ቁልፎች እና የቲኬት
+                                                ኮዶች ከሂሳብ መዝገብ ሊለወጡ ወይም ሊሰረዙ
+                                                አይችሉም።
                                             </span>
                                         </div>
                                         <div className="flex items-start gap-2.5">
                                             <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-emerald-500" />
                                             <span>
-                                                <strong>
-                                                    Automated Pipeline:
-                                                </strong>{' '}
-                                                Draws execute on the second when
-                                                countdown expires with automatic
-                                                participant notifications.
+                                                <strong>አውቶማቲክ አሰራር፦</strong>{' '}
+                                                የጊዜ ቆጣሪው እንዳለቀ ዕጣዎች በሰከንዶች ውስጥ
+                                                ወዲያውኑ ይወጣሉ፣ ለተሳታፊዎችም ፈጣን ማሳወቂያ
+                                                ይላካል።
                                             </span>
                                         </div>
                                     </div>
@@ -656,8 +649,7 @@ export default function Welcome({
                                         >
                                             <Link href={resultsRoute()}>
                                                 <Hash className="text-primary size-3.5" />
-                                                Inspect Concluded Draws &amp;
-                                                Hashes
+                                                የተጠናቀቁ ዕጣዎችን እና ሃሾችን ይመርምሩ
                                                 <ArrowRight className="size-3" />
                                             </Link>
                                         </Button>
@@ -669,7 +661,7 @@ export default function Welcome({
                                         <div className="text-muted-foreground flex items-center justify-between border-b pb-3">
                                             <span className="text-foreground flex items-center gap-1.5 font-sans font-semibold">
                                                 <Lock className="size-3.5 text-emerald-500" />
-                                                Draw Verification Formula
+                                                የዕጣ ማረጋገጫ ቀመር
                                             </span>
                                             <span className="text-[10px]">
                                                 PHP 8.5 / SHA-256
@@ -678,24 +670,22 @@ export default function Welcome({
 
                                         <div className="bg-muted space-y-2 overflow-x-auto rounded-xl p-4 text-[11px] leading-relaxed">
                                             <div className="text-muted-foreground">
-                                                // 1. Generate cryptographic
-                                                seed
+                                                // 1. አስተማማኝ የምስጠራ ቁልፍ ማመንጨት
+                                                (Seed)
                                             </div>
                                             <div className="text-primary font-bold">
                                                 $seed =
                                                 bin2hex(random_bytes(16));
                                             </div>
                                             <div className="text-muted-foreground pt-1">
-                                                // 2. Select winning ticket
-                                                deterministically
+                                                // 2. አሸናፊውን ቲኬት በትክክል መምረጥ
                                             </div>
                                             <div className="text-foreground">
                                                 $winningIndex = random_int(0,
                                                 count($tickets) - 1);
                                             </div>
                                             <div className="text-muted-foreground pt-1">
-                                                // 3. Compute immutable audit
-                                                verification hash
+                                                // 3. የማይለወጥ የኦዲት ማረጋገጫ ሃሽ ማስላት
                                             </div>
                                             <div className="text-amber-600 dark:text-amber-400">
                                                 $hash = hash('sha256',
@@ -704,10 +694,9 @@ export default function Welcome({
                                         </div>
 
                                         <p className="text-muted-foreground font-sans text-[11px]">
-                                            Anyone can reproduce the exact
-                                            winning ticket index using the
-                                            publicly published seed and
-                                            participant pool size.
+                                            ማንኛውም ሰው ይፋ በተደረገው የምስጠራ ቁልፍ እና
+                                            በተሳታፊዎች ብዛት መሰረት ትክክለኛውን አሸናፊ ቲኬት
+                                            እንደገና ማረጋገጥ ይችላል።
                                         </p>
                                     </div>
                                 </div>
@@ -722,10 +711,10 @@ export default function Welcome({
                                     <div>
                                         <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-amber-500 uppercase">
                                             <Trophy className="size-4" />
-                                            Hall of Winners
+                                            የአሸናፊዎች ዝርዝር
                                         </div>
                                         <h2 className="mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl">
-                                            Recent Verified Winners
+                                            የቅርብ ጊዜ የተረጋገጡ አሸናፊዎች
                                         </h2>
                                     </div>
                                     <Button
@@ -735,7 +724,7 @@ export default function Welcome({
                                         className="gap-1 text-xs"
                                     >
                                         <Link href={resultsRoute()}>
-                                            View All Concluded Draws (
+                                            ሁሉንም የተጠናቀቁ ዕጣዎች ይመልከቱ (
                                             {stats.completed_count})
                                             <ArrowRight className="size-3" />
                                         </Link>
@@ -762,7 +751,6 @@ export default function Welcome({
                                                 )}
                                                 <div className="absolute top-2 right-2">
                                                     <Badge className="bg-emerald-600 font-mono text-[10px] text-white shadow-xs">
-                                                        Won{' '}
                                                         {winner.drawn_at_diff}
                                                     </Badge>
                                                 </div>
@@ -775,7 +763,7 @@ export default function Welcome({
 
                                                 <div className="flex items-center justify-between border-t pt-1 text-xs">
                                                     <span className="text-muted-foreground">
-                                                        Winner:
+                                                        አሸናፊ፦
                                                     </span>
                                                     <span className="text-foreground font-semibold">
                                                         {winner.winner_name}
@@ -784,7 +772,7 @@ export default function Welcome({
 
                                                 <div className="flex items-center justify-between text-xs">
                                                     <span className="text-muted-foreground">
-                                                        Ticket:
+                                                        ቲኬት፦
                                                     </span>
                                                     <span className="text-primary font-mono font-bold">
                                                         {
@@ -804,7 +792,7 @@ export default function Welcome({
                                                             lottery: winner.id,
                                                         })}
                                                     >
-                                                        View Outcome Proof
+                                                        የውጤት ማረጋገጫውን ይመልከቱ
                                                     </Link>
                                                 </Button>
                                             </CardContent>
@@ -822,15 +810,14 @@ export default function Welcome({
                                     variant="secondary"
                                     className="font-mono text-xs font-medium"
                                 >
-                                    Instant Membership
+                                    ፈጣን አባልነት
                                 </Badge>
                                 <h2 className="text-foreground text-2xl font-extrabold tracking-tight sm:text-3xl">
-                                    Ready to win your dream item?
+                                    የህልምዎን ዕቃ ለማሸነፍ ዝግጁ ነዎት?
                                 </h2>
                                 <p className="text-muted-foreground text-xs sm:text-sm">
-                                    Create an account in 30 seconds, top up your
-                                    wallet balance, and enter active raffles
-                                    drawing today.
+                                    በ30 ሰከንድ ውስጥ አካውንት ይክፈቱ፣ የቦርሳ ሂሳብዎን ይሙሉ እና
+                                    ዛሬ በሚወጡ የቀጥታ ዕጣዎች ላይ ይሳተፉ።
                                 </p>
                             </div>
 
@@ -842,7 +829,7 @@ export default function Welcome({
                                         className="w-full gap-2 font-semibold sm:w-auto"
                                     >
                                         <Link href={appDashboard()}>
-                                            Open Player Dashboard
+                                            የተጫዋች ዳሽቦርድ ክፈት
                                             <ArrowRight className="size-4" />
                                         </Link>
                                     </Button>
@@ -854,7 +841,7 @@ export default function Welcome({
                                             className="w-full gap-2 font-semibold sm:w-auto"
                                         >
                                             <Link href={register()}>
-                                                Create Free Account
+                                                በነጻ ይመዝገቡ
                                                 <ArrowRight className="size-4" />
                                             </Link>
                                         </Button>
@@ -864,7 +851,7 @@ export default function Welcome({
                                             asChild
                                             className="w-full sm:w-auto"
                                         >
-                                            <Link href={login()}>Log In</Link>
+                                            <Link href={login()}>ግባ</Link>
                                         </Button>
                                     </>
                                 )}
@@ -880,21 +867,21 @@ export default function Welcome({
                             className="text-primary flex flex-col items-center gap-1 py-1"
                         >
                             <Sparkles className="size-4" />
-                            <span>Home</span>
+                            <span>መነሻ</span>
                         </a>
                         <a
                             href="#raffles"
                             className="text-muted-foreground hover:text-foreground flex flex-col items-center gap-1 py-1"
                         >
                             <Flame className="size-4" />
-                            <span>Raffles</span>
+                            <span>ዕጣዎች</span>
                         </a>
                         <Link
                             href={resultsRoute()}
                             className="text-muted-foreground hover:text-foreground flex flex-col items-center gap-1 py-1"
                         >
                             <Trophy className="size-4" />
-                            <span>Winners</span>
+                            <span>አሸናፊዎች</span>
                         </Link>
                         {auth.user ? (
                             <>
@@ -903,14 +890,14 @@ export default function Welcome({
                                     className="text-muted-foreground hover:text-foreground flex flex-col items-center gap-1 py-1"
                                 >
                                     <Wallet className="size-4" />
-                                    <span>Wallet</span>
+                                    <span>ቦርሳ</span>
                                 </Link>
                                 <Link
                                     href={appDashboard()}
                                     className="text-muted-foreground hover:text-foreground flex flex-col items-center gap-1 py-1"
                                 >
                                     <User className="size-4" />
-                                    <span>Account</span>
+                                    <span>መለያ</span>
                                 </Link>
                             </>
                         ) : (
@@ -920,14 +907,14 @@ export default function Welcome({
                                     className="text-muted-foreground hover:text-foreground flex flex-col items-center gap-1 py-1"
                                 >
                                     <User className="size-4" />
-                                    <span>Log In</span>
+                                    <span>ግባ</span>
                                 </Link>
                                 <Link
                                     href={register()}
                                     className="text-primary flex flex-col items-center gap-1 py-1 font-bold"
                                 >
                                     <Zap className="size-4" />
-                                    <span>Join</span>
+                                    <span>ተቀላቀል</span>
                                 </Link>
                             </>
                         )}
@@ -939,9 +926,8 @@ export default function Welcome({
                         <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:text-left">
                             <AppLogo />
                             <span className="text-muted-foreground text-xs">
-                                &copy; {new Date().getFullYear()} Item Lottery.
-                                All draws are provably fair and
-                                cryptographically verified.
+                                &copy; {new Date().getFullYear()} የእቃ ሎተሪ። ሁሉም
+                                ዕጣዎች ፍትሃዊነታቸው የተረጋገጠ እና በምስጠራ የታገዙ ናቸው።
                             </span>
                         </div>
 
@@ -950,33 +936,33 @@ export default function Welcome({
                                 href="#raffles"
                                 className="hover:text-foreground transition-colors"
                             >
-                                Raffles
+                                ዕጣዎች
                             </a>
                             <Link
                                 href={resultsRoute()}
                                 className="hover:text-foreground transition-colors"
                             >
-                                Results
+                                ውጤቶች
                             </Link>
                             <a
                                 href="#fairness"
                                 className="hover:text-foreground transition-colors"
                             >
-                                Fairness
+                                ፍትሃዊነት
                             </a>
                             {auth.user ? (
                                 <Link
                                     href={appDashboard()}
                                     className="hover:text-foreground transition-colors"
                                 >
-                                    Dashboard
+                                    ዳሽቦርድ
                                 </Link>
                             ) : (
                                 <Link
                                     href={login()}
                                     className="hover:text-foreground transition-colors"
                                 >
-                                    Login
+                                    ግባ
                                 </Link>
                             )}
                         </div>

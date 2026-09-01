@@ -30,7 +30,7 @@ function calculateTimeLeft(targetDate: string | Date): CountdownResult {
             isExpired: true,
             isUrgent: false,
             isEndingSoon: false,
-            formatted: 'Ended',
+            formatted: 'ተጠናቋል',
         };
     }
 
@@ -45,13 +45,13 @@ function calculateTimeLeft(targetDate: string | Date): CountdownResult {
 
     let formatted = '';
     if (days > 0) {
-        formatted = `${days}d ${hours}h ${minutes}m`;
+        formatted = `${days}ቀ ${hours}ሰ ${minutes}ደ`;
     } else if (hours > 0) {
-        formatted = `${hours}h ${minutes}m ${seconds}s`;
+        formatted = `${hours}ሰ ${minutes}ደ ${seconds}ሰከ`;
     } else if (minutes > 0) {
-        formatted = `${minutes}m ${seconds}s`;
+        formatted = `${minutes}ደ ${seconds}ሰከ`;
     } else {
-        formatted = `${seconds}s`;
+        formatted = `${seconds}ሰከ`;
     }
 
     return {

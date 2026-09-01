@@ -30,7 +30,7 @@ class HomeController extends Controller
             ->get()
             ->map(function (Lottery $lottery) {
                 $winner = $lottery->winningTicket?->user;
-                $maskedName = 'Verified Winner';
+                $maskedName = 'የተረጋገጠ አሸናፊ';
                 if ($winner && $winner->name) {
                     $parts = explode(' ', trim($winner->name));
                     $masked = array_map(function ($part) {

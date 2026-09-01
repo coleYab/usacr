@@ -23,18 +23,18 @@ export default function TwoFactorChallenge() {
     }>(() => {
         if (showRecoveryInput) {
             return {
-                title: 'Recovery code',
+                title: 'የማገገሚያ ኮድ',
                 description:
-                    'Please confirm access to your account by entering one of your emergency recovery codes.',
-                toggleText: 'login using an authentication code',
+                    'እባክዎ ከአደጋ ጊዜ ማገገሚያ ኮዶችዎ አንዱን በማስገባት ወደ መለያዎ መግባትን ያረጋግጡ።',
+                toggleText: 'በማረጋገጫ ኮድ ይግቡ',
             };
         }
 
         return {
-            title: 'Authentication code',
+            title: 'የማረጋገጫ ኮድ',
             description:
-                'Enter the authentication code provided by your authenticator application.',
-            toggleText: 'login using a recovery code',
+                'በማረጋገጫ መተግበሪያዎ (Authenticator app) የቀረበውን የማረጋገጫ ኮድ ያስገቡ።',
+            toggleText: 'በማገገሚያ ኮድ ይግቡ',
         };
     }, [showRecoveryInput]);
 
@@ -51,7 +51,7 @@ export default function TwoFactorChallenge() {
 
     return (
         <>
-            <Head title="Two-factor authentication" />
+            <Head title="ባለሁለት-ደረጃ ማረጋገጫ" />
 
             <div className="space-y-6">
                 <Form
@@ -67,7 +67,7 @@ export default function TwoFactorChallenge() {
                                     <Input
                                         name="recovery_code"
                                         type="text"
-                                        placeholder="Enter recovery code"
+                                        placeholder="የማገገሚያ ኮድ ያስገቡ"
                                         autoFocus={showRecoveryInput}
                                         required
                                     />
@@ -109,11 +109,11 @@ export default function TwoFactorChallenge() {
                                 className="w-full"
                                 disabled={processing}
                             >
-                                Continue
+                                ቀጥል
                             </Button>
 
                             <div className="text-muted-foreground text-center text-sm">
-                                <span>or you can </span>
+                                <span>ወይም </span>
                                 <button
                                     type="button"
                                     className="text-foreground cursor-pointer underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
