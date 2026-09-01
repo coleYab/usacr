@@ -13,16 +13,7 @@ import { AppContent } from '@/components/app-content';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { NotificationBell } from '@/components/notification-bell';
 import { ThemeToggle } from '@/components/theme-toggle';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { UserMenuContent } from '@/components/user-menu-content';
 import { useCurrentUrl } from '@/hooks/use-current-url';
-import { useInitials } from '@/hooks/use-initials';
 import { cn } from '@/lib/utils';
 import { dashboard, lotteries, results, tickets, wallet } from '@/routes/app';
 import { edit as profileEdit } from '@/routes/profile';
@@ -76,16 +67,8 @@ const mobileBottomNavItems = [
     },
 ];
 
-export default function AppTopnavLayout({
-    children,
-    breadcrumbs = [],
-    walletBalance,
-}: Props) {
+export default function AppTopnavLayout({ children, breadcrumbs = [] }: Props) {
     const page = usePage();
-    const { auth } = page.props;
-    const sharedWalletBalance = page.props.walletBalance as string | undefined;
-    const effectiveBalance = walletBalance ?? sharedWalletBalance ?? '$0.00';
-    const getInitials = useInitials();
     const { whenCurrentUrl } = useCurrentUrl();
 
     const navLinkClasses = (
@@ -123,39 +106,8 @@ export default function AppTopnavLayout({
                     </nav>
 
                     <div className="ml-auto flex items-center gap-2">
-                        <div className="border-input bg-muted/50 flex items-center gap-2 rounded-full border py-1.5 pr-3 pl-1.5">
-                            <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-full">
-                                <Wallet className="size-3.5" />
-                            </div>
-                            <span className="font-mono text-sm font-semibold tabular-nums">
-                                {effectiveBalance}
-                            </span>
-                        </div>
                         <NotificationBell />
                         <ThemeToggle />
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button
-                                    variant="ghost"
-                                    className="size-10 rounded-full p-1"
-                                >
-                                    <Avatar className="size-8 overflow-hidden rounded-full">
-                                        <AvatarImage
-                                            src={auth.user?.avatar}
-                                            alt={auth.user?.name}
-                                        />
-                                        <AvatarFallback className="bg-sidebar-accent text-sidebar-accent-foreground rounded-lg">
-                                            {getInitials(auth.user?.name ?? '')}
-                                        </AvatarFallback>
-                                    </Avatar>
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent className="w-56" align="end">
-                                {auth.user && (
-                                    <UserMenuContent user={auth.user} />
-                                )}
-                            </DropdownMenuContent>
-                        </DropdownMenu>
                     </div>
                 </div>
             </header>
