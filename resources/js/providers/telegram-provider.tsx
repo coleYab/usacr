@@ -75,11 +75,25 @@ export function TelegramProvider({ children }: PropsWithChildren) {
             // Some features aren't always available.
         }
 
+        let raw: string | undefined;
         try {
-            setInitDataRaw(retrieveRawInitData());
+            raw = retrieveRawInitData();
         } catch {
-            setInitDataRaw(undefined);
+            raw = undefined;
         }
+
+        if (!raw && typeof window !== 'undefined') {
+            const webAppInitData = (
+                window as unknown as {
+                    Telegram?: { WebApp?: { initData?: string } };
+                }
+            ).Telegram?.WebApp?.initData;
+            if (webAppInitData) {
+                raw = webAppInitData;
+            }
+        }
+
+        setInitDataRaw(raw);
 
         try {
             const params = retrieveLaunchParams() as unknown as {
@@ -90,7 +104,9 @@ export function TelegramProvider({ children }: PropsWithChildren) {
             setTgUser(undefined);
         }
 
-        setIsTelegram(true);
+        if (raw) {
+            setIsTelegram(true);
+        }
 
         return cleanup;
     }, []);
